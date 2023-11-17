@@ -1,0 +1,9 @@
+diff a/BeeWatch_DATN/src/main/resources/static/assets/admin/account/QLYttTaiKhoan.html b/BeeWatch_DATN/src/main/resources/static/assets/admin/account/QLYttTaiKhoan.html	(rejected hunks)
+@@ -14,6 +14,7 @@
+ 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+ 	crossorigin="anonymous" /> -->
+ <link rel="stylesheet"
++	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+ <style type="text/css">
+ body {
+ 	width: auto;
