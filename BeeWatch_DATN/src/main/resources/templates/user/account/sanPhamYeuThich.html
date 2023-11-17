@@ -85,7 +85,7 @@
                                 <div class="card" style="width: 18rem; height: 322px;">
                                     <a th:href="@{|/itwatch/product/detail/${listpro.product.productId}|}" style="text-decoration: none;">
                                         <div class="thumbnail" style="margin-bottom: 0px; padding-bottom: 0px;">
-                                            <img class="card-img-top" th:src="@{|/assets/images/${listpro.product.image}|}" alt="" style="height: 178px; width: 178px;">
+                                            <img class="card-img-top" th:src="@{|/assets/images/products/${listpro.product.image}|}" alt="" style="height: 178px; width: 178px;">
                                             <div class="discount-label green" th:if="${listpro.product.category.discount != null}" style="margin-left: 15px;">
                                                 <p>-[[${listpro.product.category.discount.percentDiscount}]]%</p>
                                             </div>

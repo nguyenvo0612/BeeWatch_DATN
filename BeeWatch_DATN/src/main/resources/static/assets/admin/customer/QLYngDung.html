@@ -14,7 +14,7 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous" />
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 
 <body>
@@ -133,14 +133,13 @@
 									</div>
 								</div>
 								<div class="mb-3 text-muted text-center">
-									<button class="btn btn-primary" >
-										<i class="fa fa-plus" aria-hidden="true"></i> Thêm
+									<button class="btn btn-primary" ng-click="create()" ng-disabled="form.brandId != null">
+										<i class="fa-solid fa-circle-plus"></i> Thêm
 									</button>
-									<button class="btn btn-warning">
-										<i class="fa fa-wrench" aria-hidden="true"></i> Cập Nhật
+									<button class="btn btn-success" ng-click="update()">
+										<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Cập Nhật
 									</button>
-								
-									<button class="btn btn-info">
+									<button class="btn btn-info" ng-click="reset()">
 										<i class="fa fa-refresh" aria-hidden="true"></i> Xóa Form
 									</button>
 								</div>
@@ -179,20 +178,21 @@
 							</tr>
 						</table>
 						<div class="panel-footer text-center mb-3">
-							<button class="btn btn-danger">
-								<b class="fa fa-hand-o-up "></b>
+							<button class="btn btn-danger" ng-click="pager.first()">
+								<b class="fa-solid fa-backward"></b>
 							</button>
-							<button class="btn btn-primary">
-								<b class="fa fa-hand-o-left"></b>
+							<button class="btn btn-primary" ng-click="pager.prev()">
+								<b class="fa-sharp fa-solid fa-arrow-left"></b>
 							</button>
 
-							<button class="btn btn-success">0/10</button>
+							<button class="btn btn-success">{{pager.page + 1}} of
+								{{pager.count}}</button>
 
-							<button class="btn btn-primary">
-								<b class="fa fa-hand-o-right"></b>
+							<button class="btn btn-primary" ng-click="pager.next()">
+								<b class="fa-sharp fa-solid fa-arrow-right"></b>
 							</button>
-							<button class="btn btn-danger">
-								<b class="fa fa-hand-o-down"></b>
+							<button class="btn btn-danger" ng-click="pager.last()">
+								<i class="fa-solid fa-forward"></i>
 							</button>
 						</div>
 					</div>

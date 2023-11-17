@@ -14,7 +14,7 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous" /> -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <style type="text/css">
 body {
 	width: auto;
@@ -226,20 +226,20 @@ body {
 						</div>
 						<div class="mb-3 panel-footer text-center">
 							<button class="btn btn-danger" ng-click="pager.first()">
-								<b class="fa fa-hand-o-up "></b>
+								<b class="fa-solid fa-backward"></b>
 							</button>
 							<button class="btn btn-primary" ng-click="pager.prev()">
-								<b class="fa fa-hand-o-left"></b>
+								<b class="fa-sharp fa-solid fa-arrow-left"></b>
 							</button>
 
 							<button class="btn btn-success">{{pager.page + 1}} of
 								{{pager.count}}</button>
 
 							<button class="btn btn-primary" ng-click="pager.next()">
-								<b class="fa fa-hand-o-right"></b>
+								<b class="fa-sharp fa-solid fa-arrow-right"></b>
 							</button>
 							<button class="btn btn-danger" ng-click="pager.last()">
-								<b class="fa fa-hand-o-down"></b>
+								<i class="fa-solid fa-forward"></i>
 							</button>
 						</div>
 					</div>
