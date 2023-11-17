@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/index.html}"
+>
+  <head>
+    <style type="text/css">
+      .khungtong {
+        margin-left: 30px;
+        width: 830px;
+      }
+
+      .abc:hover {
+        background-color: #22e89f;
+        color: black;
+      }
+
+      .khungSapxep {
+        background-color: #e5db7c;
+        height: 50px;
+        width: 802px;
+        padding-top: 10px;
+      }
+
+      .khungSapxep > a {
+        margin-left: 20px;
+      }
+
+      .loaisp > a {
+        text-transform: capitalize;
+        color: black;
+      }
+
+      .loaisp > a:hover {
+        color: #e5db7c;
+      }
+
+      .thumbnail {
+        width: 348px;
+        height: 348px;
+        margin-top: 10px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+      }
+
+      .thumbnail img {
+        width: 100%;
+        height: 100%;
+        transition-duration: 0.5s;
+        /* Safari */
+        -webkit-transition-duration: 0.5s;
+        /* Mozilla Firefox */
+        -moz-transition-duration: 0.5s;
+        /* Opera */
+        -o-transition-duration: 0.5s;
+        /* IE 9 */
+        -ms-transition-duration: 0.5s;
+      }
+
+      .thumbnail img:hover {
+        transform: scale(1.4);
+        -webkit-transform: scale(1.4);
+        -moz-transform: scale(1.4);
+        -o-transform: scale(1.4);
+        -ms-transform: scale(1.4);
+        cursor: pointer;
+      }
+
+      .discount-label {
+        position: absolute;
+        padding: 3px;
+        top: 0px;
+        left: 0px;
+        float: left;
+        width: 55px;
+        -webkit-border-radius: 0 4px 0 4px;
+        border-radius: 0 4px 4px 0;
+        text-align: right;
+        border-radius: 7px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+      }
+
+      .discount-label p {
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+      }
+
+      .green {
+        background-color: #16b516;
+      }
+
+      .green:after {
+        border-right-color: #16b516;
+      }
+
+      .giamgia {
+        color: #e5db7c;
+      }
+
+      .card-title {
+        font-weight: normal;
+        text-transform: capitalize;
+        color: #000;
+      }
+
+      .card-title:hover {
+        color: #e5db7c;
+      }
+
+      .giagoc {
+        font-size: 15px;
+        color: black;
+      }
+
+      .content-top h2 {
+        color: #000;
+        font-size: 2.2em;
+        font-family: "Roboto", sans-serif;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .proName {
+        margin-top: 10px;
+      }
+      .proName a {
+        color: black;
+      }
+      .proName a:hover {
+        color: red;
+      }
+      .b {
+        width: 234px;
+        height: 126px;
+      }
+      .dhn a {
+        padding: 12px 30px;
+        background: #e4e3e2;
+        border: 1px solid transparent;
+        font-size: 16px;
+        text-transform: uppercase;
+        display: inline-block;
+        transition: all 0.3s ease-out;
+        color: black;
+      }
+
+      .text-xem-them-left {
+        position: absolute;
+        top: 85%;
+        left: 10%;
+        color: white;
+      }
+      .text-xem-them-left span {
+        font-size: 12px;
+        margin-top: 10px;
+        color: #666;
+      }
+      .text-xem-them-left span:hover {
+        font-size: 13px;
+        margin-top: 10px;
+        color: #000;
+      }
+      .text-xem-them-left h2 {
+        margin-bottom: 0;
+        font-size: 25px;
+        font-family: "Roboto", sans-serif;
+      }
+      .text-xem-them-right-top {
+        position: absolute;
+        top: 75%;
+        left: 8%;
+        color: white;
+      }
+      .text-xem-them-right-top span {
+        font-size: 12px;
+        margin-top: 10px;
+        color: #666;
+      }
+      .text-xem-them-right-top span:hover {
+        font-size: 13px;
+        margin-top: 10px;
+        color: #000;
+      }
+      .text-xem-them-right-top h2 {
+        margin-bottom: 0;
+        font-size: 25px;
+        font-family: "Roboto", sans-serif;
+      }
+      .text-xem-them-right-bot {
+        position: absolute;
+        top: 60%;
+        left: 8%;
+        color: white;
+      }
+      .text-xem-them-right-bot span {
+        font-size: 12px;
+        margin-top: 10px;
+        color: #666;
+      }
+      .text-xem-them-right-bot span:hover {
+        font-size: 13px;
+        margin-top: 10px;
+        color: #000;
+      }
+      .text-xem-them-right-bot h2 {
+        margin-bottom: 0;
+        font-size: 25px;
+        font-family: "Roboto", sans-serif;
+      }
+      .bo-suu-tap-text {
+        text-align: center;
+        font-size: 20px;
+        font-family: "Roboto", sans-serif;
+        letter-spacing: 0.8px;
+      }
+      .bo-suu-tap-left {
+        margin-left: 0;
+      }
+      .bo-suu-tap-right {
+        margin-right: 0;
+      }
+      /* .dhn a:hover {
+        background-color: #e5db7c;
+        color: white;
+      } */
+      .bo-suu-tap a {
+        color: aliceblue;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+      .bo-suu-tap a:hover {
+        -ms-transform: scale(1.5);
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noidung" layout:fragment="content">
+      <!--content-->
+      <div class="content">
+        <div class="container">
+          <div class="content-top" style="padding-top: 50px">
+            <h2>Hàng mới nhất</h2>
+            <div class="row dhn" style="margin-top: 10px">
+              <a
+                class="btn btn-secondary bg-danger"
+                th:href="@{|/itwatch/product/gender/nam|}"
+                style="margin-right: 20px"
+                >ĐỒNG HỒ NAM</a
+              >
+              <a
+                class="btn btn-secondary bg-danger"
+                th:href="@{|/itwatch/product/gender/nu|}"
+                >ĐỒNG HỒ NỮ</a
+              >
+            </div>
+            <div class="grid-in">
+              <div
+                class="col-md-4 grid-top"
+                th:each="listpro : ${items}"
+                style="margin-bottom: 0px"
+              >
+                <div
+                  class="thumbnail"
+                  style="margin-bottom: 0px; padding-bottom: 0px"
+                >
+                  <a
+                    th:href="@{|itwatch/product/detail/${listpro.productId}|}"
+                    class="b-link-stripe b-animate-go thickbox"
+                  >
+                    <img
+                      class="img-responsive"
+                      th:src="@{|/assets/images/${listpro.image}|}"
+                      alt=""
+                      style="width: 348px; height: 348px"
+                    />
+                  </a>
+                </div>
+
+                <div class="proName text-center">
+                  <a
+                    class="link-danger"
+                    th:href="@{|itwatch/product/detail/${listpro.productId}|}"
+                    style="
+                      text-decoration: none;
+                      font-size: 20px;
+                      font-weight: 500;
+                    "
+                  >
+                    [[*{listpro.name}]]
+                  </a>
+
+                  <div>
+                    [[*{listpro.brand.name}]] - [[*{listpro.gender} ?
+                    'Nam':'Nữ']] - [[*{listpro.size.name}]] -
+                    [[*{listpro.glass.name}]]
+                  </div>
+                </div>
+                <div
+                  class="text-center"
+                  style="font-style: italic; color: red"
+                  th:if="${listpro.category.discount != null}"
+                >
+                  <b
+                    >[[*{#numbers.formatInteger(listpro.price - (listpro.price *
+                    (listpro.category.discount.percentDiscount)/100),3,'POINT')}]]
+                    đ</b
+                  >
+                </div>
+                <div
+                  class="text-center"
+                  style="font-style: italic; color: red"
+                  th:if="${listpro.category.discount == null}"
+                >
+                  <b
+                    >[[*{#numbers.formatInteger(listpro.price ,3,'POINT')}]]
+                    đ</b
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!-- bo suu tap noi bat -->
+          <div class="content-top-bottom">
+            <h2>Bộ sư tập nổi bật</h2>
+            <div class="col-md-6 men">
+              <div class="image-text">
+                <a th:href="@{|/itwatch/brand/citizen|}">
+                  <img
+                    class="img-responsive"
+                    src="/assets/images/rolexview.jpg"
+                    alt=""
+                    style="width: 700px; height: 490px"
+                  />
+                  <!-- <div class="b-wrapper"> -->
+                  <div class="text-xem-them-left">
+                    <h2 style="color: white">Đồng hồ Rolex</h2>
+                    <span>Xem thêm...</span>
+                  </div></a
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md1">
+                <div class="image-text">
+                  <!-- <div class="b-wrapper"> -->
+                  <a th:href="@{|/itwatch/brand/ogival|}"
+                    ><img
+                      class="img-responsive"
+                      src="/assets/images/st2.jpg"
+                      alt=""
+                    />
+                    <div class="text-xem-them-right-top">
+                      <h2 style="color: white">Đồng hồ Rolex</h2>
+                      <span>Xem thêm...</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md2" style="margin-top: 4px">
+                <div class="col-md-6 men1">
+                  <div class="image-text">
+                    <a th:href="@{|/itwatch/brand/orient|}"
+                      ><img
+                        class="img-responsive"
+                        src="/assets/images/st3.jpg"
+                        alt=""
+                      />
+
+                      <!-- <div class="b-wrapper"> -->
+
+                      <div class="text-xem-them-right-bot">
+                        <h2 style="color: white">Đồng hồ Rolex</h2>
+                        <span>Xem thêm...</span>
+                      </div></a
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6 men1">
+                  <div class="image-text">
+                    <!-- <div class="b-wrapper"> -->
+                    <a th:href="@{|/itwatch/brand/orient|}"
+                      ><img
+                        class="img-responsive"
+                        src="/assets/images/st3.jpg"
+                        alt=""
+                      />
+
+                      <div class="text-xem-them-right-bot">
+                        <h2 style="color: white">Đồng hồ Rolex</h2>
+                        <span>Xem thêm...</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!---->
+          <!-- bo suu tap dong ho hot & moi ve -->
+          <br />
+          <br />
+          <div class="content-top-bottom">
+            <div class="col-md-6 bo-suu-tap-left">
+              <div class="bo-suu-tap">
+                <a th:href="@{|/itwatch/brand/orient|}"
+                  ><img
+                    class="img-responsive"
+                    src="/assets/images/st3.jpg"
+                    alt=""
+                  />
+                </a>
+              </div>
+              <div class="bo-suu-tap-text">BST ĐỒNG HỒ HOT</div>
+            </div>
+            <div class="col-md-6 bo-suu-tap-right">
+              <div class="bo-suu-tap">
+                <a th:href="@{|/itwatch/brand/orient|}"
+                  ><img
+                    class="img-responsive"
+                    src="/assets/images/st3.jpg"
+                    alt=""
+                  />
+                </a>
+              </div>
+              <div class="bo-suu-tap-text">BST ĐỒNG HỒ MỚI VỀ</div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <!-- bai viet moi -->
+          <div class="content-bot-bottom">
+            <h2>Bài viết mới</h2>
+            <!-- thay đổi img-responsive-new -->
+            <div class="grid-in">
+              <ul>
+                <div th:each="p:${news}" class="col-md-4 grid_3">
+                  <a th:href="@{|/itwatch/blog/${p.newsId}|}"
+                    ><img
+                      style="height: 350px; width: 350px"
+                      th:src="@{|/assets/images/${p.image}/|}"
+                      class="img-responsive-new"
+                      th:href="@{|/itwatch/blog/${p.newsId}|}"
+                  /></a>
+                  <h3 style="margin-top: 10px">
+                    <a th:href="@{|/itwatch/blog/${p.newsId}|}"
+                      >[[${p.title}]]</a
+                    >
+                  </h3>
+                  <p th:utext="${p.shortcontent}"></p>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-center"
+          style="color: black; margin-bottom: 20%; margin-top: 10px"
+        >
+          <h2>THƯƠNG HIỆU NỔI TIẾNG</h2>
+          <div
+            class="col-sm-1"
+            th:each="brand : ${brands}"
+            style="margin-top: 20px; margin-bottom: 10px"
+          >
+            <a
+              th:href="@{|/itwatch/brand/${brand.name}|}"
+              style="text-decoration: none; font-size: 13px"
+              ><img
+                style="height: 90px; width: 90px; margin-top: 30px"
+                th:src="@{|/assets/images/${brand.image}/|}"
+                th:href="@{|/itwatch/brand/${brand.brandId}|}"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

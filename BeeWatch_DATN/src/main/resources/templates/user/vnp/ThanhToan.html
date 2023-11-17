@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/index.html}">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Thanh Toán</title>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--Link mới-->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+<!-- Layout -->
+<link href="/assets/user/bootstrap.css" rel="stylesheet" type="text/css"
+	media="all" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/assets/user/jquery.min.js"></script>
+<!-- Custom Theme files -->
+<!--theme-style-->
+<link href="/assets/user/style.css" rel="stylesheet" type="text/css"
+	media="all" />
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords"
+	content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+   Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript">
+	
+        addEventListener("load", function() {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    
+</script>
+<!--fonts-->
+<link
+	href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900'
+	rel='stylesheet' type='text/css'>
+<link
+	href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'
+	rel='stylesheet' type='text/css'>
+<!--//fonts-->
+<!-- start menu -->
+<link href="/assets/user/memenu.css" rel="stylesheet" type="text/css"
+	media="all" />
+<script type="text/javascript" src="/assets/user/memenu.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".memenu").memenu();
+	});
+</script>
+</head>
+
+<body>
+	<main role="main" layout:fragment="content">
+		<div class="container mt-4">
+			<form id="frmCreateOrder" action="/itwatch/order/checkout"
+				method="post">
+				<input type="hidden" name="kh_tendangnhap" th:value="${account.username}"/>
+
+				<div class="py-5 text-center">
+					<i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
+					<h2>Thanh toán</h2>
+					<p class="lead">Vui lòng kiểm tra thông tin Khách hàng, thông
+						tin Giỏ hàng trước khi Đặt hàng.</p>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 order-md-2 mb-4 ">
+						<h4 class="d-flex justify-content-between align-items-center mb-3">
+							<span class="text-muted">Giỏ hàng</span> <span
+								class="badge badge-secondary badge-pill">{{cart.count}}</span>
+						</h4>
+						<ul class="list-group mb-3">
+							<li
+								class="list-group-item d-flex justify-content-between lh-condensed"
+								ng-repeat="i in cart.items">
+								<div>
+									<h6 class="my-0">{{i.name}}-{{i.productId}}</h6>
+									<small class="text-muted">{{i.price |number:0}} x
+										{{i.qty}}</small>
+								</div> <span class="text-muted">{{i.price * i.qty|number:0}}</span>
+							</li>					
+						</ul>
+						<!-- Phần hiển thị voucher -->
+						<h4 class="d-flex justify-content-between align-items-center mb-3">
+							<span class="text-muted">Voucher</span>
+						</h4>
+						<ul class="list-group mb-3">
+							<li class="list-group-item lh-condensed">
+								<div class="form-group" th:each="c:${cates}">
+									<input ng-model="result" th:value="*{c.voucherName}"
+										ng-change="voucherVal.getValuedVoucher(result)" type="radio"
+										name="rdoResult"> <span  style="font-weight: bold;"> [[*{c.voucherName}]]</span> <p>Giảm [[${#numbers.formatDecimal(c.valued, 0, 'COMMA', 0, 'POINT')}]] VND. Áp dụng cho đơn từ [[*{#numbers.formatInteger(c.conditions,3,'POINT')}]] VND</p>
+								</div>
+							</li>
+							<li class="list-group-item d-flex justify-content-between">
+								<span>Tổng thành tiền</span> <strong>{{cart.amount |
+									number:0}} VNĐ</strong>
+							</li>
+							<li class="list-group-item d-flex justify-content-between">
+								<span>Mã giảm giá</span> <strong>{{result2 | number}} VND</strong>
+							</li>
+							<!-- voucherVal.amount2 tot -->
+							<li class="list-group-item d-flex justify-content-between">
+								<span>Tiền phải trả</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ totalFinal |
+									number:0}} VNĐ</strong> <input type="hidden" class=""
+								id="amount" name="amount" ng-value="totalFinal" />
+								<hr />
+							</li>
+						</ul>
+					</div>
+
+					<div class="col-md-8 order-md-1" th:object = "${account}">
+						<h4 class="mb-3">Thông tin khách hàng</h4>
+						<div class="row">
+							<div class="col-md-12">
+								<label for="kh_ten">Họ và Tên *</label> <input type="text"
+									class="form-control" name="kh_ten" id="kh_ten" th:field="*{fullname}"
+									required="required">
+							</div>
+
+							<div class="col-md-12">
+								<label for="kh_dienthoai">Điện Thoại *</label> <input type="text"
+									class="form-control" name="kh_dienthoai" id="kh_dienthoai" maxlength="12"
+									th:field="*{phone}" required="required">
+							</div>
+
+
+							<div class="col-md-12">
+								<label for="kh_email">Email *</label> <input type="email" 
+									class="form-control" name="kh_email" id="kh_email" th:field="*{email}"
+									required="required">
+							</div>
+
+							<div class="col-md-12">
+								<label for="kh_diachi">Địa Chỉ *</label> <input type="text"
+									class="form-control" name="kh_diachi" id="kh_diachi" th:field="*{address}"
+									required="required">
+							</div>
+
+						</div>
+						<hr>
+
+						<h4 class="mb-3">Phương Thức Thanh Toán</h4>
+
+						<div class="d-block my-3">
+							<div class="custom-control custom-radio">
+								<input id="httt-2" name="httt_ma" type="radio"
+									class="custom-control-input" required="" value="1"> <label
+									class="custom-control-label" for="httt-2">Thanh toán
+									C.O.D</label>
+							</div>
+							<br>
+							<div class="custom-control custom-radio">
+								<input id="httt-1" name="httt_ma" type="radio"
+									class="custom-control-input" required="" value="2"> <label
+									class="custom-control-label" for="httt-1">Thẻ Tín
+									dụng/Ghi nợ/Thanh toán QR</label>
+							</div>
+							<br>
+						</div>
+						<input name="ordertype" id="ordertype" value="billpayment"
+							type="hidden">
+						<div class="form-group" style="display: none;">
+							<label style="color: white">Nội dung thanh toán</label>
+							<textarea class="form-control" cols="20" id="vnp_OrderInfo"
+								name="vnp_OrderInfo" rows="2">Thanh toan</textarea>
+						</div>
+						<div class="row" style="margin-left: 5px">
+							<label for="language" style="margin-right: 30px;">Ngôn
+								ngữ</label> <select name="language" id="language" class="form-control">
+								<option value="vn">Tiếng Việt</option>
+								<option value="en">English</option>
+							</select>
+						</div>
+						<hr class="mb-4">
+
+						<div onclick="order();" class="btn btn-primary btn-lg btn-block"
+							name="btnDatHang">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Hàng
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<br>
+				<script>
+				
+		function order() {
+			var pttt2 = document.getElementById('httt-2').checked;
+			var pttt1 = document.getElementById('httt-1').checked;
+
+			if($("#kh_ten").val() =="" || $("#kh_ten").val() ==null){
+				alert("Mời khách hàng nhập họ và tên");
+				return false;
+			}
+			if($("#kh_dienthoai").val() =="" || $("#kh_dienthoai").val() ==null){
+				alert("Mời khách hàng nhập số điện thoại");
+				return false;
+			}
+			
+			if($("#kh_email").val() =="" || $("#kh_email").val() ==null){
+				alert("Mời khách hàng nhập email");
+				return false;
+			}
+			
+			if($("#kh_dienthoai").val() != ""){
+				var vnf_regex = /((09|03|07|08|05)+([0-9]{8,10})\b)/g;
+				if (vnf_regex.test($("#kh_dienthoai").val()) == false){
+	            	alert('Số điện thoại của bạn không đúng định dạng!');
+	            	return false;
+	        	}
+				if($("#kh_dienthoai").val().length <10 || $("#kh_dienthoai").val().length >12){
+					alert('Số điện thoại của bạn phải từ 10-12 số!');
+	            	return false;
+				}
+				if($("#kh_dienthoai").val().substring(0,2) =="00"){
+					alert('Số điện thoại của bạn không đúng định dạng!');
+			        return false;
+				}
+			}
+			
+			if($("#kh_email").val()!=""){
+				var email =  document.getElementById('kh_email');
+				if(email.value.length > 0){
+					var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+					var flag = re.test(email.value);
+					if(flag == false){
+						alert('Đề nghị nhập email đúng định dạng quy định');
+						setTimeout(function(){
+							$(email).focus();
+						}, 100);
+						$(email).val('');
+						return false;
+					}
+					//return flag;
+				}
+				
+			}
+			
+			if($("#kh_diachi").val() =="" || $("#kh_diachi").val() ==null){
+				alert("Mời khách hàng nhập địa chỉ giao hàng");
+				return false;
+			}
+			
+			
+			 if(pttt1 ==false && pttt2 == false ){
+				alert("Chọn phương thức thanh toán!");
+				return false;
+			} 
+			var postData = $("#frmCreateOrder").serialize();
+			var submitUrl = $("#frmCreateOrder").attr("action");
+			$.ajax({
+				type : "POST",
+				url : submitUrl,
+				data : postData,
+				dataType : 'JSON',
+				success : function(x) {
+					console.log(x)
+					if (x.code == '00') {
+						
+					   if (window.vnpay) {
+						   var a = window.localStorage.getItem('cart');	
+							console.log(a);
+					       vnpay.open({width: 768, height: 600, url: x.data});
+					       console.log("ok1")
+					   } else {
+					       window.location.href = x.data;
+					       console.log("oke2")
+					   }
+					   return false;
+					} else {
+					   alert(x.Message);
+					}
+				}
+			});
+		} 
+	</script>
+		
+	</main>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/assets/vendor-tt/jquery/jquery.min.js"></script>
+	<script src="/assets/vendor-tt/popperjs/popper.min.js"></script>
+	<script src="/assets/vendor-tt/bootstrap/js/bootstrap.min.js"></script>
+	<script th:src="@{/vendor/vnpay.js}"></script>
+</body>
+
+</html>

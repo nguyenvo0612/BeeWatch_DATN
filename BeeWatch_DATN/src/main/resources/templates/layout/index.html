@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	>
+<head>
+	<title>ITWATCH</title>	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link href="/assets/user/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/assets/user/jquery.min.js"></script>
+	<!-- Custom Theme files -->
+	<!--theme-style-->
+	<link href="/assets/user/style.css" rel="stylesheet" type="text/css" media="all" />
+	
+	<!--//theme-style-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+   Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!--fonts-->
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+	<!--//fonts-->
+	<!-- start menu -->
+	<link href="/assets/user/memenu.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="/assets/user/memenu.js"></script>
+	 <script>$(document).ready(function () { $(".memenu").memenu(); });</script> 
+	<script src="/assets/user/simpleCart.min.js"> </script>
+	<script src="/assets/js/shopping-cart-app.js"> </script>
+	
+	
+	<style type="text/css">
+	.boloc{
+	background: red;}
+	</style>
+</head>
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<div class="header">
+		<div th:replace="layout/header.html"></div>
+		<div th:replace="layout/nav.html"></div>
+	</div>
+	<div layout:fragment="content"></div>
+	<div th:replace="layout/footer.html"></div>
+</body>
+</html>

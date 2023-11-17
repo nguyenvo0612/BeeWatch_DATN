@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="/assets/vendor-tt/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/user/util.css">
+<link rel="stylesheet" type="text/css" href="/assets/user/main.css">
+<style>
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+.login-block{
+    background: #c0a820;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to bottom, #e5da7d, #94562f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to bottom, #e5da7d, #94562f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+float:left;
+width:100%;
+height: 100%;
+padding : 50px 0;
+}
+.banner-sec{background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
+.container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
+.carousel-inner{border-radius:0 10px 10px 0;}
+.carousel-caption{text-align:left; left:5%;}
+.login-sec{padding: 50px 30px; position:relative;}
+.login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
+.login-sec .copy-text i{color:#c0a820;}
+.login-sec .copy-text a{color:#c0a820;}
+.login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px; color: #c0a820;}
+.login-sec h2:after{content:" "; width:100px; height:5px; background:#c0a820; display:block; margin-top:20px; border-radius:3px; margin-left:auto;margin-right:auto}
+.btn-login{background: #c0a820; color:#fff; font-weight:600;}
+.banner-text{width:70%; position:absolute; bottom:40px; padding-left:20px;}
+.banner-text h2{color:#fff; font-weight:600;}
+.banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
+.banner-text p{color:#fff;}
+.a:hover{
+color: red;
+}
+</style>
+<section class="login-block">
+    <div class="container">
+	<div class="row">
+		<div class="col-md-4 login-sec">
+		    <h2 class="text-center">Login Now</h2>
+		    <div class="alert alert-danger text-center" th:if="${message == 'LOCK' && message != '' }"  >Thông báo tk bị khóa vui lòng liên hệ itwatch.cskh@gmail.com</div>
+
+			<div class="alert alert-danger text-center" th:if="${param.error}">Username và Password không hợp lệ</div>
+			<div class="alert alert-success text-center" th:if="${param.logout}">Bạn đã đăng xuất</div>
+		    <form class="login-form" th:action="@{/login}" method="POST">
+			  <div class="form-group" data-validate="Username is reauired">
+			    <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+			    <input type="text" class="form-control" placeholder="" name="username" data-symbol="&#xf206;">
+			    
+			  </div>
+			  <div class="form-group" data-validate="Password is required">
+			    <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+			    <input type="password" name="password" class="form-control" placeholder="" data-symbol="&#xf190;">
+			  </div>
+			  
+			  
+			    <div class="form-check">
+			    <label class="form-check-label">
+			      <input type="checkbox" class="form-check-input" name="remember-me">
+			      <small style="color: black;">Lưu mật khẩu </small> 
+			       <small><a th:href="@{/forgot_password}" style="color: black;margin-left: 120px;"> Quên mật khẩu?</a></small>
+			    </label>
+			   <!-- <button type="submit" class="btn btn-login float-right">Submit</button> -->
+			  </div>
+			  <button type="submit" class="btn btn-login mt-3 offset-4">Đăng nhập</button>
+			</form>
+			<!--
+			<div class="txt1 text-center p-t-54 p-b-20">
+						<span> Hoặc đăng nhập bằng </span>
+					</div>
+					<div class="flex-c-m">
+						<a href="/oauth2/authorization/facebook"
+							class="login100-social-item bg1"> <i class="fa fa-facebook"></i>
+						</a> <a href="/oauth2/authorization/google"
+							class="login100-social-item bg3"> <i class="fa fa-google"></i>
+						</a>
+					</div>
+					-->
+			<div class="flex-col-c p-t-10" style="padding-top: 20px;">
+				Bạn chưa có tài khoản?
+				<div style="padding-top: 10px;">
+					<small><a th:href="@{/register}" class="txt2" style="color: black;"> Đăng ký </a></small>
+					 <small><a th:href="@{/itwatch}" class="txt2" style="margin-left: 10px; color: black;">Trang chủ</a></small>
+				</div>
+			</div>
+			
+<div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="/itwatch">ITWATCH</a></div>
+		</div>
+		<div class="col-md-8 banner-sec">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                 <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+            <div class="carousel-inner" role="listbox">
+    <div class="carousel-item active">
+      <img class="d-block img-fluid" src="https://cdn.tgdd.vn/Files/2020/10/15/1299132/untitled_800x450.png" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+       
+  </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block img-fluid" src="https://xwatch.vn/images/news/2022/06/10/original/chon-dong-ho-cho-nu-trung-nien_1654832942.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        	
+    </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block img-fluid" src="https://blog.donghoviet.vn/wp-content/uploads/2020/05/1_12-dong-ho-doi-800-450.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        	
+    </div>
+  </div>
+            </div>	   
+		    
+		</div>
+	</div>
+</div>
+</div>
+</section>
+</html>
