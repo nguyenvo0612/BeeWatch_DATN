@@ -45,7 +45,7 @@ color: red;
 	<div class="row">
 		<div class="col-md-4 login-sec">
 		    <h2 class="text-center">Login Now</h2>
-		    <div class="alert alert-danger text-center" th:if="${message == 'LOCK' && message != '' }"  >Thông báo tk bị khóa vui lòng liên hệ itwatch.cskh@gmail.com</div>
+		    <div class="alert alert-danger text-center" th:if="${message == 'LOCK' && message != '' }"  >Thông báo tk bị khóa vui lòng liên hệ beewatch.cskh@gmail.com</div>
 
 			<div class="alert alert-danger text-center" th:if="${param.error}">Username và Password không hợp lệ</div>
 			<div class="alert alert-success text-center" th:if="${param.logout}">Bạn đã đăng xuất</div>
@@ -87,11 +87,11 @@ color: red;
 				Bạn chưa có tài khoản?
 				<div style="padding-top: 10px;">
 					<small><a th:href="@{/register}" class="txt2" style="color: black;"> Đăng ký </a></small>
-					 <small><a th:href="@{/itwatch}" class="txt2" style="margin-left: 10px; color: black;">Trang chủ</a></small>
+					 <small><a th:href="@{/beewatch}" class="txt2" style="margin-left: 10px; color: black;">Trang chủ</a></small>
 				</div>
 			</div>
 			
-<div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="/itwatch">ITWATCH</a></div>
+<div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="/beewatch">BEEWATCH</a></div>
 		</div>
 		<div class="col-md-8 banner-sec">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
