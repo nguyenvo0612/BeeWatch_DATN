@@ -31,7 +31,7 @@ public class CartItemController {
 		@Autowired
 		SizeService sizeSV;
 	//giỏ hàng
-			@GetMapping("/itwatch/cartItem")
+			@GetMapping("/beewatch/cartItem")
 			public String gioHang(Model model) {
 				Accounts account = useAcc.User();
 				if(useAcc.User()==null) {

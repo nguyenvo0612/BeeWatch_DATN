@@ -17,7 +17,7 @@
     <div class="container">
       <div class="navbee">
         <div class="logoBee">
-          <a th:href="@{/itwatch}"
+          <a th:href="@{/beewatch}"
             ><img
               src="../../static/assets/images/logoBrand-removebg-preview.png"
               width="200px"
@@ -28,49 +28,49 @@
         <div class="h_menu4">
           <ul class="memenu skyblue">
             <li>
-              <a class="color1" th:href="@{/itwatch/product}">Sản phẩm</a>
+              <a class="color1" th:href="@{/beewatch/product}">Sản phẩm</a>
               <div class="mepanel">
                 <div class="row">
                   <div class="col1">
                     <div class="h_nav">
                       <h4>Khoảng giá</h4>
                       <form
-                        th:action="@{|/itwatch/product/search|}"
+                        th:action="@{|/beewatch/product/search|}"
                         method="post"
                       >
                         <ul>
                           <li value="1">
-                            <a th:href="@{/itwatch/product/price/1}"
+                            <a th:href="@{/beewatch/product/price/1}"
                               >Dưới 2 triệu</a
                             >
                           </li>
                           <li value="2">
-                            <a th:href="@{/itwatch/product/price/2}"
+                            <a th:href="@{/beewatch/product/price/2}"
                               >Từ 2 triệu đến 5 triệu</a
                             >
                           </li>
                           <li value="3">
-                            <a th:href="@{/itwatch/product/price/3}"
+                            <a th:href="@{/beewatch/product/price/3}"
                               >Từ 5 triệu đến 10 triệu</a
                             >
                           </li>
                           <li value="4">
-                            <a th:href="@{/itwatch/product/price/4}"
+                            <a th:href="@{/beewatch/product/price/4}"
                               >Từ 10 triệu đến 15 triệu</a
                             >
                           </li>
                           <li value="5">
-                            <a th:href="@{/itwatch/product/price/5}"
+                            <a th:href="@{/beewatch/product/price/5}"
                               >Từ 15 triệu đến 20 triệu</a
                             >
                           </li>
                           <li value="6">
-                            <a th:href="@{/itwatch/product/price/6}"
+                            <a th:href="@{/beewatch/product/price/6}"
                               >Từ 20 triệu đến 25 triệu</a
                             >
                           </li>
                           <li value="7">
-                            <a th:href="@{/itwatch/product/price/7}"
+                            <a th:href="@{/beewatch/product/price/7}"
                               >Trên 25 triệu</a
                             >
                           </li>
@@ -84,7 +84,7 @@
                       <h4>Loại dây</h4>
                       <ul>
                         <li class="" th:each="strap : ${straps}">
-                          <a th:href="@{|/itwatch/product/strap/${strap.id}|}"
+                          <a th:href="@{|/beewatch/product/strap/${strap.id}|}"
                             >[[${strap.name}]]</a
                           >
                         </li>
@@ -98,7 +98,7 @@
 
                       <ul>
                         <li class="" th:each="size : ${sizes}">
-                          <a th:href="@{|/itwatch/product/size/${size.id}|}"
+                          <a th:href="@{|/beewatch/product/size/${size.id}|}"
                             >[[${size.name}]]</a
                           >
                         </li>
@@ -116,7 +116,7 @@
                     <div class="h_nav">
                       <ul>
                         <li class="col-md-3" th:each="brand : ${brands}">
-                          <a th:href="@{|/itwatch/brand/${brand.name}|}"
+                          <a th:href="@{|/beewatch/brand/${brand.name}|}"
                             >[[${brand.name}]]</a
                           >
                         </li>
@@ -127,12 +127,12 @@
               </div>
             </li>
             <li class="grid">
-              <a class="color1" th:href="@{/itwatch/chinhSachBaoHanh}"
+              <a class="color1" th:href="@{/beewatch/chinhSachBaoHanh}"
                 >Chính sách bảo hành</a
               >
             </li>
             <li class="grid">
-              <a class="color1" th:href="@{/itwatch}">Về chúng tôi</a>
+              <a class="color1" th:href="@{/beewatch}">Về chúng tôi</a>
             </li>
             <li
               class="grid bonus-hover-menu"
@@ -148,7 +148,7 @@
                     <div class="h_nav">
                       <ul>
                         <li>
-                          <a th:href="@{/itwatch/account/view}"
+                          <a th:href="@{/beewatch/account/view}"
                             >Thông tin tài khoản</a
                           >
                         </li>
@@ -159,7 +159,7 @@
                     <div class="h_nav">
                       <ul>
                         <li>
-                          <a th:href="@{/itwatch/account/history}"
+                          <a th:href="@{/beewatch/account/history}"
                             >Lịch sử mua hàng</a
                           >
                         </li>
@@ -170,7 +170,7 @@
                     <div class="h_nav">
                       <ul>
                         <li>
-                          <a th:href="@{/itwatch/account/favorite}"
+                          <a th:href="@{/beewatch/account/favorite}"
                             >Sản phẩm yêu thích</a
                           >
                         </li>
@@ -181,7 +181,7 @@
                     <div class="h_nav">
                       <ul>
                         <li>
-                          <a th:href="@{/itwatch/account/changePassword}"
+                          <a th:href="@{/beewatch/account/changePassword}"
                             >Đổi mật khẩu</a
                           >
                         </li>
@@ -194,7 +194,7 @@
             <form
               id="search-form"
               class="search"
-              th:action="@{/itwatch/search}"
+              th:action="@{/beewatch/search}"
               method="get"
               th:object="${account}"
               enctype="multipart/form-data"

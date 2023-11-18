@@ -97,7 +97,7 @@ public class OrderController {
 	BrandService brandService;
     Accounts account;
     
-	@GetMapping("/itwatch/order/checkout")
+	@GetMapping("/beewatch/order/checkout")
 	public String checkout(Model model) {
 		if(useAcc.User()==null) {
 			return "redirect:/login";
@@ -123,7 +123,7 @@ public class OrderController {
 		
 	}
 	
-	@PostMapping("/itwatch/order/checkout")
+	@PostMapping("/beewatch/order/checkout")
 	@ResponseBody
 	public String checkoutPost(Model model, @ModelAttribute("account") Accounts accountKh) throws IOException{
 		List<Strap_material> straps = strapSv.findAll();
@@ -542,10 +542,10 @@ public class OrderController {
 	        SimpleMailMessage message = new SimpleMailMessage();
 
 	        message.setTo(email);
-	        message.setSubject("Đặt hàng thành công tại ITWATCH.COM");
-	        message.setText("Cảm ơn bạn đã mua hàng tại ITWATCH.COM.\r\n"
+	        message.setSubject("Đặt hàng thành công tại beewatch.COM");
+	        message.setText("Cảm ơn bạn đã mua hàng tại beewatch.COM.\r\n"
 	        		+ "Mã hóa đơn của bạn là: "+order.getOrderId()+"\r\n"	
-	        		+ "Vui lòng click vào đường link: http://localhost:8080/itwatch/account/history/detail/"+order.getOrderId()+ " để xem chi tiết hóa đơn.\r\n"
+	        		+ "Vui lòng click vào đường link: http://localhost:8080/beewatch/account/history/detail/"+order.getOrderId()+ " để xem chi tiết hóa đơn.\r\n"
 	        		+ "Xin chân thành cảm ơn đã sử dụng dịch vụ.");
 	        emailSender.send(message);
 	    }

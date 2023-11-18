@@ -259,13 +259,13 @@
             <div class="row dhn" style="margin-top: 10px">
               <a
                 class="btn btn-secondary"
-                th:href="@{|/itwatch/product/gender/nam|}"
+                th:href="@{|/beewatch/product/gender/nam|}"
                 style="margin-right: 20px"
                 >ĐỒNG HỒ NAM</a
               >
               <a
                 class="btn btn-secondary"
-                th:href="@{|/itwatch/product/gender/nu|}"
+                th:href="@{|/beewatch/product/gender/nu|}"
                 >ĐỒNG HỒ NỮ</a
               >
             </div>
@@ -280,7 +280,7 @@
                   style="margin-bottom: 0px; padding-bottom: 0px"
                 >
                   <a
-                    th:href="@{|itwatch/product/detail/${listpro.productId}|}"
+                    th:href="@{|beewatch/product/detail/${listpro.productId}|}"
                     class="b-link-stripe b-animate-go thickbox"
                   >
                     <img
@@ -295,7 +295,7 @@
                 <div class="proName text-center">
                   <a
                     class="link-danger"
-                    th:href="@{|itwatch/product/detail/${listpro.productId}|}"
+                    th:href="@{|beewatch/product/detail/${listpro.productId}|}"
                     style="
                       text-decoration: none;
                       font-size: 20px;
@@ -341,7 +341,7 @@
             <h2>Bộ sư tập nổi bật</h2>
             <div class="col-md-6 men">
               <div class="image-text">
-                <a th:href="@{|/itwatch/brand/citizen|}">
+                <a th:href="@{|/beewatch/brand/citizen|}">
                   <img
                     class="img-responsive"
                     src="/assets/images/rolexview.jpg"
@@ -360,7 +360,7 @@
               <div class="col-md1">
                 <div class="image-text">
                   <!-- <div class="b-wrapper"> -->
-                  <a th:href="@{|/itwatch/brand/ogival|}"
+                  <a th:href="@{|/beewatch/brand/ogival|}"
                     ><img
                       class="img-responsive"
                       src="/assets/images/st2.jpg"
@@ -376,7 +376,7 @@
               <div class="col-md2" style="margin-top: 4px">
                 <div class="col-md-6 men1">
                   <div class="image-text">
-                    <a th:href="@{|/itwatch/brand/orient|}"
+                    <a th:href="@{|/beewatch/brand/orient|}"
                       ><img
                         class="img-responsive"
                         src="/assets/images/st3.jpg"
@@ -395,7 +395,7 @@
                 <div class="col-md-6 men1">
                   <div class="image-text">
                     <!-- <div class="b-wrapper"> -->
-                    <a th:href="@{|/itwatch/brand/orient|}"
+                    <a th:href="@{|/beewatch/brand/orient|}"
                       ><img
                         class="img-responsive"
                         src="/assets/images/st3.jpg"
@@ -421,7 +421,7 @@
           <div class="content-top-bottom">
             <div class="col-md-6 bo-suu-tap-left">
               <div class="bo-suu-tap">
-                <a th:href="@{|/itwatch/brand/orient|}"
+                <a th:href="@{|/beewatch/brand/orient|}"
                   ><img
                     class="img-responsive"
                     src="/assets/images/st3.jpg"
@@ -433,7 +433,7 @@
             </div>
             <div class="col-md-6 bo-suu-tap-right">
               <div class="bo-suu-tap">
-                <a th:href="@{|/itwatch/brand/orient|}"
+                <a th:href="@{|/beewatch/brand/orient|}"
                   ><img
                     class="img-responsive"
                     src="/assets/images/st3.jpg"
@@ -453,15 +453,15 @@
             <div class="grid-in">
               <ul>
                 <div th:each="p:${news}" class="col-md-4 grid_3">
-                  <a th:href="@{|/itwatch/blog/${p.newsId}|}"
+                  <a th:href="@{|/beewatch/blog/${p.newsId}|}"
                     ><img
                       style="height: 350px; width: 350px"
                       th:src="@{|/assets/images/${p.image}/|}"
                       class="img-responsive-new"
-                      th:href="@{|/itwatch/blog/${p.newsId}|}"
+                      th:href="@{|/beewatch/blog/${p.newsId}|}"
                   /></a>
                   <h3 style="margin-top: 10px">
-                    <a th:href="@{|/itwatch/blog/${p.newsId}|}"
+                    <a th:href="@{|/beewatch/blog/${p.newsId}|}"
                       >[[${p.title}]]</a
                     >
                   </h3>
@@ -482,12 +482,12 @@
             style="margin-top: 20px; margin-bottom: 10px"
           >
             <a
-              th:href="@{|/itwatch/brand/${brand.name}|}"
+              th:href="@{|/beewatch/brand/${brand.name}|}"
               style="text-decoration: none; font-size: 13px"
               ><img
                 style="height: 90px; width: 90px; margin-top: 30px"
                 th:src="@{|/assets/images/brand/${brand.image}/|}"
-                th:href="@{|/itwatch/brand/${brand.brandId}|}"
+                th:href="@{|/beewatch/brand/${brand.brandId}|}"
             /></a>
           </div>
         </div>

@@ -133,8 +133,8 @@
 										</td>
 										<td>
 											<div class="btn-group">
-											<a th:href="@{|/itwatch/account/history/detail/${order.orderId}|}">
-												<button type="button" class="btn btn-primary" th:href="@{|/itwatch/account/history/cancel/${order.orderId}|}">Chi tiết</button>
+											<a th:href="@{|/beewatch/account/history/detail/${order.orderId}|}">
+												<button type="button" class="btn btn-primary" th:href="@{|/beewatch/account/history/cancel/${order.orderId}|}">Chi tiết</button>
 											</a>
 										</div>
 										<div class="btn-group">
@@ -153,12 +153,12 @@
 
 <div class="row">
                         <ul class="pagination text-center" style="margin-left: 35%;">
-						  <li class="page-item"><a class="page-link" href="/itwatch/account/history?p=0">|< </a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/account/history?p=${number-1}|}"><<</a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/account/history?p=${number}|}"> [[${number+1}]]/[[${orders.totalPages}]] </a></li>
+						  <li class="page-item"><a class="page-link" href="/beewatch/account/history?p=0">|< </a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/account/history?p=${number-1}|}"><<</a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/account/history?p=${number}|}"> [[${number+1}]]/[[${orders.totalPages}]] </a></li>
 					
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/account/history?p=${number+1}|}">>></a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/account/history?p=${orders.totalPages-1}|}">>|</a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/account/history?p=${number+1}|}">>></a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/account/history?p=${orders.totalPages-1}|}">>|</a></li>
 						</ul>
                         </div>
 
@@ -172,7 +172,7 @@
 		if (t == false) {
 			return false;
 		}else{
-			url="/itwatch/account/history/cancel/"+obj;
+			url="/beewatch/account/history/cancel/"+obj;
 			document.getElementById('formId').action= url;
 			document.getElementById('formId').method= "GET";
 			document.getElementById('formId').submit();

@@ -54,7 +54,7 @@ public class AccountController {
 	@Autowired
 	ProductService productSV;
 	// Get Cap nhat tai khoan
-	@GetMapping("/itwatch/account/view")
+	@GetMapping("/beewatch/account/view")
 	public String capNhatTaiKhoan(Model model, HttpServletRequest request) {
 		
 		if(useAcc.User()==null) {
@@ -87,7 +87,7 @@ public class AccountController {
 	}
 
 	// Get lichSuMuahang
-	@GetMapping("/itwatch/account/history")
+	@GetMapping("/beewatch/account/history")
 	public String lichSuMuahang(Model model, HttpServletRequest request, @RequestParam("p") Optional<Integer> p) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -113,7 +113,7 @@ public class AccountController {
 	}
 	
 	//huy don hang
-	@GetMapping("/itwatch/account/history/cancel/{orderId}")
+	@GetMapping("/beewatch/account/history/cancel/{orderId}")
 	public String huyDon(Model model, HttpServletRequest request,@PathVariable("orderId") Integer orderId, @RequestParam("p") Optional<Integer> p) {
 		try {
 			List<Strap_material> straps = strapSv.findAll();
@@ -175,7 +175,7 @@ public class AccountController {
 		}
 	}
 	
-	@RequestMapping("/itwatch/account/history/search")
+	@RequestMapping("/beewatch/account/history/search")
 	public String Search(Model model, @RequestParam("keyword") String kw, @RequestParam("page") Optional<Integer> p) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -195,7 +195,7 @@ public class AccountController {
 		return "product/list";
 	}	
 		
-		@GetMapping("/itwatch/account/favorite")
+		@GetMapping("/beewatch/account/favorite")
 		public String sanPhamYeuThich(Model model, HttpServletRequest request) {
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
@@ -214,7 +214,7 @@ public class AccountController {
 		}
 
 		// Get doiMatKhau
-		@GetMapping("/itwatch/account/changePassword")
+		@GetMapping("/beewatch/account/changePassword")
 		public String doiMatKhau(Model model) {
 			if(useAcc.User()==null) {
 				return "redirect:/login";
@@ -229,7 +229,7 @@ public class AccountController {
 			return "/user/account/doiMatKhau";
 		}
 				
-		@GetMapping("/itwatch/account/like/{id}")
+		@GetMapping("/beewatch/account/like/{id}")
 		public String likeOrUnlike(@PathVariable("id") Integer id,Model model) {
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
@@ -246,10 +246,10 @@ public class AccountController {
 			Long idac = account.getAccountId();
 			WishList wl = wishListService.findBy(id, idac);
 			wishListService.delete(wl);
-			return "redirect:/itwatch/account/favorite";
+			return "redirect:/beewatch/account/favorite";
 		}
 		
-		@PostMapping("/itwatch/account/update")
+		@PostMapping("/beewatch/account/update")
 		public String capNhatTaiKhoan2(@ModelAttribute("account") Accounts account
 				, @RequestParam("image1") String image1, @RequestParam("image2") String image2
 				, @RequestParam("bithdate") String bithdate,Model model) throws ParseException {
@@ -291,10 +291,10 @@ public class AccountController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return "redirect:/itwatch/account/view";
+			return "redirect:/beewatch/account/view";
 		}
 		
-		@GetMapping("/itwatch/account/history/detail/{orderId}")
+		@GetMapping("/beewatch/account/history/detail/{orderId}")
 		public String chiTietDonHang(Model model, @PathVariable("orderId") Integer orderId,HttpServletRequest request) {
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);

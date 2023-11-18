@@ -100,13 +100,13 @@ public class SecurityController {
 		Accounts acount = useAcc.User();
 		if(acount!=null) {
 			if(acount.isStatus() == true) {
-				return"redirect:/itwatch";
+				return"redirect:/beewatch";
 			}else {
 				return"redirect:/login";
 			}
 		}
 		model.addAttribute("message", "Đăng nhập thành công");
-		return "redirect:/itwatch";
+		return "redirect:/beewatch";
 		 //return "/user/login/test";
 	}
 
@@ -189,13 +189,13 @@ public class SecurityController {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
 
-		helper.setFrom("itwatch.cskh@gmail.com", "Đăng Ký Tài Khoản Thành Công");
+		helper.setFrom("beewatch.cskh@gmail.com", "Đăng Ký Tài Khoản Thành Công");
 		helper.setTo(recipientEmail);
 
 		String subject = "Đây là mail xác nhận đăng ký tài khoản của bạn đã thành công";
 
 		String content = "<p>Chào bạn,</p>" + "<p>Bạn đã đăng ký thành công tài khoản của mình.</p>"
-				+ "<p>Cảm ơn bạn đã tin tưởng ITWATCH.COM, "
+				+ "<p>Cảm ơn bạn đã tin tưởng beewatch.COM, "
 				+ "hãy đăng nhập và đặt mua chiếc đồng hồ mà bạn thích ngay nào!!!</p>";
 
 		helper.setSubject(subject);
@@ -244,7 +244,7 @@ public class SecurityController {
 	public void sendEmail(String recipientEmail, String link) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
-		helper.setFrom("itwatch.cskh@gmail.com", "ITWATCH Support");
+		helper.setFrom("beewatch.cskh@gmail.com", "beewatch Support");
 		helper.setTo(recipientEmail);
 
 		String subject = "Đây là liên kết để đặt lại mật khẩu của bạn";

@@ -69,7 +69,7 @@ public class ProductController {
 	}
 	
 	//search strap
-	@GetMapping("itwatch/product/strap/{value}")
+	@GetMapping("beewatch/product/strap/{value}")
 	public String searchStrap(Model model,@PathVariable("value") Long strap, @RequestParam("p") Optional<Integer> p ) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -96,7 +96,7 @@ public class ProductController {
 	
 	
 	//seacher price
-	@GetMapping("itwatch/product/price/{value}")
+	@GetMapping("beewatch/product/price/{value}")
 	public String searchPrice(Model model,@PathVariable("value") String pric, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -123,7 +123,7 @@ public class ProductController {
 	}
 	
 	//search size
-	@GetMapping("itwatch/product/size/{value}")
+	@GetMapping("beewatch/product/size/{value}")
 	public String searchSize(Model model,@PathVariable("value") Long pric, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -149,7 +149,7 @@ public class ProductController {
 	}
 	
 	//search header
-	@GetMapping("/itwatch/search")
+	@GetMapping("/beewatch/search")
 	public String Search(Model model, @RequestParam("nameSearch") String name, Optional<Integer> p) {
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);	
 		dulieu();
@@ -172,7 +172,7 @@ public class ProductController {
 	UserAcounts useAcc;
 	
 	// Product
-	@GetMapping("/itwatch/product")
+	@GetMapping("/beewatch/product")
 	public String sanpham(Model model, @RequestParam("p") Optional<Integer> p) {
 	
 			Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -194,7 +194,7 @@ public class ProductController {
 		
 	}
 
-	@GetMapping({"/itwatch/product/{id}"})
+	@GetMapping({"/beewatch/product/{id}"})
 	public String loaiSp(Model model, @PathVariable("id") Integer id, @RequestParam("p") Optional<Integer> p) {
 		//System.out.println("id: " + id);
 		dulieu();
@@ -214,7 +214,7 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 	
-	@GetMapping({"/itwatch/brand/{name}"})
+	@GetMapping({"/beewatch/brand/{name}"})
 	public String thuonghieu(Model model, @PathVariable("name") String name, @RequestParam("p") Optional<Integer> p) {
 //		System.out.println("id: " + id);
 		dulieu();
@@ -246,7 +246,7 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 	
-	@GetMapping({"/itwatch/category/{id}"})
+	@GetMapping({"/beewatch/category/{id}"})
 	public String loaisp2(Model model, @PathVariable("id") String id, @RequestParam("p") Optional<Integer> p) {
 		System.out.println("id: " + id);
 		dulieu();
@@ -272,7 +272,7 @@ public class ProductController {
 //	private Page<Product> products;
 //	String the;
 	
-	@PostMapping("/itwatch/product/search")
+	@PostMapping("/beewatch/product/search")
 	public String search(Model model, @RequestParam("bran") String bran, @RequestParam("cate") String cate,
 			@RequestParam("pric") String pric, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
@@ -332,7 +332,7 @@ public class ProductController {
 		System.out.println("toanf 09876: "+products.getSize());
 		return "/user/product/childSanPham";
 	}
-	@GetMapping("itwatch/product/gender/{gender}")
+	@GetMapping("beewatch/product/gender/{gender}")
 	public String productGender(@RequestParam("p") Optional<Integer> p,Model model,@PathVariable("gender") String param) {
 		dulieu();
 		Long gender;
@@ -362,7 +362,7 @@ public class ProductController {
 		System.out.println("gender: "+products.getSize());
 		return "/user/product/childSanPham";
 	}
-	@GetMapping("itwatch/product/khuyenmai")
+	@GetMapping("beewatch/product/khuyenmai")
 	public String phobien(Model model, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -387,7 +387,7 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 
-	@GetMapping("itwatch/product/banchay")
+	@GetMapping("beewatch/product/banchay")
 	public String banchay(Model model, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -412,7 +412,7 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 
-	@GetMapping("itwatch/product/moinhat")
+	@GetMapping("beewatch/product/moinhat")
 	public String moinhat(Model model, @RequestParam("p") Optional<Integer> p) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -438,7 +438,7 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 	
-	@GetMapping("/itwatch/product/tags/{id}")
+	@GetMapping("/beewatch/product/tags/{id}")
 	public String tags(Model model, @RequestParam("p") Optional<Integer> p,@PathVariable("id") String id) {
 		dulieu();
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
@@ -478,10 +478,10 @@ public class ProductController {
 		return "/user/product/childSanPham";
 	}
 	//ChitietSp
-			@GetMapping({"/itwatch/product/detail/{id}","/itwatch/product/tags/detail/{id}"
-				,"/itwatch/product/tags/detail/detail/{id}","/itwatch/detail/{id}",
-				"/itwatch/brand/detail/{id}","/itwatch/category/detail/{id}","/itwatch/product/price/detail/{id}",
-				"/itwatch/product/strap/detail/{id}","/itwatch/account/detail/{id}","/chitietDH/itwatch/product/detail/{id}"})
+			@GetMapping({"/beewatch/product/detail/{id}","/beewatch/product/tags/detail/{id}"
+				,"/beewatch/product/tags/detail/detail/{id}","/beewatch/detail/{id}",
+				"/beewatch/brand/detail/{id}","/beewatch/category/detail/{id}","/beewatch/product/price/detail/{id}",
+				"/beewatch/product/strap/detail/{id}","/beewatch/account/detail/{id}","/chitietDH/beewatch/product/detail/{id}"})
 			public String chitietSp(Model model ,@PathVariable("id") Integer id) {
 				dulieu();
 				Product item = productService.getById(id);

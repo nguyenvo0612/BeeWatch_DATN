@@ -41,13 +41,13 @@ public class HomeController {
     HttpSession session;
 	
 	//home người admin
-	@GetMapping({"/","/admin","/admin/itwatch"})
+	@GetMapping({"/","/admin","/admin/beewatch"})
 	public String homeAmin(Model model) {
 		return "redirect:/assets/admin/main/homeAdmin.html";
 	}
 	
 	//Home người dùng
-	@GetMapping({"/itwatch","/itwatch/home"})
+	@GetMapping({"/beewatch","/beewatch/home"})
 	public String homeClient(Model model) {
 		List<Product> list = productService.findTop6Img();
 		model.addAttribute("items", list);

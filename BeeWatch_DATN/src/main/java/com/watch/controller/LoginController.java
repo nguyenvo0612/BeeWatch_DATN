@@ -77,7 +77,7 @@ public class LoginController {
 		return"redirect:/login";
 	}
 		
-	@GetMapping("/itwatch/chinhSachBaoHanh")
+	@GetMapping("/beewatch/chinhSachBaoHanh")
 	public String chinhSachBaoHanh(Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -89,7 +89,7 @@ public class LoginController {
 		return "/user/csbh/csbh";
 	}
 	
-	@GetMapping("/itwatch/chinhSachDoiTra")
+	@GetMapping("/beewatch/chinhSachDoiTra")
 	public String chinhSachDoiTra(Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);

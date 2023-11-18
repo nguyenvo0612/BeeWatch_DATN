@@ -73,8 +73,8 @@ public class WishListController {
 				System.out.println("Đã Like" + id);
 			}
 			//return "user/product/ChiTietSP";
-			//return "redirect:/itwatch/product/" + Product.getProductId();
-		    return "redirect:/itwatch/account/favorite";
+			//return "redirect:/beewatch/product/" + Product.getProductId();
+		    return "redirect:/beewatch/account/favorite";
 	    }
 	    
 	    
