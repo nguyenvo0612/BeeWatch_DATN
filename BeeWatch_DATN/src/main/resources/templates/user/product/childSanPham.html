@@ -13,7 +13,7 @@
                         <div id="listProduct" class="col-md-3 mt-4" th:each="listpro : ${listproduct}" style="margin-bottom: 20px;">
                             <div style="height: 330px;">
                                 <div class="card" style="width: 18rem; height: 322px;">
-                                    <a th:href="@{|/itwatch/product/detail/${listpro.productId}|}" style="text-decoration: none;">
+                                    <a th:href="@{|/beewatch/product/detail/${listpro.productId}|}" style="text-decoration: none;">
                                         <div class="thumbnail" style="margin-bottom: 0px; padding-bottom: 0px;">
                                             <img class="card-img-top" th:src="@{|/assets/images/${listpro.image}|}" alt="" style="height: 178px; width: 178px;">
                                             <div class="discount-label green" th:if="${listpro.category.discount != null}">
@@ -52,11 +52,11 @@
                     </div>
                      <div class="row">
                         <ul class="pagination" style="margin-left: 350px;">
-						  <li class="page-item"><a class="page-link" href="/itwatch/product?p=0">|< </a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/product?p=${number-1}|}"><<</a></li>
-						  <li class="page-item"><a class="page-link" href="/itwatch/product?p=0"> [[${number+1}]]/[[${listproduct.totalPages}]]</a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/product?p=${number+1}|}">>></a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/itwatch/product?p=${listproduct.totalPages-1}|}">>|</a></li>
+						  <li class="page-item"><a class="page-link" href="/beewatch/product?p=0">|< </a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/product?p=${number-1}|}"><<</a></li>
+						  <li class="page-item"><a class="page-link" href="/beewatch/product?p=0"> [[${number+1}]]/[[${listproduct.totalPages}]]</a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/product?p=${number+1}|}">>></a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beewatch/product?p=${listproduct.totalPages-1}|}">>|</a></li>
 						</ul>
                         </div>
                 </div>

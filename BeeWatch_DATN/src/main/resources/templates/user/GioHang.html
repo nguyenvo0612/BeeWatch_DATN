@@ -95,12 +95,12 @@
                             <tbody>
                                 <tr ng-repeat="item in cart.items">
                                     <td>
-                                        <a href="/itwatch/product/detail/{{item.productId}}">
+                                        <a href="/beewatch/product/detail/{{item.productId}}">
                                             <img src="/assets/images/{{item.image}}" width="150" height="150">
                                         </a>
                                     </td>
                                     <td>
-                                    <div style="margin-top: 50px;"><a  href="/itwatch/product/detail/{{item.productId}}">{{item.name}}</a></div>
+                                    <div style="margin-top: 50px;"><a  href="/beewatch/product/detail/{{item.productId}}">{{item.name}}</a></div>
                                     </td>
 
                                     <td><div style="margin-top: 45px; border:hidden;">
@@ -129,7 +129,7 @@
 						Tổng số tiền:	{{cart.amount | number:0}} VNĐ
 						</div>
                 <br />
-                <a class="btn btn-warning" th:href="@{/itwatch/product}">Tiếp
+                <a class="btn btn-warning" th:href="@{/beewatch/product}">Tiếp
 					tục mua hàng</a>
                 <button ng-click="orders.purchase()" ng-disabled="cart.amount ==0" class="btn btn-success"  id="btn1">
 						Thanh Toán
