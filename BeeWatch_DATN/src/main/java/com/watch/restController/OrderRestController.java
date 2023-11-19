@@ -173,7 +173,7 @@ public class OrderRestController {
 	        SimpleMailMessage message = new SimpleMailMessage();
 
 	        message.setTo(email);
-	        message.setSubject("Website đồng hồ ITWATCH.COM");
+	        message.setSubject("Website đồng hồ BEEWATCH.COM");
 	        message.setText("Đơn hàng đã được thay đổi trạng thái bạn vui lòng kiếm tra");
 	        emailSender.send(message);
 	    }

@@ -2,7 +2,7 @@ package com.watch.dto;
 
 public class MyConstants {
 	// Replace with your email here:  
-    public static final String MY_EMAIL = "itwatch.cskh@gmail.com";
+    public static final String MY_EMAIL = "beewatch.cskh@gmail.com";
 
     // Replace password!!
     public static final String MY_PASSWORD = "xsprlmmtpyxzbcid";
