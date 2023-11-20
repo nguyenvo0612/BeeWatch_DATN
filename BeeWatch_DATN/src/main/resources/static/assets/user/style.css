@@ -122,7 +122,7 @@ a.item_add {
   position: relative;
   width: 100%;
   height: 50px;
-  background-color: #000000;
+  /* background-color: #000000; */
   color: #ffffff;
   overflow: hidden;
 }
@@ -544,12 +544,37 @@ ul.callbacks_tabs.callbacks1_tabs {
   padding: 30px 0 0;
 }
 
-.men1 {
-  padding: 0 15px 0 0;
+.productNew {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bo-suu-tap {
+  display: flex;
+  justify-content: center;
+}
+
+.bo-suu-tap a img {
+  height: 140px;
+  width: 280px;
+  border-radius: 30px;
 }
 
 .men2 {
   padding: 0 0px 0 15px;
+}
+
+.bonus {
+  display: flex;
+  justify-content: center;
+}
+.bonus a {
+  color: red;
+  text-decoration: none;
+}
+
+.bonus a:hover {
+  font-size: large;
 }
 
 .content-top-bottom h2 {

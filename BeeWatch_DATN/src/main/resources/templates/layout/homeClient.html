@@ -284,7 +284,7 @@
                   >
                     <img
                       class="img-responsive"
-                      th:src="@{|/assets/images/product/${listpro.image}|}"
+                      th:src="@{|/assets/images/${listpro.image}|}"
                       alt=""
                       style="width: 348px; height: 348px"
                     />
@@ -333,7 +333,13 @@
                 </div>
               </div>
             </div>
+
             <div class="clearfix"></div>
+            <div class="bonus">
+              <a th:href="@{/beewatch/product}"
+                >Xem thêm <i class="fa-solid fa-angle-right"></i
+              ></a>
+            </div>
           </div>
           <!-- bo suu tap noi bat -->
           <div class="content-top-bottom">
@@ -345,7 +351,7 @@
                     class="img-responsive"
                     src="/assets/images/rolexview.jpg"
                     alt=""
-                    style="width: 700px; height: 490px"
+                    style="width: 700px; height: 428px"
                   />
                   <!-- <div class="b-wrapper"> -->
                   <div class="text-xem-them-left">
@@ -372,7 +378,7 @@
                   </a>
                 </div>
               </div>
-              <div class="col-md2" style="margin-top: 4px">
+              <div class="col-md2 productNew" style="margin-top: 4px">
                 <div class="col-md-6 men1">
                   <div class="image-text">
                     <a th:href="@{|/beewatch/brand/orient|}"

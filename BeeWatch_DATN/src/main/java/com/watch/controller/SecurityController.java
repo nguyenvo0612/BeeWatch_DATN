@@ -189,7 +189,7 @@ public class SecurityController {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
 
-		helper.setFrom("beewatch.cskh@gmail.com", "Đăng Ký Tài Khoản Thành Công");
+		helper.setFrom("cskhbeewatch@gmail.com", "Đăng Ký Tài Khoản Thành Công");
 		helper.setTo(recipientEmail);
 
 		String subject = "Đây là mail xác nhận đăng ký tài khoản của bạn đã thành công";
