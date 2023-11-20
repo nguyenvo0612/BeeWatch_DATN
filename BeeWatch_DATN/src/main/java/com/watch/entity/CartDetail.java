@@ -25,8 +25,9 @@ public class CartDetail implements Serializable {
     @JoinColumn(name = "id_cart")
     private Cart cart;
 
-    @OneToMany(mappedBy = "cartDetail")
-    List<Product> listProduct;
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product productCartDetail;
 
     @Column(name = "quantity")
     private int quantity;

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import java.util.List;
 
 @Controller
@@ -30,6 +29,27 @@ public class CartItemController {
 		
 		@Autowired
 		SizeService sizeSV;
+
+//		@GetMapping("/beewatch/cart")
+//		public String cart(Model model) {
+//			Accounts account = useAcc.User();
+//
+//			List<Product> list = productService.findTop6Img();
+//			model.addAttribute("items", list);
+//			List<Strap_material> straps = strapSv.findAll();
+//			model.addAttribute("straps", straps);
+//			List<Size> sizes = sizeSV.findAll();
+//			model.addAttribute("sizes",sizes);
+//			List<Brand> listBrand = brandService.findAll();
+//			model.addAttribute("brands", listBrand);
+//			List<Vouchers> voucher=vser.findAllByDate();
+//			List<Product> top10 = productService.top10a();
+//			model.addAttribute("account", account);
+//			model.addAttribute("top10", top10);
+//			model.addAttribute("cates", voucher);
+//			return"/user/GioHang";
+//		}
+
 	//giỏ hàng
 			@GetMapping("/beewatch/cartItem")
 			public String gioHang(Model model) {
