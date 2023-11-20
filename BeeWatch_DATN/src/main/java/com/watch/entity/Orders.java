@@ -39,6 +39,10 @@ public class Orders implements Serializable{
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "voucherName")
 	private Vouchers voucher;
+
+	@ManyToOne
+	@JoinColumn(name = "vistingGuestId")
+	private VistingGuest vistingGuest;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")

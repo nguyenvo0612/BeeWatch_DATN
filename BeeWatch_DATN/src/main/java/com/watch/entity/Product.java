@@ -77,6 +77,10 @@ public class Product implements Serializable{
 
 	private boolean gender;
 
+	@ManyToOne
+	@JoinColumn(name = "id_cart_detail")
+	private CartDetail cartDetail;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ImageProduct> images;
