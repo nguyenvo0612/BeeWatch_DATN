@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface CartDao extends JpaRepository<Cart, Integer> {
-    @Query("select new com.watch.dto.CartDTO(cd.quantity, p.image, p.productId, p.name, p.price) from Cart o join CartDetail cd on o.id_cart = cd.cart.id_cart join Product p on cd.productCartDetail.productId = p.productId join Accounts a on o.accounts.accountId = a.accountId where a.accountId =:idAccount")
-    List<CartDTO> cartDTO(Long idAccount);
+    @Query("select new com.watch.dto.CartDTO(cd.quantity, p.image, p.productId, p.name, p.price) from Cart o join CartDetail cd on o.id_cart = cd.cart.id_cart join Product p on cd.productCartDetail.productId = p.productId join Accounts a on o.accounts.accountId = a.accountId where a.username =:usernameAccount")
+    List<CartDTO> cartDTO(String usernameAccount);
 
 
 

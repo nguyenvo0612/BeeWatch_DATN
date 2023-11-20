@@ -7,10 +7,14 @@ import com.watch.dto.CartDTO;
 import com.watch.entity.*;
 import com.watch.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
+
 
 @Controller
 public class CartItemController {
@@ -36,7 +40,7 @@ public class CartItemController {
 		CartDao cartDao;
 		@GetMapping("/beewatch/cart")
 		public List<CartDTO> cart() {
-			List<CartDTO> list = cartDao.cartDTO(3);
+			List<CartDTO> list = cartDao.cartDTO("admin");
 			return list;
 		}
 //		@GetMapping("/beewatch/cart")
@@ -61,7 +65,7 @@ public class CartItemController {
 
 	//giỏ hàng
 			@GetMapping("/beewatch/cartItem")
-			public String gioHang(Model model) {
+			public String gioHang(Model model, @Param( value = "usernameAccount") String usernameAccount ) {
 				Accounts account = useAcc.User();
 				if(useAcc.User()==null) {
 					return "redirect:/login";
@@ -74,6 +78,7 @@ public class CartItemController {
 //								System.out.println("Xóa Ok Order");
 //						}
 //				}
+				List<CartDTO> listCart=cartDao.cartDTO(usernameAccount);
 				List<Product> list = productService.findTop6Img();
 				model.addAttribute("items", list);
 				List<Strap_material> straps = strapSv.findAll();
