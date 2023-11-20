@@ -1,7 +1,9 @@
 package com.watch.controller;
 
+import com.watch.dao.CartDao;
 import com.watch.dao.OrderDetailDao;
 import com.watch.dao.OrdersDao;
+import com.watch.dto.CartDTO;
 import com.watch.entity.*;
 import com.watch.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,13 @@ public class CartItemController {
 		@Autowired
 		SizeService sizeSV;
 
+		@Autowired
+		CartDao cartDao;
+		@GetMapping("/beewatch/cart")
+		public List<CartDTO> cart() {
+			List<CartDTO> list = cartDao.cartDTO(3);
+			return list;
+		}
 //		@GetMapping("/beewatch/cart")
 //		public String cart(Model model) {
 //			Accounts account = useAcc.User();
