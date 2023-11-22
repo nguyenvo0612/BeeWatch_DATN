@@ -65,11 +65,11 @@ public class CartItemController {
 
 	//giỏ hàng
 			@GetMapping("/beewatch/cartItem")
-			public String gioHang(Model model, @Param( value = "usernameAccount") String usernameAccount ) {
-				Accounts account = useAcc.User();
-				if(useAcc.User()==null) {
-					return "redirect:/login";
-				}
+			public String gioHang(Model model) {
+//				Accounts account = useAcc.User();
+//				if(useAcc.User()==null) {
+//					return "redirect:/login";
+//				}
 //				if(account.getAccountId() != null) {
 //				Orders or = ordersDao.getGanNhat1(account.getAccountId());
 //						if(or !=null) {
@@ -78,7 +78,6 @@ public class CartItemController {
 //								System.out.println("Xóa Ok Order");
 //						}
 //				}
-				List<CartDTO> listCart=cartDao.cartDTO(usernameAccount);
 				List<Product> list = productService.findTop6Img();
 				model.addAttribute("items", list);
 				List<Strap_material> straps = strapSv.findAll();
@@ -87,12 +86,12 @@ public class CartItemController {
 				model.addAttribute("sizes",sizes);
 				List<Brand> listBrand = brandService.findAll();
 				model.addAttribute("brands", listBrand);
-			List<Vouchers> voucher=vser.findAllByDate();
-			List<Product> top10 = productService.top10a();
-			model.addAttribute("account", account);
-		    model.addAttribute("top10", top10);
-			model.addAttribute("cates", voucher);
-			return"/user/GioHang";
+				List<Vouchers> voucher=vser.findAllByDate();
+				List<Product> top10 = productService.top10a();
+//				model.addAttribute("account", account);
+				model.addAttribute("top10", top10);
+				model.addAttribute("cates", voucher);
+				return"user/GioHang";
 	
 			}
 }

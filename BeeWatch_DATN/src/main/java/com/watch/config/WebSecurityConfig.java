@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()
+                .antMatchers("/beewatch/cartItem").permitAll()
         		.antMatchers("/oauth/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest().permitAll()
