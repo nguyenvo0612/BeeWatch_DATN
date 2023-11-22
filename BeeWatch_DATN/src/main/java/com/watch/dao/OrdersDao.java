@@ -16,6 +16,27 @@ import com.watch.entity.WishList;
 
 @Repository
 public interface OrdersDao extends JpaRepository<Orders, Integer>{
+
+	//chờ duyệt
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=1")
+	Long choDuyet();
+
+	//đang xử lý
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=2")
+	Long dangXuLy();
+
+	//đang giao
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=3")
+	Long dangGiao();
+
+	//hoàn thành
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=4")
+	Long hoanThanh();
+
+	//đã  hủy
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=0")
+	Long daHuy();
+
 	@Query("SELECT o FROM Orders o Where o.account.username=?1")
 	List<Orders> findByUsername(String username);
 	@Query("SELECT o FROM Orders o WHERE o.orderId LIKE ?1")

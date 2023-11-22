@@ -23,6 +23,49 @@ public class DashboardRestController {
 	OrdersDao ordersDao;
 	@Autowired
 	AccountDao accountDao;
+
+
+
+	//cho duyet
+
+	@GetMapping("/rest/dashboard/choDuyet")
+	public Long choDuyet() {
+		Long a = ordersDao.choDuyet();
+		return a;
+
+	}
+
+	//đang xử lý
+
+	@GetMapping("/rest/dashboard/dangXuLy")
+	public Long dangXuLy() {
+		Long a = ordersDao.dangXuLy();
+		return a;
+
+	}
+	//dang giao
+
+	@GetMapping("/rest/dashboard/dangGiao")
+	public Long dangGiao() {
+		Long a = ordersDao.dangGiao();
+		return a;
+
+	}
+	//hoan thanh
+
+	@GetMapping("/rest/dashboard/hoanThanh")
+	public Long hoanThanh() {
+		Long a = ordersDao.hoanThanh();
+		return a;
+
+	}
+
+	//da huy
+	@GetMapping("/rest/dashboard/daHuy")
+	public Long daHuy() {
+		Long a = ordersDao.daHuy();
+		return a;
+	}
 	//1 double
 	@GetMapping("/rest/dashboard/total")
 	public double getTotal() {
