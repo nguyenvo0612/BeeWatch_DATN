@@ -71,7 +71,6 @@ function loadComment(id) {
       document.getElementById("comen").innerHTML = html;
       console.info("Số sao " + result);
       console.info("size result= " + result.length);
-
       saoTB();
 
       //alert("lấy dữ liệu thành công " + comment)
@@ -126,10 +125,10 @@ function comments() {
       })
       .then(function (data) {
         console.info(data);
-        document.getElementById("comment").value = "";
         loadComment(productID);
+        document.getElementById("comment").value = "";
       });
-    loadComment(productID);
+    location.reload(true);
   }
 }
 
@@ -151,7 +150,7 @@ function saoTB() {
       html += "							</ul> ";
     }
     html += '<div class="review">';
-    // html += '<a href="#0"> (' + result.length + " đánh giá) </a>";
+    html += '<a href="#0"> (' + result.length + " đánh giá) </a>";
     html += "</div>";
   }
 
@@ -163,5 +162,4 @@ function saoTB() {
     // document.getElementById("dieuhuong").style.display = 'block';
     document.getElementById("saoTB").innerHTML = html;
   }
-  console.info(avg);
 }
