@@ -49,6 +49,8 @@
 						<tr>
 							<td>ID</td>
 							<td>Giảm Giá</td>
+							<td>Ngay bat dau</td>
+							<td>Ngay ket thuc</td>
 							<td>Trạng Thái</td>
 							<td>Edit</td>
 						</tr>
@@ -57,6 +59,8 @@
 						<tr ng-repeat="item in pager.items">
 							<td>{{item.discountId}}</td>
 							<td>{{item.percentDiscount}}</td>
+							<td>{{item.beginDiscount}}</td>
+							<td>{{item.finishDiscount}}</td>
 							<td>{{item.status? 'Hoạt động':'Dừng hoạt động'}}</td>
 							<td>
 								<button ng-click="edit(item)"
@@ -105,6 +109,18 @@
 								<div>Giảm Giá (%)</div>
 								<input ng-model="form.percentDiscount"
 									class="form-control form-control-sm">
+							</div>
+
+							<div class="form-group" required autofocus>
+								<div>Ngày bắt đầu</div>
+								<input ng-model="form.beginDiscount"
+									class="form-control form-control-sm" type="date"> 
+							</div>
+
+							<div class="form-group" required autofocus>
+								<div>Ngày kết thúc</div>
+								<input ng-model="form.finishDiscount"
+									class="form-control form-control-sm" type="date">
 							</div>
 
 							<div class="form-group">
