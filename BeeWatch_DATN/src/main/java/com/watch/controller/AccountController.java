@@ -174,7 +174,70 @@ public class AccountController {
 			return "/user/account/lichSuMuaHang";
 		}
 	}
-	
+
+	//hoan don hang
+	@GetMapping("/beewatch/account/history/refund/{orderId}")
+	public String hoanDon(Model model, HttpServletRequest request,@PathVariable("orderId") Integer orderId, @RequestParam("p") Optional<Integer> p) {
+		try {
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes",sizes);
+
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
+			Accounts account = useAcc.User();
+			if(useAcc.User()==null) {
+				return "redirect:/login";
+			}
+			Long id = account.getAccountId();
+//			model.addAttribute("orders", orderService.findByUserId(id));
+
+			Orders order = orderService.getById(orderId);
+			Pageable pageable = PageRequest.of(p.orElse(0), 7);
+			Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
+			model.addAttribute("number",ord.getNumber());
+			model.addAttribute("totalPages",ord.getTotalPages());
+			model.addAttribute("totalElements",ord.getTotalElements());
+			model.addAttribute("size",ord.getSize());
+
+			model.addAttribute("orders", ord);
+
+			if(order.getStatus() == 4) {
+				order.setStatus(5);
+				if(order.getTthaiThanhToan() == 4) {
+					order.setTthaiThanhToan(2);
+				}
+				List<OrderDetail> odt = detailDao.getOdtByOd(orderId);
+//				List<Product> listPro = productDao.getProductByOrders(orderId);
+
+				for(OrderDetail o : odt) {
+					Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
+					pro.setQuantity(pro.getQuantity() + o.getQuantity());
+					productSV.save(pro);
+				}
+				//back lại số lượng sp
+				// back lại sl voucher
+
+				if(null != order.getVoucher()) {
+					Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
+					voucher.setQuantity(voucher.getQuantity() + 1);
+					voucherDao.save(voucher);
+				}
+			}
+
+			orderService.save(order);
+			System.out.println("Đã hoàn đơn: "+orderId);
+			model.addAttribute("message", "Hoàn đơn hàng thành công");
+			return "/user/account/lichSuMuaHang";
+		} catch (Exception e) {
+			// TODO: handle
+			e.printStackTrace();
+			model.addAttribute("message", "Có lỗi xảy ra trong quá trình hoàn đơn!");
+			return "/user/account/lichSuMuaHang";
+		}
+	}
+
 	@RequestMapping("/beewatch/account/history/search")
 	public String Search(Model model, @RequestParam("keyword") String kw, @RequestParam("page") Optional<Integer> p) {
 		List<Strap_material> straps = strapSv.findAll();
