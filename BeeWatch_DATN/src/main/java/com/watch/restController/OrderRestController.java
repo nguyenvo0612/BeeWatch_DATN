@@ -26,17 +26,17 @@ public class OrderRestController {
 	private OrdersService ordersService;
 	@Autowired
 	private OrdersDao ordersDao;
-	
+
 	@GetMapping()
 	public List<Orders> getall(){
 //		return ordersService.findAll();
 		return ordersDao.getRealOrder();
-	}	
+	}
 	@PostMapping()
 	public Orders create(@RequestBody JsonNode orders) {
 		return ordersService.create(orders);
 	}
-	
+
 	@Autowired
 	OrdersDao dao;
 	@Autowired
@@ -71,6 +71,9 @@ public class OrderRestController {
 		}else if( status == 3) {
 			order.setStatus(4);
 			order.setTthaiThanhToan(1);
+		}else if( status == 5) {
+			order.setStatus(6);
+			order.setTthaiThanhToan(1);
 		}
 		sendSimpleEmail(email);
 		return dao.save(order);
@@ -102,7 +105,7 @@ public class OrderRestController {
 			}
 			List<OrderDetail> odt = detailDao.getOdtByOd(id);
 //			List<Product> listPro = productDao.getProductByOrders(orderId);
-			
+
 			for(OrderDetail o : odt) {
 				Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
 				pro.setQuantity(pro.getQuantity() + o.getQuantity());
@@ -110,17 +113,29 @@ public class OrderRestController {
 			}
 			//back lại số lượng sp
 			// back lại sl voucher
-			
+
 			if(null != order.getVoucher()) {
 				Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
 				voucher.setQuantity(voucher.getQuantity() + 1);
 				voucherDao.save(voucher);
 			}
 		}
-		
+
 		System.out.println("Đã hủy đơn: "+id);
 		sendSimpleEmail(email);
 		return dao.save(order);
+	}
+	@PutMapping("/saybyerefund/{id}")
+	public Orders sayByeRefund(@PathVariable("id") Integer id) {
+        Orders order = dao.getById(id);
+        String email= dao.getEmail(id);
+        int status = order.getStatus();
+        if( status == 5) {
+            order.setStatus(4);
+            order.setTthaiThanhToan(1);
+        }
+        sendSimpleEmail(email);
+        return dao.save(order);
 	}
 
 	@PutMapping("/down/{id}")
@@ -141,7 +156,7 @@ public class OrderRestController {
 		sendSimpleEmail(email);
 		return dao.save(order);
 	}
-	
+
 	@GetMapping("/searchDH/{tenTk}/{ngayTk}/{tthaiTk}")
 	public List<Orders> getDashBoard(@PathVariable("tenTk") String tenTk, @PathVariable("ngayTk") String ngayTk
 			,@PathVariable("tthaiTk") String tthaiTk) {
