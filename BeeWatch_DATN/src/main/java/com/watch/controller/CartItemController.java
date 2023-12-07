@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -38,11 +39,11 @@ public class CartItemController {
 
 		@Autowired
 		CartDao cartDao;
-		@GetMapping("/beewatch/cart")
-		public List<CartDTO> cart() {
-			List<CartDTO> list = cartDao.cartDTO("admin");
-			return list;
-		}
+	@GetMapping("/beewatch/cart")
+	public List<CartDTO> cart() {
+		List<CartDTO> list = cartDao.cartDTO("admin");
+		return list;
+	}
 //		@GetMapping("/beewatch/cart")
 //		public String cart(Model model) {
 //			Accounts account = useAcc.User();
@@ -64,12 +65,11 @@ public class CartItemController {
 //		}
 
 	//giỏ hàng
-			@GetMapping("/beewatch/cartItem")
-			public String gioHang(Model model) {
-//				Accounts account = useAcc.User();
-//				if(useAcc.User()==null) {
-//					return "redirect:/login";
-//				}
+	@GetMapping("/beewatch/cartItem")
+	public String gioHang(Model model, Principal principal) {
+
+
+
 //				if(account.getAccountId() != null) {
 //				Orders or = ordersDao.getGanNhat1(account.getAccountId());
 //						if(or !=null) {
@@ -78,20 +78,40 @@ public class CartItemController {
 //								System.out.println("Xóa Ok Order");
 //						}
 //				}
-				List<Product> list = productService.findTop6Img();
-				model.addAttribute("items", list);
-				List<Strap_material> straps = strapSv.findAll();
-				model.addAttribute("straps", straps);
-				List<Size> sizes = sizeSV.findAll();
-				model.addAttribute("sizes",sizes);
-				List<Brand> listBrand = brandService.findAll();
-				model.addAttribute("brands", listBrand);
-				List<Vouchers> voucher=vser.findAllByDate();
-				List<Product> top10 = productService.top10a();
-//				model.addAttribute("account", account);
-				model.addAttribute("top10", top10);
-				model.addAttribute("cates", voucher);
-				return"user/GioHang";
-	
+		if(principal != null) {
+			Accounts account = useAcc.User();
+			if(useAcc.User()==null) {
+				return "redirect:/login";
 			}
+			List<Product> list = productService.findTop6Img();
+			model.addAttribute("items", list);
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes",sizes);
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
+			List<Vouchers> voucher=vser.findAllByDate();
+			List<Product> top10 = productService.top10a();
+			model.addAttribute("account", account);
+			model.addAttribute("isAccount", 1);
+			model.addAttribute("top10", top10);
+			model.addAttribute("cates", voucher);
+			return"user/GioHang";
+		}
+		List<Product> list = productService.findTop6Img();
+		model.addAttribute("items", list);
+		List<Strap_material> straps = strapSv.findAll();
+		model.addAttribute("straps", straps);
+		List<Size> sizes = sizeSV.findAll();
+		model.addAttribute("sizes",sizes);
+		List<Brand> listBrand = brandService.findAll();
+		model.addAttribute("brands", listBrand);
+		model.addAttribute("isAccount", 0);
+		List<Vouchers> voucher=vser.findAllByDate();
+		List<Product> top10 = productService.top10a();
+		model.addAttribute("top10", top10);
+		model.addAttribute("cates", voucher);
+		return"user/GioHang";
+	}
 }

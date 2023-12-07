@@ -42,7 +42,7 @@ public class LoginController {
 			model.addAttribute("message", "");
 			request.getSession().setAttribute("message", "");
 		}
-		
+
 		return"/user/login/dangNhap";
 	}
 	//đăng ký
@@ -52,53 +52,52 @@ public class LoginController {
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
 		model.addAttribute("sizes",sizes);
-		
+
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		return"/user/login/dangKyTK";
 	}
-	
+
 	@GetMapping("/forgotPassword")
 	public String quenMatKhau(Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
 		model.addAttribute("sizes",sizes);
-		
+
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		return"/user/quenMK";
 	}
-	
+
 	@GetMapping("/logout")
 	public String dangXuat() {
 		session.removeAttribute("User");
 		session.invalidate();
 		return"redirect:/login";
 	}
-		
+
 	@GetMapping("/beewatch/chinhSachBaoHanh")
 	public String chinhSachBaoHanh(Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
 		model.addAttribute("sizes",sizes);
-		
+
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		return "/user/csbh/csbh";
 	}
-	
+
 	@GetMapping("/beewatch/chinhSachDoiTra")
 	public String chinhSachDoiTra(Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
 		model.addAttribute("sizes",sizes);
-		
+
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		return "/user/csbh/csdt";
 	}
-	
 }

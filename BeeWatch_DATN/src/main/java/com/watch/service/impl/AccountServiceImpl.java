@@ -1,8 +1,10 @@
 package com.watch.service.impl;
 
 import com.watch.dao.AccountDao;
+import com.watch.dao.CartDao;
 import com.watch.dto.UserDto;
 import com.watch.entity.Accounts;
+import com.watch.entity.Cart;
 import com.watch.entity.Roles;
 import com.watch.service.AccountService;
 import com.watch.service.RolesService;
@@ -29,6 +31,9 @@ public class AccountServiceImpl implements AccountService {
 	ModelMapper modelMapper;
 	@Autowired
 	RolesService rolesService;
+
+	@Autowired
+	CartDao cartDao;
 
 	public AccountServiceImpl(AccountDao accountDao) {
 		super();
@@ -72,6 +77,7 @@ public class AccountServiceImpl implements AccountService {
 		accounts.addRole(roles);
 		accounts.setStatus(true);
 		accounts.setCreate_date(new Date());
+
 		return save(accounts);
 	}
 
@@ -206,5 +212,4 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return accountDao.findByStatusC(status);
 	}
-
 }

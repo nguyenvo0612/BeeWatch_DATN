@@ -21,6 +21,8 @@ public interface AccountDao extends JpaRepository<Accounts, Long>{
     @Query("SELECT DISTINCT ar.account FROM Authorities ar WHERE ar.role.roleId IN ('1','3')")
     List<Accounts> getAdministrators();
 
+    @Query(value = "select top(1) * from accounts order by create_date desc", nativeQuery = true)
+    Accounts findNewAccount();
 	/*
 	 * @Query("SELECT o FROM Accounts o WHERE o.username LIKE ?1 and status = ?2")
 	 */

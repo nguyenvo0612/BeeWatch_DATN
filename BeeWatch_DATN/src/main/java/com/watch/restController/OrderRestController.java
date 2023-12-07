@@ -37,12 +37,17 @@ public class OrderRestController {
 		return ordersService.create(orders);
 	}
 
+	@PostMapping("/visting")
+	public Orders createVisting(@RequestBody JsonNode orders) {
+		return ordersService.createOrderVisting(orders);
+	}
+
 	@Autowired
 	OrdersDao dao;
 	@Autowired
 	OrderDetailDao orderDetailDao;
 	@Autowired
-    public JavaMailSender emailSender;
+	public JavaMailSender emailSender;
 
 	@GetMapping("/all")
 	public List<Orders> getAll() {
@@ -70,9 +75,6 @@ public class OrderRestController {
 //			order.setTthaiThanhToan(1);
 		}else if( status == 3) {
 			order.setStatus(4);
-			order.setTthaiThanhToan(1);
-		}else if( status == 5) {
-			order.setStatus(6);
 			order.setTthaiThanhToan(1);
 		}
 		sendSimpleEmail(email);
@@ -125,18 +127,6 @@ public class OrderRestController {
 		sendSimpleEmail(email);
 		return dao.save(order);
 	}
-	@PutMapping("/saybyerefund/{id}")
-	public Orders sayByeRefund(@PathVariable("id") Integer id) {
-        Orders order = dao.getById(id);
-        String email= dao.getEmail(id);
-        int status = order.getStatus();
-        if( status == 5) {
-            order.setStatus(4);
-            order.setTthaiThanhToan(1);
-        }
-        sendSimpleEmail(email);
-        return dao.save(order);
-	}
 
 	@PutMapping("/down/{id}")
 	public Orders updateStatus3(@PathVariable("id") Integer id) {
@@ -182,15 +172,15 @@ public class OrderRestController {
 		return a;
 	}
 
-	   public void sendSimpleEmail(String email) {
+	public void sendSimpleEmail(String email) {
 
-	        // Create a Simple MailMessage.
-	        SimpleMailMessage message = new SimpleMailMessage();
+		// Create a Simple MailMessage.
+		SimpleMailMessage message = new SimpleMailMessage();
 
-	        message.setTo(email);
-	        message.setSubject("Website đồng hồ BEEWATCH.COM");
-	        message.setText("Đơn hàng đã được thay đổi trạng thái bạn vui lòng kiếm tra");
-	        emailSender.send(message);
-	    }
+		message.setTo(email);
+		message.setSubject("Website đồng hồ BEEWATCH.COM");
+		message.setText("Đơn hàng đã được thay đổi trạng thái bạn vui lòng kiếm tra");
+		emailSender.send(message);
+	}
 
 }

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.watch.dao.OrderDetailDao;
 import com.watch.dao.OrdersDao;
+import com.watch.dao.VistingOrderDao;
 import com.watch.entity.OrderDetail;
 import com.watch.entity.Orders;
+import com.watch.entity.VistingGuest;
 import com.watch.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +30,10 @@ public class OrderServiceImpl implements OrdersService{
 	OrderDetailDao ddao;
 	 @Autowired 
 	public  HttpSession session;
-	
+
+	 @Autowired
+	 VistingOrderDao vistingOrderDao;
+
 	@Override
 	public List<Orders> findByUsername(String username,Pageable pageable) {
 		return odao.findByUsername(username);
@@ -46,7 +51,7 @@ public class OrderServiceImpl implements OrdersService{
 		Orders order=mapper.convertValue(orders,Orders.class);
 		order.setVoucher(null);
 		order.setStatus(1);
-		odao.save(order);	
+		odao.save(order);
 		TypeReference<List<OrderDetail>> type=new TypeReference<List<OrderDetail>>() {};
 		List<OrderDetail> details= mapper.convertValue(orders.get("orderDetails"),type)
 				.stream().peek(d->d.setOrder(order)).collect(Collectors.toList());
@@ -56,8 +61,37 @@ public class OrderServiceImpl implements OrdersService{
 		if(order1.equals(null)) {
 			return order;
 		}
-		//int maOder = order1.getOrderId();
+		int maOder = order1.getOrderId();
 		session.setAttribute("OrderganNhat", order1);
+		return order;
+	}
+
+	@Override
+	public Orders createOrderVisting(JsonNode orders) {
+		ObjectMapper mapper=new ObjectMapper();
+		VistingGuest vistingGuest = new VistingGuest();
+		vistingOrderDao.save(vistingGuest);
+		Orders order=mapper.convertValue(orders,Orders.class);
+		VistingGuest vistingGuest1 = vistingOrderDao.getVistingGuest();
+		if(vistingGuest1 == null) {
+			System.out.println("Loi sql");
+		}
+		System.out.println(vistingGuest1.toString());
+		order.setVoucher(null);
+		order.setStatus(1);
+		order.setVistingGuest(vistingGuest1);
+		odao.save(order);
+		TypeReference<List<OrderDetail>> type=new TypeReference<List<OrderDetail>>() {};
+		List<OrderDetail> details= mapper.convertValue(orders.get("orderDetails"),type)
+				.stream().peek(d->d.setOrder(order)).collect(Collectors.toList());
+		ddao.saveAll(details);
+		session.setAttribute("listOrderDetail", details);
+//		Orders order1 = odao.getGanNhat(order.getAccount().getAccountId());
+//		if(order1.equals(null)) {
+//			return order;
+//		}
+		int maOder = order.getOrderId();
+		session.setAttribute("OrderganNhat", order);
 		return order;
 	}
 
@@ -109,8 +143,4 @@ public class OrderServiceImpl implements OrdersService{
 		// TODO Auto-generated method stub
 		return odao.findByUserId2(id,pageable);
 	}
-
-	
-	
-
 }

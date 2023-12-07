@@ -4,11 +4,7 @@ package com.watch.controller;
 import com.watch.config.Utility;
 import com.watch.dao.AccountDao;
 import com.watch.dto.UserDto;
-import com.watch.entity.Accounts;
-import com.watch.entity.Brand;
-import com.watch.entity.Size;
-import com.watch.entity.Strap_material;
-import com.watch.entity.UserAcounts;
+import com.watch.entity.*;
 import com.watch.service.AccountService;
 import com.watch.service.BrandService;
 import com.watch.service.ProductService;
@@ -180,6 +176,7 @@ public class SecurityController {
 			// TODO: handle exception
 			model.addAttribute("error", "Lỗi khi gửi email");
 		}
+
 		accountService.register(userDto);
 
 		return "redirect:/auth/login/form";
