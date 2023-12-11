@@ -391,6 +391,8 @@ app.controller("thongke-ctrl", function ($scope, $http) {
   $scope.dangGiao = [];
   $scope.hoanThanh = [];
   $scope.daHuy = [];
+  $scope.yeuCauHoan = [];
+  $scope.donHoan = [];
   $scope.initialize = function () {
     $http.get("/rest/orders/all").then((resp) => {
       $scope.order2 = resp.data;
@@ -547,10 +549,18 @@ app.controller("thongke-ctrl", function ($scope, $http) {
   });
   //yeu cau hoan
   $http.get("/rest/dashboard/yeuCauHoan").then((resp) => {
-    $scope.daHuy = resp.data;
+    $scope.yeuCauHoan = resp.data;
   });
   //don hoan
   $http.get("/rest/dashboard/donHoan").then((resp) => {
-    $scope.daHuy = resp.data;
+    $scope.donHoan = resp.data;
   });
+
+  $scope.showErrorDetails = function (item) {
+    // Đặt đối tượng hiện tại để hiển thị trong modal
+    $scope.currentSelectedItem = item;
+
+    // Mở modal
+    $("#errorModal").modal("show");
+  };
 });

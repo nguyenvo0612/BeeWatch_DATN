@@ -17,11 +17,19 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
     />
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Layout -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
     <link
       href="/assets/user/bootstrap.css"
       rel="stylesheet"
@@ -29,7 +37,7 @@
       media="all"
     />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="/assets/user/jquery.min.js"></script>
+    <!-- <script src="/assets/user/jquery.min.js"></script> -->
     <!-- Custom Theme files -->
     <!--theme-style-->
     <link
@@ -159,7 +167,15 @@
                           <span th:if="${order.status} == 1">Chờ duyệt</span>
                           <span th:if="${order.status} == 2">Đang xử lý</span>
                           <span th:if="${order.status} == 3">Đang giao</span>
-                          <span th:if="${order.status} == 4">Hoàn thành</span>
+                          <span
+                            th:if="${order.status} == 4  and ${order.reason} == null"
+                            >Hoàn thành</span
+                          >
+                          <span th:if="${order.status} == 6">Đơn hoàn</span>
+                          <span
+                            th:if="${order.status} == 4 and ${order.reason} != null"
+                            >Không chấp nhận hoàn đơn</span
+                          >
                           <span th:if="${order.status} == 5"
                             >Yêu cầu hoàn hàng</span
                           >
@@ -198,12 +214,21 @@
                               value="Huỷ đơn"
                             />
                           </div>
-                          <div class="btn-group">
+                          <!-- <div class="btn-group">
                             <input
                               class="btn btn-danger"
                               type="button"
                               th:disabled="${order.status} !=4"
                               th:onclick="'onSummit2('+${order.orderId}+')'"
+                              value="Hoàn đơn"
+                            />
+                          </div> -->
+                          <div class="btn-group">
+                            <input
+                              class="btn btn-danger"
+                              type="button"
+                              th:disabled="${order.status != 4 or order.reason != null}"
+                              th:onclick="'showRefundModal(' + ${order.orderId} + ')'"
                               value="Hoàn đơn"
                             />
                           </div>
@@ -258,6 +283,103 @@
         </div>
       </div>
     </div>
+    <div class="modal" id="refundModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Nhập lý do hoàn đơn và đính kèm ảnh</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <label for="refundReason">Lý do hoàn đơn:</label>
+            <input
+              type="text"
+              id="refundReason"
+              class="form-control"
+              required
+            />
+
+            <label for="refundFile">Tải lên ảnh:</label>
+            <input
+              type="file"
+              id="refundFile"
+              class="form-control"
+              accept="image/*"
+              required
+            />
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="submitRefundForm()"
+            >
+              Xác nhận
+            </button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script th:inline="javascript">
+      function showRefundModal(orderId) {
+        // Mở modal
+        $("#refundModal").modal("show");
+        // Lưu orderId vào thuộc tính data-order-id của modal để sử dụng sau này
+        $("#refundModal").data("order-id", orderId);
+      }
+      function submitRefundForm() {
+        var orderId = $("#refundModal").data("order-id");
+        var reason = $("#refundReason").val();
+        var anh_san_pham_loi = $("#refundFile").val().split("\\").pop();
+
+        if (!reason) {
+          alert("Vui lòng nhập lý do hoàn đơn hàng.");
+          return;
+        } else if (!anh_san_pham_loi) {
+          alert("Vui lòng tải lên ảnh.");
+          return;
+        }
+        // alert("Id dơn hàng:" + orderId + "lý do:" + reason + "ảnh:" + file);
+        var formData = new FormData();
+        formData.append("orderId", orderId);
+        formData.append("reason", reason);
+        formData.append("anh_san_pham_loi", anh_san_pham_loi);
+
+        $.ajax({
+          url: "/beewatch/account/history/refundOrder/" + orderId,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (data) {
+            // Xử lý kết quả thành công
+            alert("Đã gửi yêu cầu hoàn đơn!");
+            $("#refundModal").modal("hide");
+            location.reload();
+          },
+          error: function (error) {
+            console.error("Lỗi khi hoàn đơn:", error);
+            alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+          },
+        });
+      }
+    </script>
     <script type="text/javascript">
       function onSummit1(obj) {
         var t = confirm("Bạn muốn hủy đơn hàng? mã đơn hàng:  " + obj);
@@ -271,18 +393,32 @@
         }
       }
       function onSummit2(obj) {
-        var t = confirm(
-          "Bạn muốn hoàn đơn hàng này không? mã đơn hàng:  " + obj
-        );
-        if (t == false) {
+        var reason = prompt("Nhập vào lý do hoàn đơn hàng này của bạn:");
+        if (reason == null) {
+          alert("Bạn đã hủy thao tác.");
           return false;
         } else {
-          url = "/beewatch/account/history/refund/" + obj;
+          url =
+            "/beewatch/account/history/refund/" +
+            obj +
+            "/" +
+            encodeURIComponent(reason);
           document.getElementById("formId").action = url;
           document.getElementById("formId").method = "GET";
           document.getElementById("formId").submit();
+          setTimeout(function () {
+            // Chuyển hướng đến URL mong muốn
+            window.location.replace(
+              "http://localhost:8080/beewatch/account/history"
+            );
+          }, 50);
         }
       }
+      // }
+
+      /* <![CDATA[ */
+
+      /* ]]> */
     </script>
   </body>
 </html>

@@ -76,6 +76,9 @@ public class OrderRestController {
 		}else if( status == 3) {
 			order.setStatus(4);
 			order.setTthaiThanhToan(1);
+		}else if( status == 5) {
+			order.setStatus(6);
+			order.setTthaiThanhToan(1);
 		}
 		sendSimpleEmail(email);
 		return dao.save(order);
@@ -124,6 +127,19 @@ public class OrderRestController {
 		}
 
 		System.out.println("Đã hủy đơn: "+id);
+		sendSimpleEmail(email);
+		return dao.save(order);
+	}
+	@PutMapping("/saybyerefund/{id}")
+	public Orders sayByeRefund(@PathVariable("id") Integer id) {
+		Orders order = dao.getById(id);
+		String email= dao.getEmail(id);
+		int status = order.getStatus();
+		if( status == 5) {
+			order.setStatus(4);
+			order.setTthaiThanhToan(1);
+
+		}
 		sendSimpleEmail(email);
 		return dao.save(order);
 	}

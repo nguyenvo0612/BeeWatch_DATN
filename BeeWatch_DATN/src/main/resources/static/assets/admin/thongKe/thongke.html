@@ -27,11 +27,11 @@
 		.menten {
 			border: 1px solid black;
 			/*border-radius: 10px;*/
-			width: 300px;
+			width: 255px;
 			margin-bottom: 10px;
-			margin-left: 30px;
 			background-color: #187da5e3;
 			font-weight: 800;
+			
 		}
 		.menten > h4 {
 			color: white;
@@ -72,6 +72,16 @@
 		.khung {
 			margin-left: 10px;
 		}
+		.gachchitietloi {
+    	text-decoration: underline;
+		}
+		.img-small {
+    	width: 30%;
+    	height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
+		}
+		/* .cotthongke{
+		width: 200px;
+		} */
 	</style>
 </head>
 <body>
@@ -96,47 +106,59 @@
 					<div class="row align-items-center">
 
 						<div class="row">
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Tổng Đơn Hàng</h4>
 									<h3 class="mount">{{total2}} đơn hàng</h3>
 								</div>
 							</div>
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Đơn Chờ Duyệt</h4>
 									<h3 class="mount">{{choDuyet}} đơn hàng</h3>
 								</div>
 							</div>
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Đơn Đang Xử Lý</h4>
 									<h3 class="mount">{{dangXuLy}} đơn hàng</h3>
 								</div>
 							</div>
+							<div class="col-sm-3">
+								<div class="menten text-center">
+									<h4 class="title">Đơn Yêu Cầu Hoàn</h4>
+									<h3 class="mount">{{yeuCauHoan}} đơn hàng</h3>
+								</div>
+							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Đơn Đang Giao</h4>
 									<h3 class="mount">{{dangGiao}} đơn hàng</h3>
 								</div>
 							</div>
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Đã Hoàn Thành</h4>
 									<h3 class="mount">{{hoanThanh}} đơn hàng</h3>
 								</div>
 							</div>
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Đơn Hủy</h4>
 									<h3 class="mount">{{daHuy}} đơn hàng</h3>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="menten text-center">
+									<h4 class="title">Đơn Hoàn</h4>
+									<h3 class="mount">{{donHoan}} đơn hàng</h3>
 								</div>
 							</div>
 						</div>
@@ -210,13 +232,18 @@
 										<span ng-if="item.status ==1">Chờ duyệt</span>
 										<span ng-if="item.status ==2">Đang xử lý</span>
 										<span ng-if="item.status ==3">Đang giao</span>
-										<span ng-if="item.status ==4">Hoàn thành</span>
+										<span ng-if="item.status == 4 && item.reason == null">Hoàn thành</span>
+										<span ng-if="item.status == 4 && item.reason != null">Từ chối hoàn</span>
 										<span ng-if="item.status ==5">Yêu cầu hoàn đơn</span>
 										<span ng-if="item.status ==6">Đơn hoàn</span>
 										<span ng-if="item.status ==0">Đã hủy</span> |
 										<span ng-if="item.tthaiThanhToan == 0"  ng-show="item.status !=6">Chờ thanh toán</span>
-										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6">Đã thanh toán</span>
+										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6 && item.status !=5" >Đã thanh toán</span>
+										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
+										<span ng-if="item.status == 4 && item.reason != null"> |</span>
+										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
 										<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status !=6">Đã hoàn tiền</span>
+										
 									</td>
 									<td class="text-nowrap">
 										<!--  	<div class="btn-group mt-3" >
@@ -498,6 +525,34 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lý do hoàn đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <img ng-src="../../images/{{currentSelectedItem.anhLoiSanPham}}" alt="Ảnh" class="img-small" />
+				
+				{{currentSelectedItem.reason}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<td ng-repeat="item in orderList">
+    <span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6 ">
+        <a href="#" ng-click="showErrorDetails(item)" data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a>
+    </span>
+</td>
 </body>
 </html>
 

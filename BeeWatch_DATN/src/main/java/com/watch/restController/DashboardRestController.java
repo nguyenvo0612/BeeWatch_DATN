@@ -71,7 +71,7 @@ public class DashboardRestController {
 
 	@GetMapping("/rest/dashboard/yeuCauHoan")
 	public Long yeuCauHoan() {
-		Long a = ordersDao.choDuyet();
+		Long a = ordersDao.yeuCauHoan();
 		return a;
 
 	}
@@ -80,7 +80,7 @@ public class DashboardRestController {
 
 	@GetMapping("/rest/dashboard/donHoan")
 	public Long donHoan() {
-		Long a = ordersDao.choDuyet();
+		Long a = ordersDao.donHoan();
 		return a;
 
 	}

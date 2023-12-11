@@ -36,6 +36,14 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=0")
 	Long daHuy();
 
+	//yeu cau hoan
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=5 and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
+	Long yeuCauHoan();
+
+	//don hoan
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=6 and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
+	Long donHoan();
+
 	@Query("SELECT o FROM Orders o Where o.account.username=?1")
 	List<Orders> findByUsername(String username);
 	@Query("SELECT o FROM Orders o WHERE o.orderId LIKE ?1")
