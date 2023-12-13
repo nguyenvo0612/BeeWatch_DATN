@@ -1,4 +1,4 @@
-s<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/index.html}">
 <head>
@@ -57,7 +57,7 @@ s<!DOCTYPE html>
             </div>
 
             <p>
-                <a href="/beewatch" style="font-size: 26px; text-decoration: none;">Về trang chủ</a>
+                <a th:href="@{/beewatch}" style="font-size: 26px; text-decoration: none;">Về trang chủ</a>
             </p>
 
             <footer>
@@ -65,6 +65,8 @@ s<!DOCTYPE html>
             </footer>
         </div>
     </div>
+</div>
+
 
 </div> <!-- /container -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

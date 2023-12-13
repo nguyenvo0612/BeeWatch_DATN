@@ -3,14 +3,10 @@ package com.watch.controller;
 
 import com.watch.config.Utility;
 import com.watch.dao.AccountDao;
+import com.watch.dao.CartDao;
 import com.watch.dto.UserDto;
 import com.watch.entity.*;
-import com.watch.service.AccountService;
-import com.watch.service.BrandService;
-import com.watch.service.ProductService;
-import com.watch.service.RolesService;
-import com.watch.service.SizeService;
-import com.watch.service.StrapService;
+import com.watch.service.*;
 import com.watch.service.impl.CustomerNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
@@ -80,7 +76,10 @@ public class SecurityController {
 	StrapService strapSv;
 	@Autowired
 	BrandService brandService;
-	
+	@Autowired
+	CartDao cartDao;
+	@Autowired
+	CartService cartService;
 	@Autowired
 	ProductService productSV;
 

@@ -3,9 +3,12 @@ package com.watch.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.watch.dao.CartDao;
 import com.watch.dao.OrderDetailDao;
 import com.watch.dao.OrdersDao;
 import com.watch.dao.VistingOrderDao;
+import com.watch.dto.CartDTO;
+import com.watch.entity.CartDetail;
 import com.watch.entity.OrderDetail;
 import com.watch.entity.Orders;
 import com.watch.entity.VistingGuest;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +32,8 @@ public class OrderServiceImpl implements OrdersService{
 	OrdersDao odao;
 	@Autowired
 	OrderDetailDao ddao;
+	@Autowired
+	CartDao cartDao;
 	 @Autowired 
 	public  HttpSession session;
 
@@ -55,8 +61,18 @@ public class OrderServiceImpl implements OrdersService{
 		TypeReference<List<OrderDetail>> type=new TypeReference<List<OrderDetail>>() {};
 		List<OrderDetail> details= mapper.convertValue(orders.get("orderDetails"),type)
 				.stream().peek(d->d.setOrder(order)).collect(Collectors.toList());
-		ddao.saveAll(details);
-		session.setAttribute("listOrderDetail", details);
+		List<CartDetail> listToPay = cartDao.cartDetailForPay(order.getAccount().getAccountId());
+		List<OrderDetail> listLoginToPay = new ArrayList<>();
+		for(CartDetail dto:listToPay){
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setProduct(dto.getProductCartDetail());
+			orderDetail.setQuantity(dto.getQuantity());
+			orderDetail.setPrice(dto.getProductCartDetail().getPrice());
+			listLoginToPay.add(orderDetail);
+		}
+		System.out.println(listLoginToPay);
+		ddao.saveAll(listLoginToPay);
+		session.setAttribute("listOrderDetail", listLoginToPay);
 		Orders order1 = odao.getGanNhat(order.getAccount().getAccountId());
 		if(order1.equals(null)) {
 			return order;

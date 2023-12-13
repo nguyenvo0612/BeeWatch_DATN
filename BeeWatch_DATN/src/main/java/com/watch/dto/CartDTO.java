@@ -1,21 +1,26 @@
 package com.watch.dto;
 
-public class CartDTO {
+import java.io.Serializable;
+
+public class CartDTO implements Serializable{
     private int quantity;
     private String image;
     private int product_id;
     private String nameProduct;
     private Double price;
 
+    private int cartDetailId;
+
     public CartDTO() {
     }
 
-    public CartDTO(int quantity, String image, int product_id, String nameProduct, Double price) {
+    public CartDTO(int quantity, String image, int product_id, String nameProduct, Double price, int cartDetailId) {
         this.quantity = quantity;
         this.image = image;
         this.product_id = product_id;
         this.nameProduct = nameProduct;
         this.price = price;
+        this.cartDetailId = cartDetailId;
     }
 
     public int getQuantity() {
@@ -56,5 +61,13 @@ public class CartDTO {
 
     public void setNameProduct(String nameProduct) {
         this.nameProduct = nameProduct;
+    }
+
+    public int getCartDetailId() {
+        return cartDetailId;
+    }
+
+    public void setCartDetailId(int cartDetailId) {
+        this.cartDetailId = cartDetailId;
     }
 }

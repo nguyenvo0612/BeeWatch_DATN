@@ -208,6 +208,9 @@ a.item_add {
   position: relative;
 }
 
+.formatted-number {
+  font-family: monospace; /* Optional: Use a monospaced font for better alignment */
+}
 .search-btn {
   position: absolute;
   float: right;

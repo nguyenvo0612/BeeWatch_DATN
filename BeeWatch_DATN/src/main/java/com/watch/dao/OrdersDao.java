@@ -151,7 +151,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	List<ThongKeDto> getProductSearch6(Integer thang,Integer namTke);
 
 
-	@Query(value = "select order_id,address,create_date,sdt_nn,ten_nn,tthai_thanh_toan,status,total,account_id,voucher_name from orders where account_id =?1 and status ='1' and voucher_name is not null order by create_date desc",nativeQuery = true)
+	@Query(value = "select * from orders where account_id =?1 and status ='1' and voucher_name is not null order by create_date desc",nativeQuery = true)
 	List<Orders> getByIdVoucher(Long accountId);
 	@Query(value = "select top(1) * from orders where account_id =?1 and status ='1' order by create_date desc",nativeQuery = true)
 	Orders getGanNhat1(Long accountId);

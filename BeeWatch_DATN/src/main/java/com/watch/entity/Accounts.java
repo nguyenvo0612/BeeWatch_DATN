@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.Size;
 @SuppressWarnings("serial")
-@Data
 @AllArgsConstructor
 //@NoArgsConstructor
 @Entity

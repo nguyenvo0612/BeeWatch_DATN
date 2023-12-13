@@ -6,23 +6,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.watch.dao.VistingOrderDao;
+import com.watch.dao.*;
+import com.watch.dto.CartDTO;
 import com.watch.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,8 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.watch.config.VnpayConfig;
-import com.watch.dao.OrdersDao;
-import com.watch.dao.VoucherDao;
 import com.watch.service.AccountService;
 import com.watch.service.BrandService;
 import com.watch.service.OrdersService;
@@ -78,6 +70,10 @@ public class OrderController {
     
     @Autowired
 	OrdersDao odao;
+	@Autowired
+	CartDao cartDao;
+	@Autowired
+	CartDetailDao cartDetailDao;
     @Autowired
 	SizeService sizeSV;
 	@Autowired
@@ -95,6 +91,17 @@ public class OrderController {
 			if(useAcc.User()==null) {
 				return "redirect:/login";
 			}else {
+				String username = principal.getName();
+				Optional<Accounts> user = accountService.findByUsername(username);
+				List<CartDTO> cartItems = cartDao.cartDTO(username);
+				Long cartTotal = cartDao.cartQuantity(username);
+				Long totalPrice = cartDao.totalPrice(username);
+				model.addAttribute("cartItems", cartItems);
+				model.addAttribute("cartTotal", cartTotal);
+				model.addAttribute("totalPrice", totalPrice);
+				model.addAttribute("account",account);
+				model.addAttribute("isAccount", 1);
+
 				List<Product> list = productService.findTop6Img();
 				model.addAttribute("items", list);
 				List<Strap_material> straps = strapSv.findAll();
@@ -109,12 +116,14 @@ public class OrderController {
 				Accounts account1 = new Accounts();
 				account1 = accountService.getById(account.getAccountId());
 				List<Vouchers> voucher = voucherDao.getVoucherWithAcc(account.getAccountId());
+
 				model.addAttribute("account", account1);
 				model.addAttribute("cates", voucher);
 				model.addAttribute("isAccount", 1);
 				return "/user/vnp/ThanhToan";
 			}
 		}
+		model.addAttribute("isAccount", 0);
 		List<Product> list = productService.findTop6Img();
 		model.addAttribute("items", list);
 		List<Strap_material> straps = strapSv.findAll();
@@ -664,7 +673,18 @@ public class OrderController {
 			String email = "";
 			if(principal != null) {
 				email = orderDao.getEmail(order.getOrderId());
+				String username = principal.getName();
+				Optional<Accounts> user = accountService.findByUsername(username);
+				List<CartDTO> cartItems = cartDao.cartDTO(username);
+				Long cartTotal = cartDao.cartQuantity(username);
+				Long totalPrice = cartDao.totalPrice(username);
+				model.addAttribute("cartItems", cartItems);
+				model.addAttribute("cartTotal", cartTotal);
+				model.addAttribute("totalPrice", totalPrice);
+				model.addAttribute("isAccount", 1);
+
 			}else  {
+				model.addAttribute("isAccount", 0);
 				email = orderDao.getEmailVisiting();
 			}
 			System.out.println(email);
@@ -742,6 +762,7 @@ public class OrderController {
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order1);
 			sendSimpleEmail(mail, order1);
+			cartDetailDao.deleteCartDetails(account.getAccountId());
 			return "success1";
 		}
 		List<Strap_material> straps = strapSv.findAll();

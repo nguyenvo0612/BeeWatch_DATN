@@ -42,7 +42,8 @@ public class AccountController {
 	VoucherDao voucherDao;
 	@Autowired
 	AccountDao accountDao;
-	
+	@Autowired
+	CartDao cartDao;
 	@Autowired
 	OrderDetailDao detailDao;
 	@Autowired

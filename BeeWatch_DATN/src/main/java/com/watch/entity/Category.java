@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@Data
 @Entity 
 public class Category implements Serializable{
 	

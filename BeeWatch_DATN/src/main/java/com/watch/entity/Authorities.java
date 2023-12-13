@@ -6,8 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-@Data
-@Entity 
+@Entity
 @Table
 public class Authorities implements Serializable{
 

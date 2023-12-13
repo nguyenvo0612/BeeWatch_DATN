@@ -17,6 +17,9 @@ public interface ProductDao extends JpaRepository<Product, Integer>{
 	@Query(value = "select p from Product p where p.category.categoryId=?1")
 	Page<Product> selectProductSpIdCategory(Integer id,Pageable pageable);
 
+	@Query(value = "select p from Product p where p.productId=: id")
+	Product findById( int id);
+
 	@Query(value = "select p from Product p where p.brand.brandId=?1 and p.category.categoryId=?2 and (p.price BETWEEN ?3 AND ?4)")
 	Page<Product> searchBCP(Integer brandId, Integer categoryId, Double price1, Double price2,Pageable page);
 	

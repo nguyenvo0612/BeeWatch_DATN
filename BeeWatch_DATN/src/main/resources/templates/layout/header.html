@@ -10,15 +10,8 @@
     type="text/css"
     media="all"
   />
-  <link
-    rel="icon"
-    href="../../static/assets/images/Bee.png"
-    type="image/x-icon"
-  />
-  <link
-    rel="stylesheet"
-    href="../../static/assets/fontwesome/css/all.min.css"
-  />
+  <link rel="icon" href="../../../assets/images/Bee.png" type="image/x-icon" />
+  <link rel="stylesheet" href="../../../assets/fontwesome/css/all.min.css" />
   <script type="text/javascript" src="/assets/user/memenu.js"></script>
   <body>
     <div>
@@ -54,7 +47,14 @@
                       <a th:href="@{/beewatch/cartItem}">
                         <div class="total">
                           <i class="fa-solid fa-cart-shopping"></i>
-                          <div class="cart-count">{{cart.count}}</div>
+                          <div class="cart-count" th:if="${isAccount} == 1">
+                            <span
+                              th:text="${{cartTotal != null ? cartTotal : '0'}}"
+                            ></span>
+                          </div>
+                          <div class="cart-count" th:if="${isAccount} == 0">
+                            <span>{{cart.count}}</span>
+                          </div>
                         </div>
                       </a>
                     </li>
@@ -76,6 +76,6 @@
         </div>
       </div>
     </div>
-    <script src="../../static/assets/user/slogan.js"></script>
+    <script src="../../../assets/user/slogan.js"></script>
   </body>
 </html>

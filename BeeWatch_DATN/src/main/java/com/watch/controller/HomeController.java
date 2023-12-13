@@ -1,9 +1,7 @@
 package com.watch.controller;
 
 
-import com.watch.dao.BrandDao;
-import com.watch.dao.NewsDao;
-import com.watch.dao.ProductDao;
+import com.watch.dao.*;
 import com.watch.entity.*;
 import com.watch.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -39,7 +39,16 @@ public class HomeController {
 	
 	@Autowired 
     HttpSession session;
-	
+	@Autowired
+	AccountService accountService;
+	@Autowired
+	AccountDao accountDao;
+	@Autowired
+	CartDao cartDao;
+	@Autowired
+	CartService cartService;
+
+
 	//home người admin
 	@GetMapping({"/","/admin","/admin/beewatch"})
 	public String homeAmin(Model model) {
@@ -48,27 +57,65 @@ public class HomeController {
 	
 	//Home người dùng
 	@GetMapping({"/beewatch","/beewatch/home"})
-	public String homeClient(Model model) {
-		List<Product> list = productService.findTop6Img();
-		model.addAttribute("items", list);
-		List<Strap_material> straps = strapSv.findAll();
-		model.addAttribute("straps", straps);
-		List<Size> sizes = sizeSV.findAll();
-		model.addAttribute("sizes",sizes);
-		
-		List<Brand> listBrand = brandService.findAll();
-		model.addAttribute("brands", listBrand);
-		
-		
-		List<Brand> list2 = brandService.findTop4Img();
-		model.addAttribute("items2", list2);
+	public String homeClient(Model model, Principal principal) {
+		if (principal != null) {
+			// User is logged in
+			String username = principal.getName();
+			Optional<Accounts> user = accountService.findByUsername(username);
+			Long cartTotal = cartDao.cartQuantity(username);
+			model.addAttribute("cartTotal", cartTotal);
+			model.addAttribute("isAccount", 1);
+			List<Product> list = productService.findTop6Img();
+			model.addAttribute("items", list);
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes", sizes);
 
-		List<News> list3 = newsService.findAll();
-		model.addAttribute("items3", list3);
+			List<Cart> carts = cartDao.findAll();
+			model.addAttribute("carts", carts);
 
-		List<News> list1= newsService.findAll();
-		model.addAttribute("news", list1);
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
 
-		return "/layout/homeClient";	
+
+			List<Brand> list2 = brandService.findTop4Img();
+			model.addAttribute("items2", list2);
+
+			List<News> list3 = newsService.findAll();
+			model.addAttribute("items3", list3);
+
+			List<News> list1 = newsService.findAll();
+			model.addAttribute("news", list1);
+
+			return "/layout/homeClient";
+		} else {
+			model.addAttribute("isAccount", 0);
+
+			List<Product> list = productService.findTop6Img();
+			model.addAttribute("items", list);
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes", sizes);
+
+			List<Cart> carts = cartDao.findAll();
+			model.addAttribute("carts", carts);
+
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
+
+
+			List<Brand> list2 = brandService.findTop4Img();
+			model.addAttribute("items2", list2);
+
+			List<News> list3 = newsService.findAll();
+			model.addAttribute("items3", list3);
+
+			List<News> list1 = newsService.findAll();
+			model.addAttribute("news", list1);
+
+			return "/layout/homeClient";
+		}
 	}
 }

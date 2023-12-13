@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@Data
-@Entity 
+@Entity
 public class Brand implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

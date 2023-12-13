@@ -9,6 +9,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
     */
   $scope.cart = {
     items: [],
+    isAccount: $("#isAccount").val(),
     //Thêm sản phẩm
     /* add(productId) {
             //alert(productId)
@@ -181,12 +182,16 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
     loadFromLocalStorage() {
       var json = localStorage.getItem("cart");
       this.items = json ? JSON.parse(json) : [];
+      var totalPriceLogin = localStorage.getItem("totalPrice");
+      console.log("Total Price saved to Local Storage:", totalPriceLogin);
     },
-  };
 
+  };
+  var totalPriceLogin = localStorage.getItem("totalPrice");
   $scope.cart.loadFromLocalStorage();
   //Đưa giá về ban đầu
-  $scope.totalFinal = $scope.cart.amount;
+  $scope.totalFinal = totalPriceLogin;
+  $scope.totalFinalLogin = "0";
   //Tên voucher
   $scope.result = "";
   //Giá trị voucher
@@ -195,13 +200,17 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
     cates: [],
     //lấy % của voucher
     getValuedVoucher(result) {
+      var totalPriceLogin = localStorage.getItem("totalPrice");
       const resultName = $scope.result;
       $http.get(`/rest/vouchers/${resultName}`).then((resp) => {
         $scope.result2 = resp.data.valued;
-        resp.data.finalPrice = $scope.cart.amount - resp.data.valued;
-        resp.data.priceStart = $scope.cart.amount;
+        console.log("Total Price:",resp.data.valued)
+        resp.data.finalPrice = totalPriceLogin - resp.data.valued;
+        resp.data.priceStart = totalPriceLogin;
         const dieuKien = resp.data.conditions;
-        if ($scope.cart.amount >= dieuKien) {
+        console.log(totalPriceLogin)
+        console.log("Điều kiện:",dieuKien)
+        if (Number(totalPriceLogin) >= dieuKien) {
           alert("Áp dụng thành công");
           $scope.totalFinal = resp.data.priceStart - resp.data.valued;
           $scope.voucherVal.infoVoucher();
@@ -216,6 +225,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
         }
         // this.cates.push(resp.data);
       });
+
     },
 
     get amount2() {
@@ -288,6 +298,8 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
     },
     purchase() {
       var order = angular.copy(this);
+      var totalPrice = document.getElementById("totalPrice").innerText;
+      localStorage.setItem("totalPrice", totalPrice);
       console.log(order);
       $http
         .post(`/rest/orders`, order)
@@ -301,6 +313,42 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
         });
     },
   };
+
+  $scope.orderVisting = {
+    createDate: new Date(),
+    address: "",
+    status: "",
+    //lấy tổng tiền khi áp dụng voucher
+    total: $scope.totalFinal,
+    //{username:$("#username").text()}
+    voucher: { voucherName: $scope.result },
+    //Hàm duyệt các mặt hàng trong giỏ
+    get orderDetails() {
+      return $scope.cart.items.map((item) => {
+        return {
+          product: { productId: item.productId },
+          price: item.price,
+          quantity: item.qty,
+          valueVoucher: item.valueVoucher,
+        };
+      });
+    },
+    purchase() {
+      var order = angular.copy(this);
+      console.log(order);
+      $http
+        .post(`/rest/orders/visting`, order)
+        .then((resp) => {
+          /* $scope.cart.clear();*/
+          location.href = "/beewatch/order/checkout";
+        })
+        .cath((error) => {
+          alert("Dat hang loi");
+          console.log(error);
+        });
+    },
+  };
+
   $scope.form = [];
   //upload hình
   $scope.imageChanged = function (files) {
