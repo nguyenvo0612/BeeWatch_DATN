@@ -33,16 +33,16 @@
             <div class="table-responsive">
 
                 <div class="form-group">
-                    <label for="OrderId">Mã đơn hàng: </label>
+                    <label>Mã đơn hàng: </label>
                     <h4><span th:text="${order.orderId}"/></h4>
 
                 </div>
                 <div class="form-group">
-                    <label for="Amount">Số tiền: </label>
+                    <label>Số tiền: </label>
                     <h4><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')}"/> VNĐ</h4>
                 </div>
                 <div class="form-group">
-                    <label for="OrderDescription">Thời gian đặt hàng</label>
+                    <label>Thời gian đặt hàng</label>
                     <h4><span th:text="${order.createDate}"/></h4>
                 </div>
                 <div class="form-group">

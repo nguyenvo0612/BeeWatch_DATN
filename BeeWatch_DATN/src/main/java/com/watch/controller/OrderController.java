@@ -147,7 +147,7 @@ public class OrderController {
 
 	@PostMapping("/beewatch/order/checkout")
 	@ResponseBody
-	public String checkoutPost(Model model, @ModelAttribute("account") Accounts accountKh) throws IOException{
+	public String checkoutPost(Model model, @ModelAttribute("account") Accounts accountKh,Principal principal) throws IOException{
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
@@ -251,6 +251,7 @@ public class OrderController {
 			com.google.gson.JsonObject job = new JsonObject();
 			if(pttt.equals("1")) {
 				Orders order = (Orders) session.getAttribute("OrderganNhat");
+				System.out.println(order.toString());
 				Accounts ttkh = (Accounts) session.getAttribute("accountKh");
 				String address = ttkh.getAddress();
 				String maVoucher2 = (String) session.getAttribute("maVoucher");
@@ -308,12 +309,17 @@ public class OrderController {
 				}
 				order.setStatus(1);
 				order.setCreateDate(new Date());
-
+				String username = principal.getName();
+				Long totalPrice = cartDao.totalPrice(username);
+				model.addAttribute("totalPrice", totalPrice);
 				order.setTenNn(accountKh.getFullname());
 				order.setSdtNn(accountKh.getPhone());
 //					order.setEmailNn(accountKh.getEmail());
 //					order.setDiaChiNn(accountKh.getAddress());
 				//order.setTotal(amount1);
+//				order.setOrderId(order.getOrderId());
+				System.out.println(order);
+				order.setTotal(totalPrice);
 				order.setTthaiThanhToan(0);
 				orderService.save(order);
 				if(order.getTenNn().equals(null) || order.getSdtNn().equals(null) || order.getAddress().equals(null)) {
@@ -772,17 +778,17 @@ public class OrderController {
 
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
-//		Orders order = (Orders) session.getAttribute("OrderganNhat");
+		Orders order = (Orders) session.getAttribute("OrderganNhat");
 		Orders order1 = odao.getVistingOrder();
 		/* Format ngày tháng */
 		Date date = new Date();
-		date = order1.getCreateDate();
+		date = order.getCreateDate();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 		String strDate = formatter.format(date);
 		System.out.println("Date Format with dd MMMM yyyy: " + strDate);
 
 		/* Format tiền */
-		double vn = order1.getTotal();
+		double vn = order.getTotal();
 		float vn2 = (float) vn;
 		long vnd = (long) vn2;
 		Locale localeVN = new Locale("vi", "VN");
@@ -812,13 +818,13 @@ public class OrderController {
 		String mail = orderDao.getEmailVisiting();
 		model.addAttribute("vnd", str1);
 		model.addAttribute("date", strDate);
-		model.addAttribute("order", order1);
+		model.addAttribute("order", order);
 		if(mail == null) {
 			System.out.println("Ko co mail");
 		}else {
 			System.out.println(mail);
 		}
-		sendSimpleEmail(mail, order1);
+		sendSimpleEmail(mail, order);
 		return "success1";
 	}
 

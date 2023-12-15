@@ -1,13 +1,14 @@
 package com.watch.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-@Data
-@Entity 
+@Entity
 public class OrderDetail implements Serializable{
 	
 	@Id
@@ -22,6 +23,7 @@ public class OrderDetail implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "orderId")
+	@JsonBackReference
 	private Orders order;
 
 	public int getOrderDetailId() {

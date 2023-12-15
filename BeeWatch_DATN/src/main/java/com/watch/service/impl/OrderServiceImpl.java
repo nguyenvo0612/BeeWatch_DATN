@@ -13,6 +13,8 @@ import com.watch.entity.OrderDetail;
 import com.watch.entity.Orders;
 import com.watch.entity.VistingGuest;
 import com.watch.service.OrdersService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrdersService{
-
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	OrdersDao odao;
 	@Autowired
@@ -67,6 +69,7 @@ public class OrderServiceImpl implements OrdersService{
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setProduct(dto.getProductCartDetail());
 			orderDetail.setQuantity(dto.getQuantity());
+			orderDetail.setOrder(order);
 			orderDetail.setPrice(dto.getProductCartDetail().getPrice());
 			listLoginToPay.add(orderDetail);
 		}
@@ -79,9 +82,8 @@ public class OrderServiceImpl implements OrdersService{
 		}
 		int maOder = order1.getOrderId();
 		session.setAttribute("OrderganNhat", order1);
-		return order;
+		return order1;
 	}
-
 	@Override
 	public Orders createOrderVisting(JsonNode orders) {
 		ObjectMapper mapper=new ObjectMapper();

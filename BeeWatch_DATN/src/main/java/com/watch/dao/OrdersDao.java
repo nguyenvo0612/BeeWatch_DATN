@@ -16,24 +16,27 @@ import com.watch.entity.WishList;
 
 @Repository
 public interface OrdersDao extends JpaRepository<Orders, Integer>{
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
+	Long tongDonHang();
 
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=1")
+
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=1 and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long choDuyet();
 
 	//đang xử lý
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=2")
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=2 and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long dangXuLy();
 
 	//đang giao
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=3")
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=3  and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long dangGiao();
 
 	//hoàn thành
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=4")
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=4  and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long hoanThanh();
 
 	//đã  hủy
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=0")
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=0  and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long daHuy();
 
 	//yeu cau hoan

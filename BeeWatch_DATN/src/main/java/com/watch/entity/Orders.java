@@ -1,6 +1,8 @@
 package com.watch.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
-@Data
 @Entity
 
 public class Orders implements Serializable {
@@ -43,10 +44,11 @@ public class Orders implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "vistingGuestId")
+    @JsonBackReference
     private VistingGuest vistingGuest;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderDetail> orderDetails;
 
 

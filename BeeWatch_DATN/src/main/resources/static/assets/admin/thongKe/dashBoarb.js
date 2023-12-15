@@ -470,6 +470,7 @@ app.controller("thongke-ctrl", function ($scope, $http) {
   $scope.findId = function (item) {
     $http.get(`/rest/orders/${item.orderId}`, item).then((resp) => {
       $scope.orderDetail = resp.data;
+      console.log(resp.data)
       //alert(orderDetail)
     });
   };

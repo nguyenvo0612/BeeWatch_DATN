@@ -11,6 +11,8 @@ import com.watch.entity.Product;
 import com.watch.entity.Vouchers;
 import com.watch.service.OrdersService;
 import com.watch.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/orders")
 public class OrderRestController {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private OrdersService ordersService;
 	@Autowired
@@ -34,6 +37,7 @@ public class OrderRestController {
 	}
 	@PostMapping()
 	public Orders create(@RequestBody JsonNode orders) {
+		logger.info(ordersService.create(orders).toString());
 		return ordersService.create(orders);
 	}
 
@@ -56,8 +60,10 @@ public class OrderRestController {
 		return ordersDao.getRealOrder();
 	}
 
+
 	@GetMapping("/{id}")
 	public List<OrderDetail> findOrderById(@PathVariable("id") Integer id) {
+
 		return orderDetailDao.findOrderDetailById(id);
 	}
 

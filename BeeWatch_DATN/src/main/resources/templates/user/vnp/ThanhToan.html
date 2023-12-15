@@ -100,7 +100,12 @@
             name="kh_tendangnhap"
             th:value="${account.username}"
           />
-
+          <input
+                  type="hidden"
+                  name="kh_tendangnhap"
+                  id="isAccount"
+                  th:value="${isAccount}"
+          />
 
           <div class="py-5 text-center">
             <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
@@ -188,7 +193,8 @@
                 <!-- voucherVal.amount2 tot -->
                 <li class="list-group-item d-flex justify-content-between">
                   <span>Tiền phải trả</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <strong>{{ totalFinal | number:0}} VNĐ</strong>
+                  <strong th:if="${isAccount} == 0">{{ totalFinalOLogin | number:0}} VNĐ</strong>
+                  <strong th:if="${isAccount} == 1">{{ totalFinal | number:0}} VNĐ</strong>
                   <input
                     type="hidden"
                     class=""
