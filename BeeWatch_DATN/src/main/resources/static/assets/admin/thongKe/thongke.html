@@ -88,17 +88,12 @@
 <div class="container">
 	<!-- Nav tabs -->
 	<div class="col-sm-3">
-		<h3 class="page-title" style="width: 350px">Thống kê </h3>
+		<h3 class="page-title" style="width: 350px"> Quản lý đơn hàng</h3>
 	</div>
-	<ul class="nav nav-tabs" role="tablist">
-		<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" data-target="#home" href="">Đơn hàng</a></li>
-		<li class="nav-item"><a class="nav-link " data-toggle="tab"
-								data-target="#menu1" href="" ng-click="reset1()">Doanh thu</a></li>
-	</ul>
+
 
 	<!-- Tab panes -->
-	<div class="tab-content card">
+	
 		<div id="home" class="container tab-pane active">
 			<div class="content container-fluid">
 				<!-- Page Header -->
@@ -109,7 +104,7 @@
 							<div class="col-sm-3">
 								<div class="menten text-center">
 									<h4 class="title">Tổng Đơn Hàng</h4>
-									<h3 class="mount">{{order}} đơn hàng</h3>
+									<h3 class="mount">{{total2}} đơn hàng</h3>
 								</div>
 							</div>
 
@@ -356,175 +351,8 @@
 
 		</div>
 
-		<div id="menu1" class="container tab-pane">
 
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="menten text-center">
-							<h4 class="title">Tổng Doanh Thu</h4>
-							<h3 class="mount">{{total}} VND</h3>
-						</div>
-					</div>
 
-					<div class="col-sm-4">
-						<div class="menten text-center">
-							<h4 class="title">Số lượng khách đã mua</h4>
-							<h3 class="mount">{{account}}</h3>
-						</div>
-					</div>
-
-					<div class="col-sm-4">
-						<div class="menten text-center">
-							<h4 class="title">Tổng đơn hàng</h4>
-							<h3 class="mount">{{order}}</h3>
-						</div>
-					</div>
-				</div>
-
-				<hr />
-				<div class="row">
-					<div class="col-sm-4">
-						<h4 class="title">Thống kê doanh thu theo năm</h4>
-					</div>
-
-					<div class="col-sm-2 input-group-sm mb-3">
-						<h5 class="title">Tháng/năm:</h5>
-						<input
-								type="text"
-								id="namTke"
-								name="namTke"
-								value="{{namTke}}"
-								class="form-control"
-								placeholder="Nhập tháng năm!"
-								style="width: 120px"
-								ng-blur="checkKyThangInput('namTke');"
-						/>
-					</div>
-					<div class="form-group col-sm-2">
-						<h5 class="title">Loại đồng hồ:</h5>
-						<select
-								ng-model="formProduct.category.categoryId"
-								id="categoySelect"
-								class="form-control form-control-sm"
-						>
-							<option value="">-- Chọn --</option>
-							<option ng-repeat="c in cates" ng-value="c.categoryId">
-								{{c.name}}
-							</option>
-						</select>
-					</div>
-					<div class="form-group col-sm-2">
-						<h5 class="title">Hãng:</h5>
-						<select
-								ng-model="formProduct.brand.brandId"
-								id="brandSelect"
-								class="form-control form-control-sm"
-						>
-							<option value="">-- Chọn --</option>
-							<option ng-repeat="c in brand" ng-value="c.brandId">
-								{{c.name}}
-							</option>
-						</select>
-					</div>
-					<div class="form-group col-sm-2">
-						<h5 class="title">&emsp;&emsp;&emsp;</h5>
-						<input
-								type="button"
-								style="width: 90px; margin-left: 10px; height: 31px"
-								value="Tìm kiếm"
-								ng-click="searchdThu();"
-								class="btn btn-info"
-						/>
-					</div>
-				</div>
-				<div>
-					<div class="col-sm-12">
-						<table class="table table-hover">
-							<thead>
-							<tr>
-								<th scope="col">Mã sản phẩm</th>
-								<th scope="col">Tên sản phẩm</th>
-								<th scope="col">Loại đồng hồ</th>
-								<th scope="col">Hãng đồng hồ</th>
-								<th scope="col">Số lượng mua</th>
-								<th scope="col">Tổng tiền</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="item in pager.itemsProduct">
-								<td>{{item.id}}</td>
-								<td>{{item.name}}</td>
-								<td>{{item.brand}}</td>
-								<td>{{item.cate}}</td>
-								<td>{{item.quantity}}</td>
-								<td>{{item.total}} VND</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-					<div align="right">
-						<button class="btn btn-danger" ng-click="pager.first()">
-							<b class="fa-solid fa-backward"></b>
-						</button>
-						<button class="btn btn-primary" ng-click="pager.prev()">
-							<b class="fa-sharp fa-solid fa-arrow-left"></b>
-						</button>
-
-						<button class="btn btn-success">
-							{{pager.page + 1}} of {{pager.count}}
-						</button>
-
-						<button class="btn btn-primary" ng-click="pager.next()">
-							<b class="fa-sharp fa-solid fa-arrow-right"></b>
-						</button>
-						<button class="btn btn-danger" ng-click="pager.last()">
-							<i class="fa-solid fa-forward"></i>
-						</button>
-					</div>
-				</div>
-
-				<div class="">
-					<h4 class="title">Top sản phẩm được mua nhiều nhất</h4>
-					<div class="row">
-						<div class="col-sm-4" ng-repeat="item in product">
-							<div class="khung">
-								<div class="image">
-									<img alt="" src="/assets/images/{{item.image}}" />
-								</div>
-								<div class="nameDh">
-									<h6>{{item.name}}</h6>
-
-									<div class="amount">
-										<h6>{{item.price}} VND</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<h4 class="title" style="margin-top: 10px">
-						Top tài khoản mua nhiều nhất
-					</h4>
-					<div class="row">
-						<div class="col-sm-4" ng-repeat="item in accountTop">
-							<div class="khung">
-								<div class="image">
-									<img alt="" src="/assets/images/{{item.image}}" />
-								</div>
-								<div class="nameDh">
-									<h6>{{item.fullname}}</h6>
-
-									<div class="amount">
-										<h6>Số lần mua hàng: {{item.totalOrder}}</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
