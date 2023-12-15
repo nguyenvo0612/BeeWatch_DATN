@@ -3,6 +3,7 @@ package com.watch.controller;
 import com.watch.dao.*;
 import com.watch.entity.*;
 import com.watch.service.*;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -52,10 +53,33 @@ public class AccountController {
 	StrapService strapSv;
 	@Autowired
 	BrandService brandService;
-	
+
 	@Autowired
 	ProductService productSV;
+
+	@Autowired
+	OrderDetailDao orderDetailDao;
 	// Get Cap nhat tai khoan
+
+	@GetMapping("/lich_sư_ko_login/{orderID}")
+	public String orderDetail(@PathVariable(name = "orderID") int orderID, Model model) {
+		List<Strap_material> straps = strapSv.findAll();
+		model.addAttribute("isAccount", 0);
+		model.addAttribute("straps", straps);
+		List<Size> sizes = sizeSV.findAll();
+		model.addAttribute("sizes",sizes);
+		List<Brand> listBrand = brandService.findAll();
+		model.addAttribute("brands", listBrand);
+		Pageable pageable = PageRequest.of(0,1);
+		Page<Orders> ord = orderDao.findOrdersByOrderId(orderID, pageable);
+		model.addAttribute("number",ord.getNumber());
+		model.addAttribute("totalPages",ord.getTotalPages());
+		model.addAttribute("totalElements",ord.getTotalElements());
+		model.addAttribute("size",ord.getSize());
+		model.addAttribute("orders", ord);
+		return "/user/account/lichSuMuaHang";
+	}
+
 	@GetMapping("/beewatch/account/view")
 	public String capNhatTaiKhoan(Model model, HttpServletRequest request) {
 
@@ -100,9 +124,9 @@ public class AccountController {
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		Accounts account = useAcc.User();
-		if(useAcc.User()==null) {
-			return "redirect:/login";
-		}
+//		if(useAcc.User()==null) {
+//			return "redirect:/login";
+//		}
 		Long id = account.getAccountId();
 		Pageable pageable = PageRequest.of(p.orElse(0), 7);
 		Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
@@ -134,7 +158,10 @@ public class AccountController {
 
 	//huy don hang
 	@GetMapping("/beewatch/account/history/cancel/{orderId}")
-	public String huyDon(Model model, HttpServletRequest request,@PathVariable("orderId") Integer orderId, @RequestParam("p") Optional<Integer> p) {
+	public String huyDon(Model model, HttpServletRequest request
+			,@PathVariable("orderId") Integer orderId
+			, @RequestParam("p") Optional<Integer> p
+	,	Principal principal) {
 		try {
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
@@ -144,49 +171,89 @@ public class AccountController {
 			List<Brand> listBrand = brandService.findAll();
 			model.addAttribute("brands", listBrand);
 			Accounts account = useAcc.User();
-			if(useAcc.User()==null) {
-				return "redirect:/login";
-			}
-			Long id = account.getAccountId();
+
+
 //			model.addAttribute("orders", orderService.findByUserId(id));
-
 			Orders order = orderService.getById(orderId);
-			Pageable pageable = PageRequest.of(p.orElse(0), 7);
-			Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
-			model.addAttribute("number",ord.getNumber());
-			model.addAttribute("totalPages",ord.getTotalPages());
-			model.addAttribute("totalElements",ord.getTotalElements());
-			model.addAttribute("size",ord.getSize());
+			if(principal == null) {
+				model.addAttribute("isAccount", 0);
+				model.addAttribute("brands", listBrand);
+				Pageable pageable = PageRequest.of(0,1);
+				Page<Orders> ord = orderDao.findOrdersByOrderId(orderId, pageable);
+				model.addAttribute("number",ord.getNumber());
+				model.addAttribute("totalPages",ord.getTotalPages());
+				model.addAttribute("totalElements",ord.getTotalElements());
+				model.addAttribute("size",ord.getSize());
+				model.addAttribute("orders", ord);
 
-			model.addAttribute("orders", ord);
-
-			if(order.getStatus() == 1) {
-				order.setStatus(0);
-				if(order.getTthaiThanhToan() == 1) {
-					order.setTthaiThanhToan(2);
-				}
-				List<OrderDetail> odt = detailDao.getOdtByOd(orderId);
+				if(order.getStatus() == 1) {
+					order.setStatus(0);
+					if(order.getTthaiThanhToan() == 1) {
+						order.setTthaiThanhToan(2);
+					}
+					List<OrderDetail> odt = detailDao.getOdtByOd(orderId);
 //				List<Product> listPro = productDao.getProductByOrders(orderId);
 
-				for(OrderDetail o : odt) {
-					Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
-					pro.setQuantity(pro.getQuantity() + o.getQuantity());
-					productSV.save(pro);
-				}
-				//back lại số lượng sp
-				// back lại sl voucher
+					for(OrderDetail o : odt) {
+						Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
+						pro.setQuantity(pro.getQuantity() + o.getQuantity());
+						productSV.save(pro);
+					}
+					//back lại số lượng sp
+					// back lại sl voucher
 
-				if(null != order.getVoucher()) {
-					Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
-					voucher.setQuantity(voucher.getQuantity() + 1);
-					voucherDao.save(voucher);
+					if(null != order.getVoucher()) {
+						Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
+						voucher.setQuantity(voucher.getQuantity() + 1);
+						voucherDao.save(voucher);
+					}
 				}
+
+				orderService.save(order);
+				System.out.println("Đã hủy đơn: "+orderId);
+				model.addAttribute("message", "Hủy đơn thành công");
+				return "/user/account/lichSuMuaHang";
+
+			} else {
+				Long id = account.getAccountId();
+				Pageable pageable = PageRequest.of(p.orElse(0), 7);
+				Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
+				model.addAttribute("number", ord.getNumber());
+				model.addAttribute("totalPages", ord.getTotalPages());
+				model.addAttribute("totalElements", ord.getTotalElements());
+				model.addAttribute("size", ord.getSize());
+
+				model.addAttribute("orders", ord);
+
+
+				if (order.getStatus() == 1) {
+					order.setStatus(0);
+					if (order.getTthaiThanhToan() == 1) {
+						order.setTthaiThanhToan(2);
+					}
+					List<OrderDetail> odt = detailDao.getOdtByOd(orderId);
+//				List<Product> listPro = productDao.getProductByOrders(orderId);
+
+					for (OrderDetail o : odt) {
+						Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
+						pro.setQuantity(pro.getQuantity() + o.getQuantity());
+						productSV.save(pro);
+					}
+					//back lại số lượng sp
+					// back lại sl voucher
+
+					if (null != order.getVoucher()) {
+						Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
+						voucher.setQuantity(voucher.getQuantity() + 1);
+						voucherDao.save(voucher);
+					}
+				}
+
+				orderService.save(order);
+				System.out.println("Đã hủy đơn: " + orderId);
+				model.addAttribute("message", "Hủy đơn thành công");
+				return "/user/account/lichSuMuaHang";
 			}
-
-			orderService.save(order);
-			System.out.println("Đã hủy đơn: "+orderId);
-			model.addAttribute("message", "Hủy đơn thành công");
-			return "/user/account/lichSuMuaHang";
 		} catch (Exception e) {
 			// TODO: handle
 			e.printStackTrace();
@@ -216,9 +283,6 @@ public class AccountController {
 			List<Brand> listBrand = brandService.findAll();
 			model.addAttribute("brands", listBrand);
 			Accounts account = useAcc.User();
-			if(useAcc.User()==null) {
-				return "redirect:/login";
-			}
 			Long id = account.getAccountId();
 //			model.addAttribute("orders", orderService.findByUserId(id));
 
@@ -297,9 +361,7 @@ public class AccountController {
 			List<Brand> listBrand = brandService.findAll();
 			model.addAttribute("brands", listBrand);
 			Accounts account = useAcc.User();
-			if(useAcc.User()==null) {
-				return "redirect:/login";
-			}
+
 			Long id = account.getAccountId();
 //			model.addAttribute("orders", orderService.findByUserId(id));
 
@@ -483,9 +545,6 @@ public class AccountController {
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		//Accounts account = useAcc.User();
-		if(useAcc.User()==null) {
-			return "redirect:/login";
-		}
 
 		List<OrderDetail> detail = detailDao.findOrderDetailById(orderId);
 		model.addAttribute("details", detail);

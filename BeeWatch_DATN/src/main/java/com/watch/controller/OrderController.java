@@ -718,6 +718,7 @@ public class OrderController {
 	@GetMapping("/dat-hang-thanh-cong")
 	public String okCOD(Model model, Principal principal) {
 		if(principal != null) {
+			model.addAttribute("isAccount", 1);
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
 			List<Size> sizes = sizeSV.findAll();
@@ -770,62 +771,64 @@ public class OrderController {
 			sendSimpleEmail(mail, order1);
 			cartDetailDao.deleteCartDetails(account.getAccountId());
 			return "success1";
-		}
-		List<Strap_material> straps = strapSv.findAll();
-		model.addAttribute("straps", straps);
-		List<Size> sizes = sizeSV.findAll();
-		model.addAttribute("sizes",sizes);
+		} else {
+			model.addAttribute("isAccount", 0);
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes", sizes);
 
-		List<Brand> listBrand = brandService.findAll();
-		model.addAttribute("brands", listBrand);
-		Orders order = (Orders) session.getAttribute("OrderganNhat");
-		Orders order1 = odao.getVistingOrder();
-		/* Format ngày tháng */
-		Date date = new Date();
-		date = order.getCreateDate();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		String strDate = formatter.format(date);
-		System.out.println("Date Format with dd MMMM yyyy: " + strDate);
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
+			Orders order = (Orders) session.getAttribute("OrderganNhat");
+			Orders order1 = odao.getVistingOrder();
+			/* Format ngày tháng */
+			Date date = new Date();
+			date = order.getCreateDate();
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+			String strDate = formatter.format(date);
+			System.out.println("Date Format with dd MMMM yyyy: " + strDate);
 
-		/* Format tiền */
-		double vn = order.getTotal();
-		float vn2 = (float) vn;
-		long vnd = (long) vn2;
-		Locale localeVN = new Locale("vi", "VN");
-		NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
-		String str1 = currencyVN.format(vnd);
-		System.out.println(str1);
+			/* Format tiền */
+			double vn = order.getTotal();
+			float vn2 = (float) vn;
+			long vnd = (long) vn2;
+			Locale localeVN = new Locale("vi", "VN");
+			NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+			String str1 = currencyVN.format(vnd);
+			System.out.println(str1);
 
 
-		// load lai sl sp
-		List<OrderDetail> orderDetail = (List<OrderDetail>) session.getAttribute("listOrderDetail");
-		if(orderDetail.size() ==0 || orderDetail.equals(null)) {
-			return "success";
-		}
-		//chỉnh sửa lại số lượng thanh toán
-		for (int i = 0; i < orderDetail.size(); i++) {
-			int productId = orderDetail.get(i).getProduct().getProductId();
-			int slgmua = orderDetail.get(i).getQuantity();
-			Product product = productService.getById(productId);
-			int slgProduct = product.getQuantity();
-			int slgMoi = slgProduct - slgmua;
-			if(slgMoi < 0) {
-				return "redirect:/thanh-toan-khong-thanh-cong";
+			// load lai sl sp
+			List<OrderDetail> orderDetail = (List<OrderDetail>) session.getAttribute("listOrderDetail");
+			if (orderDetail.size() == 0 || orderDetail.equals(null)) {
+				return "success";
 			}
-			product.setQuantity(slgMoi);
-			productService.save(product);
+			//chỉnh sửa lại số lượng thanh toán
+			for (int i = 0; i < orderDetail.size(); i++) {
+				int productId = orderDetail.get(i).getProduct().getProductId();
+				int slgmua = orderDetail.get(i).getQuantity();
+				Product product = productService.getById(productId);
+				int slgProduct = product.getQuantity();
+				int slgMoi = slgProduct - slgmua;
+				if (slgMoi < 0) {
+					return "redirect:/thanh-toan-khong-thanh-cong";
+				}
+				product.setQuantity(slgMoi);
+				productService.save(product);
+			}
+			String mail = orderDao.getEmailVisiting();
+			model.addAttribute("vnd", str1);
+			model.addAttribute("date", strDate);
+			model.addAttribute("order", order);
+			if (mail == null) {
+				System.out.println("Ko co mail");
+			} else {
+				System.out.println(mail);
+			}
+			sendSimpleEmail(mail, order);
+			return "success1";
 		}
-		String mail = orderDao.getEmailVisiting();
-		model.addAttribute("vnd", str1);
-		model.addAttribute("date", strDate);
-		model.addAttribute("order", order);
-		if(mail == null) {
-			System.out.println("Ko co mail");
-		}else {
-			System.out.println(mail);
-		}
-		sendSimpleEmail(mail, order);
-		return "success1";
 	}
 
 

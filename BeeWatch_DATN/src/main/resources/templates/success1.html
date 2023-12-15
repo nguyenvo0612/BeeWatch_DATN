@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <label>Mã đơn hàng: </label>
-                    <h4><span th:text="${order.orderId}"/></h4>
+                    <h4><span th:text="${order.orderId}"/>{{order.orderId}}</h4>
 
                 </div>
                 <div class="form-group">
@@ -51,8 +51,8 @@
 
                     <span th:if="${order.getTthaiThanhToan} == 1">Đã thanh toán</span>
                     <br>
-                    <a th:href="@{/beewatch/account/history}">Xem chi tiết</a>
-
+                    <div th:if="${isAccount} == 1"><a th:href="@{/beewatch/account/history}">Xem chi tiết</a></div>
+                    <div th:if="${isAccount} == 0"><a th:href="@{'/lich_sư_ko_login/' + ${order.orderId}}">Xem chi tiết</a></div>
                 </div>
             </div>
 

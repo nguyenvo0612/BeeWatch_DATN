@@ -2,6 +2,7 @@ package com.watch.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,9 @@ import com.watch.entity.WishList;
 
 @Repository
 public interface OrdersDao extends JpaRepository<Orders, Integer>{
+
+	Page<Orders> findOrdersByOrderId(int id ,Pageable pageable);
+
 	@Query("select count(Orders.orderId) from Orders Orders where Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long tongDonHang();
 

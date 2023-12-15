@@ -99,10 +99,23 @@ public class OrderServiceImpl implements OrdersService{
 		order.setStatus(1);
 		order.setVistingGuest(vistingGuest1);
 		odao.save(order);
+		List<OrderDetail> orderDetails = new ArrayList<>();
 		TypeReference<List<OrderDetail>> type=new TypeReference<List<OrderDetail>>() {};
 		List<OrderDetail> details= mapper.convertValue(orders.get("orderDetails"),type)
 				.stream().peek(d->d.setOrder(order)).collect(Collectors.toList());
-		ddao.saveAll(details);
+		for(OrderDetail od : details){
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setProduct(od.getProduct());
+			orderDetail.setQuantity(od.getQuantity());
+			orderDetail.setOrder(order);
+			orderDetail.setPrice(od.getProduct().getPrice());
+			orderDetails.add(orderDetail);
+		}
+		logger.info(String.valueOf(orderDetails.size()));
+		for (OrderDetail od : orderDetails) {
+			logger.warn(od.toString());
+		}
+//		ddao.saveAll(orderDetails);
 		session.setAttribute("listOrderDetail", details);
 //		Orders order1 = odao.getGanNhat(order.getAccount().getAccountId());
 //		if(order1.equals(null)) {
