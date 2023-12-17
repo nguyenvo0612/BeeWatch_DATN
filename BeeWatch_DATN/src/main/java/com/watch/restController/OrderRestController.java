@@ -18,6 +18,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -68,9 +69,14 @@ public class OrderRestController {
 	}
 
 	@PutMapping("/up/{id}")
-	public Orders updateStatus1(@PathVariable("id") Integer id) {
+	public Orders updateStatus1(@PathVariable("id") Integer id, Principal principal) {
 		Orders order = dao.getById(id);
-		String email= dao.getEmail(id);
+		String email = dao.getEmail(id);
+		logger.info("Get email");
+		if(email == null) {
+			email = dao.getEmailVisiting(id);
+			logger.info("1", email);
+		}
 		int status = order.getStatus();
 		if (status == 0) {
 			order.setStatus(1);
@@ -99,9 +105,14 @@ public class OrderRestController {
 	VoucherDao voucherDao;
 
 	@PutMapping("/close/{id}")
-	public Orders updateStatus2(@PathVariable("id") Integer id) {
+	public Orders updateStatus2(@PathVariable("id") Integer id, Principal principal) {
 		Orders order = dao.getById(id);
-		String email= dao.getEmail(id);
+		String email = dao.getEmail(id);
+		logger.info("Get email");
+		if(email == null) {
+			email = dao.getEmailVisiting(id);
+			logger.info("1", email);
+		}
 //		int status = order.getStatus();
 //		if (status == 1 || status == 2 || status == 3) {
 //			order.setStatus(0);
@@ -137,9 +148,14 @@ public class OrderRestController {
 		return dao.save(order);
 	}
 	@PutMapping("/saybyerefund/{id}")
-	public Orders sayByeRefund(@PathVariable("id") Integer id) {
+	public Orders sayByeRefund(@PathVariable("id") Integer id, Principal principal) {
 		Orders order = dao.getById(id);
-		String email= dao.getEmail(id);
+		String email = dao.getEmail(id);
+		logger.info("Get email");
+		if(email == null) {
+			email = dao.getEmailVisiting(id);
+			logger.info("1", email);
+		}
 		int status = order.getStatus();
 		if( status == 5) {
 			order.setStatus(4);
@@ -151,9 +167,14 @@ public class OrderRestController {
 	}
 
 	@PutMapping("/down/{id}")
-	public Orders updateStatus3(@PathVariable("id") Integer id) {
+	public Orders updateStatus3(@PathVariable("id") Integer id, Principal principal) {
 		Orders order = dao.getById(id);
-		String email= dao.getEmail(id);
+		String email = dao.getEmail(id);
+		logger.info("Get email");
+		if(email == null) {
+			email = dao.getEmailVisiting(id);
+			logger.info("1", email);
+		}
 		int status = order.getStatus();
 		if (status == 3) {
 			order.setStatus(2);

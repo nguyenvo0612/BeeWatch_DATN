@@ -65,7 +65,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query(value="select sum(total) from orders where status != 0 and sdt_nn is not null and ten_nn is not null and address is not null and tthai_thanh_toan = 1", nativeQuery = true)
 	long getReportTotal();
 
-	@Query(value="select count(order_id) from orders where sdt_nn is not null and ten_nn is not null and address is not null ",nativeQuery = true)
+	@Query(value="select count(order_id) from orders where sdt_nn is not null and ten_nn is not null and address is not null and status = 4 and reason is null",nativeQuery = true)
 	Long getTotalOrder();
 
 	@Query("SELECT new ReportAccount(o.account.accountId,o.account.fullname,o.account.image, COUNT(o.account.accountId) ) FROM Orders o "
@@ -82,6 +82,9 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	List<DashBoard> dashBoard(Integer date);
 	@Query("SELECT o.account.email FROM Orders o where o.orderId=?1")
 	String getEmail(Integer id);
+
+	@Query("SELECT o.vistingGuest.email FROM Orders o where o.orderId=?1")
+	String getEmailVisiting(Integer id);
 
 	@Query(value = "select email from visting_guest where id_guest in (select top 1 visting_guest_id from orders order by create_date desc)", nativeQuery = true)
 	String getEmailVisiting();

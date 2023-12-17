@@ -84,6 +84,8 @@ public class OrderController {
     @Autowired
 	VistingOrderDao vistingOrderDao;
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@GetMapping("/beewatch/order/checkout")
 	public String checkout(Model model, Principal principal) {
 
@@ -582,7 +584,13 @@ public class OrderController {
 		System.out.println("mã: "+vnp_ResponseCode);
 		if(vnp_ResponseCode.equals("00")) {
 			Orders order = (Orders) session.getAttribute("OrderganNhat");
-			VistingGuest accountKh = (VistingGuest) session.getAttribute("accountKh");
+			Accounts accountKh = new Accounts();
+			VistingGuest vistingGuest = new VistingGuest();
+			if(principal != null) {
+				accountKh = (Accounts) session.getAttribute("accountKh");
+			}else {
+				vistingGuest = (VistingGuest) session.getAttribute("accountKh");
+			}
 			String address = accountKh.getAddress();
 			String maVoucher = (String) session.getAttribute("maVoucher");
 
@@ -678,6 +686,7 @@ public class OrderController {
 			model.addAttribute("str1", str1);
 			String email = "";
 			if(principal != null) {
+
 				email = orderDao.getEmail(order.getOrderId());
 				String username = principal.getName();
 				Optional<Accounts> user = accountService.findByUsername(username);

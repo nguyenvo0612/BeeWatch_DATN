@@ -156,7 +156,8 @@
                       <tr th:each="order, state: ${orders}">
                         <td>[[${state.index}]]</td>
                         <td>[[${order.orderId}]]</td>
-                        <td>[[${order.account.username}]]</td>
+                        <td th:if="${isAccount} == 1">[[${order.account.username}]]</td>
+                        <td th:if="${isAccount} == 0">Khách vãng lai</td>
                         <td>[[${order.createDate}]]</td>
                         <td>
                           [[${#numbers.formatDecimal(order.total, 0, 'COMMA', 0,
