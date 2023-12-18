@@ -78,6 +78,4 @@ public class OrderDetail implements Serializable{
 	public OrderDetail() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 }

@@ -6,6 +6,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import com.watch.entity.DashBoard;
 import com.watch.entity.Orders;
 import com.watch.entity.ReportAccount;
 import com.watch.entity.WishList;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface OrdersDao extends JpaRepository<Orders, Integer>{
@@ -59,6 +61,9 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query(value = "select top(1) * from orders where account_id =?1  order by create_date desc",nativeQuery = true)
 	Orders getGanNhat(Long maAcc);
 
+	@Query(value = "select top(1) tien_sau_giam from orders where account_id = ?1 order by create_date desc ", nativeQuery = true)
+	Double getTienSauGiam(Long id);
+
 	@Query(value = "select top 1 * from orders where visting_guest_id is null and account_id is null order by create_date desc", nativeQuery = true)
 	Orders getVistingOrder();
 	//	@Query("SELECT SUM(o.total) FROM Orders o")
@@ -82,6 +87,11 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	List<DashBoard> dashBoard(Integer date);
 	@Query("SELECT o.account.email FROM Orders o where o.orderId=?1")
 	String getEmail(Integer id);
+
+	@Transactional
+	@Modifying
+	@Query(value = "update orders set tien_sau_giam = total - v.valued from orders od join vouchers v on od.voucher_name = v.voucher_name", nativeQuery = true)
+	void updateTienSauGiam();
 
 	@Query("SELECT o.vistingGuest.email FROM Orders o where o.orderId=?1")
 	String getEmailVisiting(Integer id);

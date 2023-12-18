@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.apache.poi.hpsf.Decimal;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -60,6 +61,18 @@ public class Orders implements Serializable {
 
     public VistingGuest getVistingGuest() {
         return vistingGuest;
+    }
+
+    @Column(name = "tien_sau_giam")
+    private double tienSauGiam;
+
+    public Double getTienSauGiam() {
+        return tienSauGiam;
+    }
+
+
+    public void setTienSauGiam(Double tienSauGiam) {
+        this.tienSauGiam = tienSauGiam;
     }
 
     public void setVistingGuest(VistingGuest vistingGuest) {
@@ -171,12 +184,8 @@ public class Orders implements Serializable {
     }
 
 
-    public Orders(int orderId, Date createDate, String address, int status, double total, int tthaiThanhToan,
-                  String tenNn, String reason, String anhLoiSanPham, String sdtNn, Accounts account, Vouchers voucher, List<OrderDetail> orderDetails) {
-        super();
+    public Orders(int orderId, Date createDate, String address, int status, double total, int tthaiThanhToan, String tenNn, String sdtNn, Accounts account, Vouchers voucher, VistingGuest vistingGuest, List<OrderDetail> orderDetails, String reason, String anhLoiSanPham, Double tienSauGiam) {
         this.orderId = orderId;
-        this.reason = reason;
-        this.anhLoiSanPham = anhLoiSanPham;
         this.createDate = createDate;
         this.address = address;
         this.status = status;
@@ -186,15 +195,34 @@ public class Orders implements Serializable {
         this.sdtNn = sdtNn;
         this.account = account;
         this.voucher = voucher;
+        this.vistingGuest = vistingGuest;
         this.orderDetails = orderDetails;
-
+        this.reason = reason;
+        this.anhLoiSanPham = anhLoiSanPham;
+        this.tienSauGiam = tienSauGiam;
     }
-
-
 
     public Orders() {
-        // TODO Auto-generated constructor stub
     }
 
-
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId=" + orderId +
+                ", createDate=" + createDate +
+                ", address='" + address + '\'' +
+                ", status=" + status +
+                ", total=" + total +
+                ", tthaiThanhToan=" + tthaiThanhToan +
+                ", tenNn='" + tenNn + '\'' +
+                ", sdtNn='" + sdtNn + '\'' +
+                ", account=" + account +
+                ", voucher=" + voucher +
+                ", vistingGuest=" + vistingGuest +
+                ", orderDetails=" + orderDetails +
+                ", reason='" + reason + '\'' +
+                ", anhLoiSanPham='" + anhLoiSanPham + '\'' +
+                ", tienSauGiam=" + tienSauGiam +
+                '}';
+    }
 }

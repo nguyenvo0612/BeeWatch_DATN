@@ -50,7 +50,7 @@ public class HomeController {
 
 
 	//home người admin
-	@GetMapping({"/","/admin","/admin/beewatch"})
+	@GetMapping({"/admin","/admin/beewatch"})
 	public String homeAmin(Model model) {
 		return "redirect:/assets/admin/main/homeAdmin.html";
 	}

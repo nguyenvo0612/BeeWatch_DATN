@@ -738,13 +738,16 @@ public class OrderController {
 //		Orders order = (Orders) session.getAttribute("OrderganNhat");
 			account = useAcc.User();
 			Orders order1 = odao.getGanNhat(account.getAccountId());
+			orderDao.updateTienSauGiam();
+			System.out.println(order1.toString());
 			/* Format ngày tháng */
 			Date date = new Date();
 			date = order1.getCreateDate();
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 			String strDate = formatter.format(date);
 			System.out.println("Date Format with dd MMMM yyyy: " + strDate);
 
+			Double tienGiam = orderDao.getTienSauGiam(account.getAccountId());
 			/* Format tiền */
 			double vn = order1.getTotal();
 			float vn2 = (float) vn;
@@ -773,11 +776,14 @@ public class OrderController {
 				product.setQuantity(slgMoi);
 				productService.save(product);
 			}
+
 			String mail = orderDao.getEmail(order1.getOrderId());
 			model.addAttribute("vnd", str1);
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order1);
+			model.addAttribute("tienSauGiam", tienGiam);
 			sendSimpleEmail(mail, order1);
+
 			cartDetailDao.deleteCartDetails(account.getAccountId());
 			return "success1";
 		} else {
