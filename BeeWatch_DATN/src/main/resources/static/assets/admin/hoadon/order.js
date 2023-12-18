@@ -150,13 +150,13 @@ app.controller("order-ctrl", function ($scope, $http) {
         $scope.total = $scope.formatSoNguyenDuong(tongAll);
       });
 
-    $http
-      .get(
-        `/rest/dashboard/searchDthu/hoaDon/${namTke}/${categoySelect[1]}/${brandSelect[1]}`
-      )
-      .then((resp) => {
-        $scope.order = resp.data;
-      });
+    // $http
+    //   .get(
+    //     `/rest/dashboard/searchDthu/hoaDon/${namTke}/${categoySelect[1]}/${brandSelect[1]}`
+    //   )
+    //   .then((resp) => {
+    //     $scope.order = resp.data;
+    //   });
 
     $http
       .get(

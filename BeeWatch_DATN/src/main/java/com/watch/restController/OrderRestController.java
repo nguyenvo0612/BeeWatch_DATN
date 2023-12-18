@@ -148,18 +148,20 @@ public class OrderRestController {
 		return dao.save(order);
 	}
 	@PutMapping("/saybyerefund/{id}")
-	public Orders sayByeRefund(@PathVariable("id") Integer id, Principal principal) {
+	public Orders sayByeRefund(@PathVariable("id") Integer id , @RequestBody Orders updatedOrder) {
 		Orders order = dao.getById(id);
-		String email = dao.getEmail(id);
-		logger.info("Get email");
-		if(email == null) {
-			email = dao.getEmailVisiting(id);
-			logger.info("1", email);
-		}
+		String email= dao.getEmail(id);
 		int status = order.getStatus();
+		String sendToCuscomer =updatedOrder.getSendToCustomer();
+		System.out.println("/n");
+		System.out.println("-----------------------------------------");
+		System.out.println(sendToCuscomer);
+		System.out.println("/n");
 		if( status == 5) {
 			order.setStatus(4);
 			order.setTthaiThanhToan(1);
+			order.setSendToCustomer(sendToCuscomer);
+
 
 		}
 		sendSimpleEmail(email);

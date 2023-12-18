@@ -59,6 +59,17 @@ public class Orders implements Serializable {
     @Column(columnDefinition = "NVARCHAR(100)  NULL")
     private String anhLoiSanPham;
 
+    @Column(columnDefinition = "NVARCHAR(200)  NULL")
+    private String sendToCustomer;
+
+    public void setSendToCustomer(String sendToCustomer) {
+        this.sendToCustomer = sendToCustomer;
+    }
+
+    public String getSendToCustomer() {
+        return sendToCustomer;
+    }
+
     public VistingGuest getVistingGuest() {
         return vistingGuest;
     }

@@ -153,7 +153,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="order, state: ${orders}">
+                      <tr th:each="order, state: ${orders}"
+                          th:data-send-to-customer="${order.sendToCustomer}"
+                          th:data-image="${order.anhLoiSanPham}"
+                          th:data-reason-refund="${order.reason}">
                         <td>[[${state.index}]]</td>
                         <td>[[${order.orderId}]]</td>
                         <td th:if="${isAccount} == 1">[[${order.account.username}]]</td>
@@ -191,6 +194,24 @@
                           <span th:if="${order.getTthaiThanhToan} == 2"
                             >Đã hoàn tiền</span
                           >
+                          <span
+                                  th:if="${order.status == 5 or order.status == 6 }"
+                          >|</span
+                          >
+                          <span
+                                  th:if="${order.status == 5 or order.status == 6}"
+                          >
+                            <a href="#" class="view-hoandon"> Xem thêm</a>
+                          </span>
+                          <span
+                                  th:if="${order.status == 4 and order.reason != null }"
+                          >|</span
+                          >
+                          <span
+                                  th:if="${order.status == 4 and order.reason != null}"
+                          >
+                            <a href="#" class="view-more"> Xem lý do</a>
+                          </span>
                         </td>
                         <td>
                           <div class="btn-group">
@@ -337,6 +358,32 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Thông tin đơn hoàn trả</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body" id="modal-body">
+            <!-- Nội dung của modal sẽ được thêm vào đây bằng JavaScript -->
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script th:inline="javascript">
       function showRefundModal(orderId) {
         // Mở modal
@@ -420,6 +467,98 @@
       /* <![CDATA[ */
 
       /* ]]> */
+    </script>
+    <script th:inline="javascript">
+      $(document).ready(function () {
+        // Sự kiện click trên nút "Xem thêm"
+        $("a.view-hoandon").on("click", function (event) {
+          event.preventDefault();
+          // Lấy dữ liệu trường sendToCustomer của order
+          var sendToCustomerData = $(this)
+                  .closest("tr")
+                  .data("send-to-customer");
+          // Lấy dữ liệu trường ảnh của order
+          var imageData = $(this).closest("tr").data("image");
+          var reasonData = $(this).closest("tr").data("reason-refund");
+
+          // Tạo thẻ <img> từ đường dẫn ảnh
+          var imageTag =
+                  '<img src="' +
+                  "../../../static/assets/images/" +
+                  imageData +
+                  '" alt="Order Image" style="max-width: 50%;">';
+
+          var styledText =
+                  '<span style="color: red;">' + sendToCustomerData + "</span>";
+
+          var titleee =
+                  '<span style="color: black; font-weight: bold;">' +
+                  "Lý do hoàn đơn: " +
+                  "</span>";
+
+          var titleeeSystem =
+                  '<span style="color: black; font-weight: bold;">' +
+                  "Lý do không chấp nhận: " +
+                  "</span>";
+          // Hiển thị dữ liệu và ảnh trong modal
+          $("#modal-body").html(
+                  titleee + reasonData + "<br>" + "<br>" + imageTag + "<br>"
+          );
+
+          // Hiển thị modal
+          $("#myModal").modal("show");
+        });
+      });
+      /*<![CDATA[*/
+      $(document).ready(function () {
+        // Sự kiện click trên nút "Xem thêm"
+        $("a.view-more").on("click", function (event) {
+          event.preventDefault();
+          // Lấy dữ liệu trường sendToCustomer của order
+          var sendToCustomerData = $(this)
+                  .closest("tr")
+                  .data("send-to-customer");
+          // Lấy dữ liệu trường ảnh của order
+          var imageData = $(this).closest("tr").data("image");
+          var reasonData = $(this).closest("tr").data("reason-refund");
+
+          // Tạo thẻ <img> từ đường dẫn ảnh
+          var imageTag =
+                  '<img src="' +
+                  "../../../static/assets/images/" +
+                  imageData +
+                  '" alt="Order Image" style="max-width: 50%;">';
+
+          var styledText =
+                  '<span style="color: red;">' + sendToCustomerData + "</span>";
+
+          var titleee =
+                  '<span style="color: black; font-weight: bold;">' +
+                  "Lý do hoàn đơn: " +
+                  "</span>";
+
+          var titleeeSystem =
+                  '<span style="color: black; font-weight: bold;">' +
+                  "Lý do không chấp nhận: " +
+                  "</span>";
+          // Hiển thị dữ liệu và ảnh trong modal
+          $("#modal-body").html(
+                  titleee +
+                  reasonData +
+                  "<br>" +
+                  "<br>" +
+                  imageTag +
+                  "<br>" +
+                  "<br>" +
+                  titleeeSystem +
+                  styledText
+          );
+
+          // Hiển thị modal
+          $("#myModal").modal("show");
+        });
+      });
+      /*]]>*/
     </script>
   </body>
 </html>

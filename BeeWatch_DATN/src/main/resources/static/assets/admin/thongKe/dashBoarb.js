@@ -72,19 +72,40 @@ app.controller("thongke-ctrl", function ($scope, $http) {
       });
     }
   };
+
+  //tu choi hoan don
   $scope.sayByeRefund = function (item) {
-    var t = confirm("Bạn từ chối hoàn đơn hàng?");
-    if (t == false) {
-    } else {
-      $http
-        .put(`/rest/orders/saybyerefund/${item.orderId}`, item)
-        .then((resp) => {
-          $scope.initialize();
-          alert("Đơn hàng đã được từ chối hoàn lại");
-          location.reload(true);
-        });
+    var sendToCustomer = prompt("Vui lòng nhập lý do từ chối:");
+
+    if (sendToCustomer === null) {
+      // Người dùng đã nhấn Cancel, không làm gì cả
+      return;
     }
+    if (sendToCustomer.trim() === "" || sendToCustomer.length > 1000) {
+      alert("Vui lòng nhập lý do từ chối hoàn đơn hàng này");
+      return;
+    }
+    if (sendToCustomer.length > 200) {
+      alert("Lý do quá dài, vui lòng nhập khoảng 200 ký tự");
+      return;
+    }
+    $http
+      .put(`/rest/orders/saybyerefund/${item.orderId}`, {
+        sendToCustomer: sendToCustomer,
+        item: item,
+      })
+      .then((resp) => {
+        $scope.initialize();
+        alert("Đơn hàng đã được từ chối hoàn lại");
+        location.reload(true);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật lý do:", error);
+        // Xử lý lỗi nếu cần
+      });
   };
+
+  ///end
   $scope.findId = function (item) {
     $http.get(`/rest/orders/${item.orderId}`, item).then((resp) => {
       $scope.orderDetail = resp.data;

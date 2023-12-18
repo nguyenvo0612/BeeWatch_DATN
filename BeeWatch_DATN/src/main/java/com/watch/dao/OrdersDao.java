@@ -73,6 +73,10 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query(value="select count(order_id) from orders where sdt_nn is not null and ten_nn is not null and address is not null and status = 4 and reason is null",nativeQuery = true)
 	Long getTotalOrder();
 
+
+	@Query(value="select count(order_id) from orders where  sdt_nn is not null and ten_nn is not null and address is not null and tthai_thanh_toan = 1",nativeQuery = true)
+	Long getTotalOrderDone();
+
 	@Query("SELECT new ReportAccount(o.account.accountId,o.account.fullname,o.account.image, COUNT(o.account.accountId) ) FROM Orders o "
 			+ "WHERE o.tenNn is not null and o.address is not null and o.sdtNn is not null and o.status = 4 and o.tthaiThanhToan=1 "
 			+ "GROUP BY o.account.accountId,o.account.fullname,o.account.image " + "ORDER BY COUNT(o.id) DESC")

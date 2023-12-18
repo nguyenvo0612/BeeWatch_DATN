@@ -79,6 +79,17 @@
     	width: 30%;
     	height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
 		}
+		.ly_do_khong_chap_nhan{
+			color: red;
+		}
+		.title_ly_do_khong_chap_nhan{
+			font-weight: bold;
+			
+		}
+		.title_ly_do{
+			margin-left: 20px;
+			
+		}
 		/* .cotthongke{
 		width: 200px;
 		} */
@@ -234,10 +245,12 @@
 										<span ng-if="item.status ==0">Đã hủy</span> |
 										<span ng-if="item.tthaiThanhToan == 0"  ng-show="item.status !=6">Chờ thanh toán</span>
 										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6 && item.status !=5" >Đã thanh toán</span>
+										<span ng-if="item.tthaiThanhToan == 2">Đã hoàn tiền</span> |
 										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
-										<span ng-if="item.status == 4 && item.reason != null"> |</span>
-										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
-										<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status !=6">Đã hoàn tiền</span>
+										<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status == 6 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
+										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Lý do</a></span>
+
+										
 										
 									</td>
 									<td class="text-nowrap">
@@ -271,8 +284,9 @@
 										</div>
 										<div class="btn-group">
 											<a class="dropdown_icon" data-toggle="dropdown">
-												<button class="btn btn-danger" ng-show="item.status !=5"  ng-click="updateClose(item)" ng-disabled="item.status == 4 || item.status ==0 ||item.status ==5 ||item.status ==6">Huỷ đơn</button>
-												<button class="btn btn-danger" ng-show="item.status ==5"  ng-click="sayByeRefund(item)" >Từ chối</button>
+												<button class="btn btn-danger" ng-show="item.status !=5"  ng-click="updateClose(item)" ng-disabled="item.status == 3 || item.status == 4 || item.status ==0 ||item.status ==5 ||item.status ==6">Huỷ đơn</button>
+												<button class="btn btn-danger" ng-show="item.status == 5" ng-click="sayByeRefund(item)">Từ chối</button>
+
 											</a>
 										</div>
 										<div class="btn-group">
@@ -368,6 +382,9 @@
 				
 				{{currentSelectedItem.reason}}
             </div>
+			<div ng-show="currentSelectedItem.sendToCustomer!=null"  class="title_ly_do">
+				<span  class="title_ly_do_khong_chap_nhan">Lý do không chấp nhận:</span> <span class="ly_do_khong_chap_nhan">{{currentSelectedItem.sendToCustomer}}</span>
+			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
