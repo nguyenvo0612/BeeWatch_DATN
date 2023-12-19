@@ -34,7 +34,7 @@ public interface OrderDetailDao extends JpaRepository<OrderDetail, Integer> {
 			+ "GROUP BY o.product.productId,o.product.name,o.product.price " + "ORDER BY SUM(o.quantity) ASC")
 	List<ReportQuantityProduct> getProductMin();
 	
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity, sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity, sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"

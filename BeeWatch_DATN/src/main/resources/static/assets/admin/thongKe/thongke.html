@@ -231,7 +231,7 @@
 									<td>{{item.tenNn}}</td>
 									<td>{{item.voucher.voucherName}}</td>
 									<td>{{item.createDate | date : 'dd-MM-yyyy'}}</td>
-									<td>{{item.total | number:0 }} VND</td>
+									<td>{{item.tienSauGiam | number:0 }} VND</td>
 									<td>{{item.address}}</td>
 									<td>
 										<!-- <span class="mode mode_on">{{item.status}}</span>-->
@@ -242,17 +242,19 @@
 										<span ng-if="item.status == 4 && item.reason != null">Từ chối hoàn</span>
 										<span ng-if="item.status ==5">Yêu cầu hoàn đơn</span>
 										<span ng-if="item.status ==6">Đơn hoàn</span>
-										<span ng-if="item.status ==0">Đã hủy</span> |
+										<span ng-if="item.status ==0">Đã hủy</span>
+										<span ng-show="item.status ==1 || item.status ==2 || item.status ==3 || item.status ==4 || item.status ==6"> | </span>
 										<span ng-if="item.tthaiThanhToan == 0"  ng-show="item.status !=6">Chờ thanh toán</span>
 										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6 && item.status !=5" >Đã thanh toán</span>
-										<span ng-if="item.tthaiThanhToan == 2">Đã hoàn tiền</span> |
+										<span ng-if="item.tthaiThanhToan == 2">Đã hoàn tiền</span>
+										<span ng-show="item.status ==5 || item.status ==6"> | </span>
+										<span ng-show="item.status ==4 && item.reason != null"> | </span>
 										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
 										<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status == 6 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
 										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Lý do</a></span>
 
-										
-										
 									</td>
+
 									<td class="text-nowrap">
 										<!--  	<div class="btn-group mt-3" >
                                                 <a class="dropdown_icon" data-toggle="dropdown" ng-click="updateDown(item)">

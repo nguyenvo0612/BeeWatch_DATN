@@ -63,12 +63,11 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				$scope.items[index] = item;
 				this.initialize();
 				console.log(item);
-				alert("Lưu voucher thành công " + item.voucherName);
 				$(".nav-tabs a:eq(0)").tab('show');
 				//$("#exampleModal").css("display","none");
-			}).catch(error => {
-				alert("Lưu voucher thất bại")
-				console.log("error", error);
+			}).catch(res => {
+				alert("Lưu voucher thành công " + item.voucherName);
+				console.log("error", res);
 			})
 		} else {
 			//alert("Thêm mới voucher ")

@@ -153,87 +153,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="order, state: ${orders}"
-                          th:data-send-to-customer="${order.sendToCustomer}"
-                          th:data-image="${order.anhLoiSanPham}"
-                          th:data-reason-refund="${order.reason}">
-                        <td>[[${state.index}]]</td>
-                        <td>[[${order.orderId}]]</td>
-                        <td >[[${order.tenNn}]]</td>
-                        <td>[[${order.createDate}]]</td>
+                      <tr >
+                        <td></td>
+                        <td></td>
+                        <td ></td>
+                        <td></td>
                         <td>
-                          [[${#numbers.formatDecimal(order.total, 0, 'COMMA', 0,
-                          'POINT')}]] VND
                         </td>
-                        <td>
-                          <!-- <span class="mode mode_on">[[${order.status}]]</span>-->
-                          <span th:if="${order.status} == 1">Chờ duyệt</span>
-                          <span th:if="${order.status} == 2">Đang xử lý</span>
-                          <span th:if="${order.status} == 3">Đang giao</span>
-                          <span
-                            th:if="${order.status} == 4  and ${order.reason} == null"
-                            >Hoàn thành</span
-                          >
-                          <span th:if="${order.status} == 6">Đơn hoàn</span>
-                          <span
-                            th:if="${order.status} == 4 and ${order.reason} != null"
-                            >Không chấp nhận hoàn đơn</span
-                          >
-                          <span th:if="${order.status} == 5"
-                            >Yêu cầu hoàn hàng</span
-                          >
-                          <span th:if="${order.status} == 0">Đã hủy</span> |
-                          <span th:if="${order.getTthaiThanhToan} == 0"
-                            >Thanh toán khi nhận hàng</span
-                          >
-
-                          <span th:if="${order.getTthaiThanhToan} == 1"
-                            >Đã thanh toán</span
-                          >
-                          <span th:if="${order.getTthaiThanhToan} == 2"
-                            >Đã hoàn tiền</span
-                          >
-                          <span
-                                  th:if="${order.status == 5 or order.status == 6 }"
-                          >|</span
-                          >
-                          <span
-                                  th:if="${order.status == 5 or order.status == 6}"
-                          >
-                            <a href="#" class="view-hoandon"> Xem thêm</a>
-                          </span>
-                          <span
-                                  th:if="${order.status == 4 and order.reason != null }"
-                          >|</span
-                          >
-                          <span
-                                  th:if="${order.status == 4 and order.reason != null}"
-                          >
-                            <a href="#" class="view-more"> Xem lý do</a>
-                          </span>
-                        </td>
+                        <td></td>
                         <td>
                           <div class="btn-group">
-                            <a
-                              th:href="@{|/beewatch/account/history/detail/${order.orderId}|}"
-                            >
-                              <button
-                                type="button"
-                                class="btn btn-primary"
-                                th:href="@{|/beewatch/account/history/cancel/${order.orderId}|}"
-                              >
-                                Chi tiết
-                              </button>
+
                             </a>
                           </div>
                           <div class="btn-group">
-                            <input
-                              class="btn btn-danger"
-                              type="button"
-                              th:disabled="${order.status} !=1"
-                              th:onclick="'onSummit1('+${order.orderId}+')'"
-                              value="Huỷ đơn"
-                            />
+
                           </div>
                           <!-- <div class="btn-group">
                             <input
@@ -244,15 +178,6 @@
                               value="Hoàn đơn"
                             />
                           </div> -->
-                          <div class="btn-group">
-                            <input
-                              class="btn btn-danger"
-                              type="button"
-                              th:disabled="${order.status != 4 or order.reason != null}"
-                              th:onclick="'showRefundModal(' + ${order.orderId} + ')'"
-                              value="Hoàn đơn"
-                            />
-                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -272,30 +197,21 @@
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number-1}|}"
                   ><<</a
                 >
               </li>
               <li class="page-item">
-                <a
-                  class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number}|}"
-                >
-                  [[${number+1}]]/[[${orders.totalPages}]]
-                </a>
               </li>
 
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number+1}|}"
                   >>></a
                 >
               </li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${orders.totalPages-1}|}"
                   >>|</a
                 >
               </li>

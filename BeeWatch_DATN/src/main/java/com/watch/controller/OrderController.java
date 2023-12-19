@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,7 @@ import com.watch.service.StrapService;
 import com.watch.service.VoucherService;
 
 @Controller
+@EnableAsync
 public class OrderController {
 
 	@Autowired
@@ -739,6 +742,7 @@ public class OrderController {
 			account = useAcc.User();
 			Orders order1 = odao.getGanNhat(account.getAccountId());
 			orderDao.updateTienSauGiam();
+			orderDao.updateTongTienKoKhuyenMai();
 			System.out.println(order1.toString());
 			/* Format ngày tháng */
 			Date date = new Date();
@@ -785,6 +789,8 @@ public class OrderController {
 			sendSimpleEmail(mail, order1);
 
 			cartDetailDao.deleteCartDetails(account.getAccountId());
+			orderDao.updateOrdersNull();
+			orderDao.deleteOrders();
 			return "success1";
 		} else {
 			model.addAttribute("isAccount", 0);
@@ -832,15 +838,20 @@ public class OrderController {
 				product.setQuantity(slgMoi);
 				productService.save(product);
 			}
+			orderDao.updateTongTienKoKhuyenMai();
+			Double tienGiam = orderDao.getTienSauGiamKhachVangLai((order.getOrderId()));
 			String mail = orderDao.getEmailVisiting();
 			model.addAttribute("vnd", str1);
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order);
+			model.addAttribute("tienSauGiam", tienGiam);
 			if (mail == null) {
 				System.out.println("Ko co mail");
 			} else {
 				System.out.println(mail);
 			}
+			orderDao.updateOrdersNull();
+			orderDao.deleteOrders();
 			sendSimpleEmail(mail, order);
 			return "success1";
 		}
@@ -867,6 +878,8 @@ public class OrderController {
 		System.out.println("order " + ordersService.getById(id).getClass());
 		return "/user/DonHang1";
 	}
+
+	@Async
 	public void sendSimpleEmail(String email,Orders order) {
 
 		// Create a Simple MailMessage.
@@ -881,4 +894,5 @@ public class OrderController {
 		System.out.println("gui mail");
 		emailSender.send(message);
 	}
+
 }

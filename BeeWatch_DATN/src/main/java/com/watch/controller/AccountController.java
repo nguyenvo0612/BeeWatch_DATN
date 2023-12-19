@@ -61,7 +61,7 @@ public class AccountController {
 	OrderDetailDao orderDetailDao;
 	// Get Cap nhat tai khoan
 
-	@GetMapping("/lich_sư_ko_login/{orderID}")
+	@GetMapping("/lich_su_ko_login/{orderID}")
 	public String orderDetail(@PathVariable(name = "orderID") int orderID, Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("isAccount", 0);
@@ -115,45 +115,34 @@ public class AccountController {
 	// Get lichSuMuahang
 	@GetMapping("/beewatch/account/history")
 	public String lichSuMuahang(Model model, HttpServletRequest request, @RequestParam("p") Optional<Integer> p, Principal principal) {
-//		if(principal != null) {
-		List<Strap_material> straps = strapSv.findAll();
-		model.addAttribute("straps", straps);
-		List<Size> sizes = sizeSV.findAll();
-		model.addAttribute("sizes",sizes);
+		if(principal != null) {
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes",sizes);
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
+			Accounts account = useAcc.User();
+			Long id = account.getAccountId();
+			Pageable pageable = PageRequest.of(p.orElse(0), 7);
+			Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
+			model.addAttribute("number",ord.getNumber());
+			model.addAttribute("totalPages",ord.getTotalPages());
+			model.addAttribute("totalElements",ord.getTotalElements());
+			model.addAttribute("size",ord.getSize());
+			model.addAttribute("orders", ord);
+			return "/user/account/lichSuMuaHang";
+		}else {
+			List<Strap_material> straps = strapSv.findAll();
+			model.addAttribute("straps", straps);
+			List<Size> sizes = sizeSV.findAll();
+			model.addAttribute("sizes",sizes);
+			List<Brand> listBrand = brandService.findAll();
+			model.addAttribute("brands", listBrand);
 
-		List<Brand> listBrand = brandService.findAll();
-		model.addAttribute("brands", listBrand);
-		Accounts account = useAcc.User();
-//		if(useAcc.User()==null) {
-//			return "redirect:/login";
-//		}
-		Long id = account.getAccountId();
-		Pageable pageable = PageRequest.of(p.orElse(0), 7);
-		Page<Orders> ord = orderService.getOrderByUserId(id, pageable);
-		model.addAttribute("number",ord.getNumber());
-		model.addAttribute("totalPages",ord.getTotalPages());
-		model.addAttribute("totalElements",ord.getTotalElements());
-		model.addAttribute("size",ord.getSize());
+			return "/user/account/lichSuMuaHang0Login";
+		}
 
-		model.addAttribute("orders", ord);
-		return "/user/account/lichSuMuaHang";
-//		}
-//		List<Strap_material> straps = strapSv.findAll();
-//		model.addAttribute("straps", straps);
-//		List<Size> sizes = sizeSV.findAll();
-//		model.addAttribute("sizes",sizes);
-//		List<Brand> listBrand = brandService.findAll();
-//		model.addAttribute("brands", listBrand);
-//		Pageable pageable = PageRequest.of(p.orElse(0), 7);
-//
-//		Orders ord = orderDao.getVistingOrder();
-//		model.addAttribute("number",ord.getNumber());
-//		model.addAttribute("totalPages",ord.getTotalPages());
-//		model.addAttribute("totalElements",ord.getTotalElements());
-//		model.addAttribute("size",ord.getSize());
-//
-//		model.addAttribute("orders", ord);
-//		return "/user/account/lichSuMuaHang";
 	}
 
 	//huy don hang
@@ -422,18 +411,19 @@ public class AccountController {
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
 		model.addAttribute("sizes",sizes);
-
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
 		try {
 			session.setAttribute("keywords", kw);
 			Pageable pageable = PageRequest.of(p.orElse(0), 12);
 			Page<WishList> page = orderDao.findByKeywords("%" + kw + "%", pageable);
+			orderDao.findByKeywords(kw, pageable);
 			model.addAttribute("items", page);
+			return "/user/account/lichSuMuaHang";
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "product/list";
+		return "/user/account/lichSuMuaHang0Login";
 	}
 
 	@GetMapping("/beewatch/account/favorite")

@@ -38,8 +38,10 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	Long dangGiao();
 
 	//hoàn thành
-	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=4  and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
+	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=4 or Orders.status =5 and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long hoanThanh();
+
+
 
 	//đã  hủy
 	@Query("select count(Orders.orderId) from Orders Orders where Orders.status=0  and Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
@@ -63,6 +65,9 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 
 	@Query(value = "select top(1) tien_sau_giam from orders where account_id = ?1 order by create_date desc ", nativeQuery = true)
 	Double getTienSauGiam(Long id);
+
+	@Query(value = "select top(1) tien_sau_giam from orders where order_id = ?1 order by create_date desc  ", nativeQuery = true)
+	Double getTienSauGiamKhachVangLai(int id);
 
 	@Query(value = "select top 1 * from orders where visting_guest_id is null and account_id is null order by create_date desc", nativeQuery = true)
 	Orders getVistingOrder();
@@ -97,13 +102,30 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query(value = "update orders set tien_sau_giam = total - v.valued from orders od join vouchers v on od.voucher_name = v.voucher_name", nativeQuery = true)
 	void updateTienSauGiam();
 
+	@Transactional
+	@Modifying
+	@Query(value = "update orders set tien_sau_giam = total where tien_sau_giam = 0", nativeQuery = true)
+	void updateTongTienKoKhuyenMai();
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete orders where account_id is null and visting_guest_id is null", nativeQuery = true)
+	void deleteOrders();
+
+	@Transactional
+	@Modifying
+	@Query(value = "update order_detail set order_id = null, product_id = null\n" +
+			"from orders o join order_detail od on o.order_id = od.order_id\n" +
+			"where account_id is null and visting_guest_id is null", nativeQuery = true)
+	void updateOrdersNull();
+
 	@Query("SELECT o.vistingGuest.email FROM Orders o where o.orderId=?1")
 	String getEmailVisiting(Integer id);
 
 	@Query(value = "select email from visting_guest where id_guest in (select top 1 visting_guest_id from orders order by create_date desc)", nativeQuery = true)
 	String getEmailVisiting();
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity, sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity, sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -113,7 +135,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "  					GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductSearch(Integer thang,Integer namTke, Integer categoySelect, Integer brandSelect);
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -123,7 +145,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "						GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductSearch1(Integer categoySelect, Integer brandSelect);
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -133,7 +155,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "						GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductSearch2(Integer thang,Integer namTke, Integer brandSelect);
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -144,7 +166,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	List<ThongKeDto> getProductSearch3(Integer thang,Integer namTke, Integer categoySelect);
 
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -154,7 +176,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "						GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductSearch4(Integer brandSelect);
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -164,7 +186,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "						GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductSearch5(Integer categoySelect);
 
-	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.total) as total)  \r\n"
+	@Query(value="select new ThongKeDto(a.productId as id,a.name, d.name as brand,e.name as cate, sum(b.quantity) as quantity,  sum(c.tienSauGiam) as total)  \r\n"
 			+ "						from Product a join OrderDetail b on a.productId = b.product.productId\r\n"
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
@@ -202,8 +224,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 			+ "	where o.ten_nn like %?1% and CONVERT(varchar, o.create_date, 101) = CONVERT(date, ?2) and orders.address is not null and orders.sdt_nn is not null and orders.ten_nn is not null",nativeQuery = true)
 	List<Orders> getDonHangSearch3(String tenTk, String ngayTk);
 
-	@Query(value = "select o.* from orders o join accounts a on o.account_id = a.account_id\r\n"
-			+ "	where o.status =?1 and o.address is not null and o.sdt_nn is not null and o.ten_nn is not null",nativeQuery = true)
+	@Query(value = "select * from orders where status =?1 and ten_nn is not null ",nativeQuery = true)
 	List<Orders> getDonHangSearch4(String tthaiTk);
 
 	@Query(value = "select o.* from orders o join accounts a on o.account_id = a.account_id\r\n"
@@ -219,6 +240,8 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 
 	@Query(value="SELECT * from orders where address is not null and sdt_nn is not null and ten_nn is not null order by create_date desc",nativeQuery = true)
 	List<Orders> getRealOrder();
+
+
 
 	@Query(value="select count(distinct(o.order_id)) from orders o\r\n"
 			+ "join order_detail d on d.order_id = o.order_id\r\n"

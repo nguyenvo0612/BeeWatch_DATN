@@ -52,7 +52,7 @@
                     <span th:if="${order.getTthaiThanhToan} == 1">Đã thanh toán</span>
                     <br>
                     <div th:if="${isAccount} == 1"><a th:href="@{/beewatch/account/history}">Xem chi tiết</a></div>
-                    <div th:if="${isAccount} == 0"><a th:href="@{'/lich_sư_ko_login/' + ${order.orderId}}">Xem chi tiết</a></div>
+                    <div th:if="${isAccount} == 0"><a th:href="@{'/lich_su_ko_login/' + ${order.orderId}}">Xem chi tiết</a></div>
                 </div>
             </div>
 
