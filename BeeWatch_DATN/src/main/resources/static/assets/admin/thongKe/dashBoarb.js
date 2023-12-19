@@ -46,6 +46,19 @@ app.controller("thongke-ctrl", function ($scope, $http) {
     }
   };
 
+  $scope.confirmTienCoc = function (item) {
+    var t = confirm("Bạn muốn xác nhận hoàn đơn " + item.orderId + " không?");
+    if (t == false) {
+    } else {
+      $http.put(`/rest/orders/up/${item.orderId}`, item).then((resp) => {
+        $scope.initialize();
+        alert("Đơn hàng đã được chuyển trạng thái");
+        // $window.location.reload();
+        location.reload(true);
+      });
+    }
+  };
+
   $scope.updateDown = function (item) {
     var t;
     if (item.status == 1) {

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8" />
 	<title>Thống kê</title>
@@ -282,6 +282,7 @@
 												<button type="button" class="btn btn-primary" ng-show="item.status ==5" ng-click="confirmRefund(item)">Xác nhận hoàn đơn</button>
 												<button type="button" class="btn btn-primary" ng-show="item.status ==2" ng-click="updateUp(item)">Giao hàng</button>
 												<button type="button" class="btn btn-primary" ng-show="item.status ==3" ng-click="updateUp(item)">Hoàn thành</button>
+												<button type="button" class="btn btn-primary" ng-show="item.status ==1" ng-click="ConfirmTienCoc(item)"   ng-click="showCoc(item)"   data-toggle="modal" data-target="#errorCoc">Nhận cọc</button>
 											</a>
 										</div>
 										<div class="btn-group">
@@ -395,11 +396,35 @@
 </div>
 
 
+	<div class="modal fade" id="errorCoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCoc" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCoc">Coc don hang</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<span>Nhận đủ số cọc :</span>
+					<input type="number">
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 <td ng-repeat="item in orderList">
     <span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6 ">
         <a href="#" ng-click="showErrorDetails(item)" data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a>
     </span>
 </td>
+
 </body>
 </html>
 

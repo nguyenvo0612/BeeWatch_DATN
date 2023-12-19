@@ -741,9 +741,8 @@ public class OrderController {
 //		Orders order = (Orders) session.getAttribute("OrderganNhat");
 			account = useAcc.User();
 			Orders order1 = odao.getGanNhat(account.getAccountId());
-			orderDao.updateTienSauGiam();
 			orderDao.updateTongTienKoKhuyenMai();
-			System.out.println(order1.toString());
+			orderDao.updateTienSauGiam();
 			/* Format ngày tháng */
 			Date date = new Date();
 			date = order1.getCreateDate();
