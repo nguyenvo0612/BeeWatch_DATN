@@ -189,12 +189,9 @@
                       </td>
                       <td>
                         <div class="price-wrap" style="margin-top: 50px">
-                          <a class="price">
-                            <p
-                              th:text="${item.getPrice() * item.getQuantity()}"
-                            >
+                          <a class="price" id="MyNumber" th:text="${#numbers.formatDecimal(item.getPrice() * item.getQuantity(), 3, 0)}"
+                          >
                               VNĐ
-                            </p>
                           </a>
                         </div>
                       </td>
@@ -210,7 +207,7 @@
                 </table>
               </div>
               <div th:if="${#lists.isEmpty(cartItems)}">
-                <h3>Bạn chưa thêm sản phẩm nào vào giỏ hàng. (～￣▽￣)～</h3>
+                <h3>Bạn chưa thêm sản phẩm nào vào giỏ hàng.</h3>
               </div>
             </div>
             <div

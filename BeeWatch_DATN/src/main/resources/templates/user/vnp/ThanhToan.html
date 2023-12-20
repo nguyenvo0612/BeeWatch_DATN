@@ -150,11 +150,11 @@
                 >
                   <div>
                     <h6 class="my-0" th:text="${item.getNameProduct()}"></h6>
-                    <small class="text-muted" th:text="${item.getPrice() * item.getQuantity()}"
+                    <small class="text-muted" th:text="${#numbers.formatDecimal(item.getPrice() * item.getQuantity(), 3, 0)}"
                     ></small
                     >
                   </div>
-                  <span class="text-muted" th:text="${item.getPrice() * item.getQuantity()}"></span>
+                  <span class="text-muted" th:text="${#numbers.formatDecimal(item.getPrice() * item.getQuantity(), 3, 0)}"></span>
                 </li>
               </ul>
               <!-- Phần hiển thị voucher -->
