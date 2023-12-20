@@ -62,6 +62,44 @@ public class Orders implements Serializable {
     @Column(columnDefinition = "NVARCHAR(200)  NULL")
     private String sendToCustomer;
 
+    @Column(name = "date_start")
+    private Date dateStart;
+
+    @Column(name = "date_end")
+    private Date dateEnd;
+
+    @Column(name = "tien_coc")
+    private float tienCoc;
+
+
+    public void setTienSauGiam(double tienSauGiam) {
+        this.tienSauGiam = tienSauGiam;
+    }
+
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public float getTienCoc() {
+        return tienCoc;
+    }
+
+    public void setTienCoc(float tienCoc) {
+        this.tienCoc = tienCoc;
+    }
+
     public void setSendToCustomer(String sendToCustomer) {
         this.sendToCustomer = sendToCustomer;
     }

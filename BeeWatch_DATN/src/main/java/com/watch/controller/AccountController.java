@@ -4,6 +4,8 @@ import com.watch.dao.*;
 import com.watch.entity.*;
 import com.watch.service.*;
 import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,6 +62,7 @@ public class AccountController {
 	@Autowired
 	OrderDetailDao orderDetailDao;
 	// Get Cap nhat tai khoan
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/lich_su_ko_login/{orderID}")
 	public String orderDetail(@PathVariable(name = "orderID") int orderID, Model model) {
@@ -174,16 +177,16 @@ public class AccountController {
 				model.addAttribute("totalElements",ord.getTotalElements());
 				model.addAttribute("size",ord.getSize());
 				model.addAttribute("orders", ord);
-
-				if(order.getStatus() == 1) {
+				if (order.getStatus() == 1 || order.getStatus() == 2) {
 					order.setStatus(0);
-					if(order.getTthaiThanhToan() == 1) {
+					logger.info(String.valueOf(order.getStatus()));
+					if (order.getTthaiThanhToan() == 1) {
 						order.setTthaiThanhToan(2);
 					}
 					List<OrderDetail> odt = detailDao.getOdtByOd(orderId);
 //				List<Product> listPro = productDao.getProductByOrders(orderId);
 
-					for(OrderDetail o : odt) {
+					for (OrderDetail o : odt) {
 						Product pro = productDao.getProductByOrderDetail(o.getOrderDetailId());
 						pro.setQuantity(pro.getQuantity() + o.getQuantity());
 						productSV.save(pro);
@@ -191,7 +194,7 @@ public class AccountController {
 					//back lại số lượng sp
 					// back lại sl voucher
 
-					if(null != order.getVoucher()) {
+					if (null != order.getVoucher()) {
 						Vouchers voucher = voucherDao.getVoucherWithOrder(order.getVoucher().getVoucherName());
 						voucher.setQuantity(voucher.getQuantity() + 1);
 						voucherDao.save(voucher);
@@ -199,7 +202,7 @@ public class AccountController {
 				}
 
 				orderService.save(order);
-				System.out.println("Đã hủy đơn: "+orderId);
+				System.out.println("Đã hủy đơn login: "+orderId);
 				model.addAttribute("message", "Hủy đơn thành công");
 				return "/user/account/lichSuMuaHang";
 
@@ -215,7 +218,7 @@ public class AccountController {
 				model.addAttribute("orders", ord);
 
 
-				if (order.getStatus() == 1) {
+				if (order.getStatus() == 1 || order.getStatus() == 2) {
 					order.setStatus(0);
 					if (order.getTthaiThanhToan() == 1) {
 						order.setTthaiThanhToan(2);

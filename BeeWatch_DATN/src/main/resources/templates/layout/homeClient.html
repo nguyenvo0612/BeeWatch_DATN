@@ -270,12 +270,12 @@
             <div class="dhn">
               <a
                 class="btn btn-secondary"
-                th:href="@{|/beewatch/product/gender/nam|}"
+                th:href="@{|/beewatch/category/1|}"
                 >Đồng hồ cơ</a
               >
               <a
                 class="btn btn-secondary"
-                th:href="@{|/beewatch/product/gender/nu|}"
+                th:href="@{|/beewatch/category/2|}"
                 >Đồng hồ pin</a
               >
             </div>
@@ -316,8 +316,7 @@
                   </a>
 
                   <div>
-                    [[*{listpro.brand.name}]] - [[*{listpro.gender} ?
-                    'Nam':'Nữ']] - [[*{listpro.size.name}]] -
+                    [[*{listpro.brand.name}]] - [[*{listpro.size.name}]] -
                     [[*{listpro.glass.name}]]
                   </div>
                 </div>

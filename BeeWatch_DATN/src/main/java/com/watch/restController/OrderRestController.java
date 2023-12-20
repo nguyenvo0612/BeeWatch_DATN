@@ -14,12 +14,17 @@ import com.watch.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -84,9 +89,13 @@ public class OrderRestController {
 			order.setStatus(2);
 		} else if (status == 2) {
 			order.setStatus(3);
+			order.setDateStart(new Date());
 //			order.setTthaiThanhToan(1);
 		}else if( status == 3) {
+			order.setDateEnd(new Date());
 			order.setStatus(4);
+			double tienSG =order.getTienSauGiam()+order.getTienCoc();
+			order.setTienSauGiam((float) tienSG);
 			order.setTthaiThanhToan(1);
 		}else if( status == 5) {
 			order.setStatus(6);
@@ -105,7 +114,7 @@ public class OrderRestController {
 	VoucherDao voucherDao;
 
 	@PutMapping("/close/{id}")
-	public Orders updateStatus2(@PathVariable("id") Integer id, Principal principal) {
+	public Orders updateStatus2(@PathVariable("id") Integer id, Principal principal, Authentication authentication) {
 		Orders order = dao.getById(id);
 		String email = dao.getEmail(id);
 		logger.info("Get email");
@@ -142,8 +151,10 @@ public class OrderRestController {
 				voucherDao.save(voucher);
 			}
 		}
-
 		System.out.println("Đã hủy đơn: "+id);
+		if(principal.getName().equals("admin")) {
+
+		}
 		sendSimpleEmail(email);
 		return dao.save(order);
 	}
@@ -227,5 +238,37 @@ public class OrderRestController {
 		message.setText("Đơn hàng đã được thay đổi trạng thái bạn vui lòng kiếm tra");
 		emailSender.send(message);
 	}
-
+	@PutMapping("/coctien/{id}")
+	public Orders cocTien(@PathVariable("id") Integer id, Principal principal, @RequestBody Map<String, Float> requestBody) {
+//		String tien=String.valueOf(soTienCoc);
+//		Float soTienC =Float.valueOf(tien);
+		Float soTienCoc = requestBody.get("soTienCoc");
+		Orders order = dao.getById(id);
+		String email = dao.getEmail(id);
+		logger.info("Get email");
+		if(email == null) {
+			email = dao.getEmailVisiting(id);
+			logger.info("1", email);
+		}
+		int status = order.getStatus();
+		if (status == 0) {
+			order.setStatus(1);
+		} else if (status == 1) {
+			order.setStatus(2);
+			double tienSG =order.getTienSauGiam()-soTienCoc;
+			order.setTienSauGiam((float) tienSG);
+			order.setTienCoc(soTienCoc);
+		} else if (status == 2) {
+			order.setStatus(3);
+//			order.setTthaiThanhToan(1);
+		}else if( status == 3) {
+			order.setStatus(4);
+			order.setTthaiThanhToan(1);
+		}else if( status == 5) {
+			order.setStatus(6);
+			order.setTthaiThanhToan(1);
+		}
+		sendSimpleEmail(email);
+		return dao.save(order);
+	}
 }

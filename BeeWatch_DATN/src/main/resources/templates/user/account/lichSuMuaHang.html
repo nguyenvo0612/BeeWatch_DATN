@@ -230,7 +230,8 @@
                             <input
                               class="btn btn-danger"
                               type="button"
-                              th:disabled="${order.status} !=1"
+                              th:onshow="${order.status == 1 or order.status == 2}"
+                              th:disabled="${order.status == 3 or order.status == 4 or order.status == 5 or order.status == 6 or order.status ==0}"
                               th:onclick="'onSummit1('+${order.orderId}+')'"
                               value="Huỷ đơn"
                             />

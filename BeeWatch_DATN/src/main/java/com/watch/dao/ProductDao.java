@@ -13,6 +13,9 @@ import com.watch.entity.Product;
 @Repository
 public interface ProductDao extends JpaRepository<Product, Integer>{
 	/* @Query("select o from Orders o where o.account.username=?1") */
+
+	@Query(value = "select * from product where category_id = ?1", nativeQuery = true)
+	Page<Product> ProductCategory(Integer id, Pageable pageable);
 	
 	@Query(value = "select p from Product p where p.category.categoryId=?1")
 	Page<Product> selectProductSpIdCategory(Integer id,Pageable pageable);

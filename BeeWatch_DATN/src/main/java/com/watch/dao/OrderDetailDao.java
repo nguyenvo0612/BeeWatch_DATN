@@ -39,7 +39,7 @@ public interface OrderDetailDao extends JpaRepository<OrderDetail, Integer> {
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
 			+ "						join Category e on e.categoryId = a.category.categoryId\r\n"
-			+"						where b.order.sdtNn is not null and b.order.address is not null and b.order.tenNn is not null and b.order.tthaiThanhToan = 1 and b.order.status =4 "
+			+"						where b.order.sdtNn is not null and b.order.address is not null and b.order.tenNn is not null and b.order.tthaiThanhToan = 1 "
 			+ "						GROUP BY a.productId,a.name, d.name,e.name")
 	List<ThongKeDto> getProductAll();
 
@@ -48,7 +48,7 @@ public interface OrderDetailDao extends JpaRepository<OrderDetail, Integer> {
 			+ "						join Orders c on b.order.orderId = c.orderId \r\n"
 			+ "						join Brand d on a.brand.brandId = d.brandId\r\n"
 			+ "						join Category e on e.categoryId = a.category.categoryId\r\n"
-			+ "						where b.order.status != 0 and b.order.sdtNn is not null and b.order.address is not null and b.order.tenNn is not null and b.order.tthaiThanhToan = 1 and b.order.status =4 "	
+			+ "						where b.order.status != 0 and b.order.sdtNn is not null and b.order.address is not null and b.order.tenNn is not null and b.order.tthaiThanhToan = 1  "
 			+ "						GROUP BY a.productId,a.name, d.name,e.name"
 			+ "						ORDER BY sum(b.quantity) asc")
 	List<ThongKeDto> getProductBySmall();

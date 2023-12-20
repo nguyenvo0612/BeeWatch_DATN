@@ -1,4 +1,44 @@
 app.controller("thongke-ctrl", function ($scope, $http) {
+  $scope.showDepositDialog = function(item) {
+    var soTienCoc = prompt("Nhập số tiền cọc cho đơn hàng " + item.orderId + ":");
+
+    // Kiểm tra nếu người dùng đã nhập số tiền cọc
+    if (soTienCoc !== null) {
+      // Xử lý logic của bạn với số tiền cọc ở đây
+      console.log("Số tiền cọc cho đơn hàng " + item.orderId + ": " + soTienCoc + " VND");
+
+      // Gọi hàm xác nhận cọc hoặc thực hiện các bước khác tùy thuộc vào yêu cầu của bạn
+      // confirmDeposit(item, depositAmount);
+    }
+    if (soTienCoc.trim() === "") {
+      alert("Vui lòng nhập số tiền cọc");
+      return;
+    }
+    soTienCoc = parseFloat(soTienCoc);
+    if (soTienCoc > item.tienSauGiam) {
+      alert("Số tiền cọc lớn hơn số tiền phải thanh toán");
+      return;
+    }
+
+    if (soTienCoc < item.tienSauGiam * 0.1) {
+      alert("Số tiền cọc tối thiểu là 10% giá trị đơn hàng " + item.tienSauGiam);
+      return;
+    }
+    var data = {
+      soTienCoc: soTienCoc
+    };
+    $http.put('/rest/orders/coctien/' + item.orderId, data)
+        .then(function(response) {
+          // Xử lý kết quả từ server nếu cần
+          alert("Đơn hàng đã được chuyển trạng thái");
+          // $window.location.reload();
+          location.reload(true);
+        })
+        .catch(function(error) {
+          // Xử lý lỗi nếu có
+          console.error("Lỗi khi cập nhật số tiền cọc:", error);
+        });
+  };
   // hoa don
   $scope.order2 = [];
   $scope.orderDetail = [];

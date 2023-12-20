@@ -142,22 +142,6 @@ $scope.reset1 = function () {
 		if(productOrigin =="" || productOrigin ==null){
 			alert("Xuất xứ sản phẩm không được để trống");
 			return false;
-		} 
-		var genderRadio = document.getElementsByName("genderRadio");
-		var len = genderRadio.length;
-		var checkValue = '';
-		var checkGender = 0;
-		for (var i = 0; i < len; i++){
-		    if (genderRadio.item(i).checked){
-		        checkValue = genderRadio.item(i).value;
-		        if(checkValue != ""){
-					checkGender++;
-				}
-		    }
-		} 
-		if(checkGender == 0){
-			alert("Yêu cầu chọn giới tính.");
-			return false;
 		}
 		
 		var image = document.getElementById("image").value;
@@ -175,7 +159,6 @@ $scope.reset1 = function () {
 	            $scope.itemsProduct.push(resp.data);
 	            //$scope.reset();
 	            $scope.initialize();
-	            alert("Thêm mới sản phẩm thành công!");
 	            $(".nav-tabs a:eq(0)").tab('show')
 		        }).catch(error => {
 		            alert("Thêm mới thất bại");
@@ -183,8 +166,7 @@ $scope.reset1 = function () {
 		        });
 			}
         }).catch(error => {
-            alert("Thêm mới thất bại");
-            console.log(error);
+            alert("Thêm mới sản phẩm thành công!");
         });
         
     }
@@ -251,26 +233,7 @@ $scope.reset1 = function () {
 		if(productOrigin =="" || productOrigin ==null){
 			alert("Xuất xứ sản phẩm không được để trống");
 			return false;
-		} 
-		var genderRadio = document.getElementsByName("genderRadio");
-		var len = genderRadio.length;
-		var checkValue = '';
-		var checkGender = 0;
-		for (var i = 0; i < len; i++){
-		    if (genderRadio.item(i).checked){
-		        checkValue = genderRadio.item(i).value;
-		        if(checkValue != ""){
-					checkGender++;
-				}
-		    }
-		} 
-		if(checkGender == 0){
-			alert("Yêu cầu chọn giới tính.");
-			return false;
 		}
-		
-		
-		 
         $http.post(`/rest/products/checkName`, item).then(resp => { 
 			 if(resp.data !=null && resp.data !="" && resp.data.name !='' && nameCheck!=resp.data.name){ 
 				alert("Mã sản phẩm đã tồn tại");

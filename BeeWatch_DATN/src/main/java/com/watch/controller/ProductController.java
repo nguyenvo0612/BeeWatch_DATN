@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.watch.dao.CartDao;
+import com.watch.dao.ProductDao;
 import com.watch.entity.*;
 import com.watch.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class ProductController {
 	
 	@Autowired
 	SizeService sizeSV;
+
+	@Autowired
+	ProductDao productDao;
 	
 	 List<Category> categories;
 	 List<Brand> brands;
@@ -446,8 +450,7 @@ public class ProductController {
 	}
 	
 	@GetMapping({"/beewatch/category/{id}"})
-	public String loaisp2(Model model, @PathVariable("id") String id, @RequestParam("p") Optional<Integer> p,Principal principal) {
-		System.out.println("id: " + id);
+	public String loaisp2(Model model, @PathVariable("id") int id, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
 			String username = principal.getName();
@@ -458,7 +461,7 @@ public class ProductController {
 			dulieu();
 			products = null;
 			Pageable pageable = PageRequest.of(p.orElse(0), 8);
-			Page<Product> page = selectAllcategoryName(pageable,id);
+			Page<Product> page = productDao.ProductCategory(id, pageable);
 			model.addAttribute("listproduct", products);
 			model.addAttribute("brands", brands);
 			model.addAttribute("straps", straps);
@@ -474,10 +477,11 @@ public class ProductController {
 		}else{
 		model.addAttribute("isAccount", 0);
 		dulieu();
-		products = null;
 		Pageable pageable = PageRequest.of(p.orElse(0), 8);
-		Page<Product> page = selectAllcategoryName(pageable,id);
-		model.addAttribute("listproduct", products);
+		Page<Product> page = productDao.ProductCategory(id, pageable);
+			System.out.println(page.getNumber());
+			System.out.println(page.getTotalPages());
+		model.addAttribute("listproduct", page);
 		model.addAttribute("brands", brands);
 		model.addAttribute("straps", straps);
 		model.addAttribute("sizes",sizes);
@@ -487,15 +491,10 @@ public class ProductController {
 		model.addAttribute("totalPages",page.getTotalPages());
 		model.addAttribute("totalElements",page.getTotalElements());
 		model.addAttribute("size",page.getSize());
-		System.out.println("toanf 09876: "+page.getSize());
 		return "/user/product/childSanPham";
 		}
 	}
 
-//	double price1 = 0;
-//	double price2 = 0;
-//	private Page<Product> products;
-//	String the;
 	
 	@PostMapping("/beewatch/product/search")
 	public String search(Model model, @RequestParam("bran") String bran, @RequestParam("cate") String cate,
