@@ -467,7 +467,7 @@ public class OrderController {
 			String address = ttkh.getAddress();
 			String maVoucher2 = (String) session.getAttribute("maVoucher");
 			//int amount = (int) session.getAttribute("amount");
-			order.setAddress(address);
+			order.setAddress(visiting.getAddress());
 
 			if(maVoucher2== null || maVoucher2.equals("")) {
 				order.setVoucher(null);
@@ -594,14 +594,20 @@ public class OrderController {
 			}else {
 				vistingGuest = (VistingGuest) session.getAttribute("accountKh");
 			}
-			String address = accountKh.getAddress();
+			String address = "";
+			if(principal != null) {
+				address = accountKh.getAddress();
+			}else {
+				address = vistingGuest.getAddress();
+
+			}
 			String maVoucher = (String) session.getAttribute("maVoucher");
 
 			System.out.println(address);
 
 
 			//int amount = (int) session.getAttribute("amount");
-			order.setAddress(address);
+			order.setAddress(accountKh.getAddress());
 
 			if(maVoucher== null || maVoucher.equals("")) {
 				order.setVoucher(null);
@@ -653,7 +659,13 @@ public class OrderController {
 			order.setSdtNn(accountKh.getPhone());
 //			order.setEmailNn(accountKh.getEmail());
 //			order.setDiaChiNn(accountKh.getAddress());
+			if(principal != null) {
+ 				address = accountKh.getAddress();
+			}else {
+				address = vistingGuest.getAddress();
 
+			}
+			order.setAddress(address);
 			order.setStatus(1);
 			order.setTthaiThanhToan(1);
 			order.setCreateDate(new Date());
@@ -740,9 +752,11 @@ public class OrderController {
 			model.addAttribute("brands", listBrand);
 //		Orders order = (Orders) session.getAttribute("OrderganNhat");
 			account = useAcc.User();
-			Orders order1 = odao.getGanNhat(account.getAccountId());
-			orderDao.updateTongTienKoKhuyenMai();
+			Orders order1 = odao.getGanNhat(account.getAccountId());orderDao.updateTongTienKoKhuyenMai();
+
 			orderDao.updateTienSauGiam();
+
+
 			/* Format ngày tháng */
 			Date date = new Date();
 			date = order1.getCreateDate();
@@ -785,6 +799,7 @@ public class OrderController {
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order1);
 			model.addAttribute("tienSauGiam", tienGiam);
+			logger.info(mail);
 			sendSimpleEmail(mail, order1);
 
 			cartDetailDao.deleteCartDetails(account.getAccountId());
@@ -838,12 +853,15 @@ public class OrderController {
 				productService.save(product);
 			}
 			orderDao.updateTongTienKoKhuyenMai();
+			orderDao.updateTienSauGiam();
+
 			Double tienGiam = orderDao.getTienSauGiamKhachVangLai((order.getOrderId()));
 			String mail = orderDao.getEmailVisiting();
 			model.addAttribute("vnd", str1);
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order);
 			model.addAttribute("tienSauGiam", tienGiam);
+			model.addAttribute("email", mail);
 			if (mail == null) {
 				System.out.println("Ko co mail");
 			} else {

@@ -215,7 +215,7 @@
                 Acme Corp.<br />
                 <span th:text="${order.getTenNn()}"></span><br />
                 <span th:if="${isAccount} == 1" th:text="${order.getAccount().getEmail()}"></span>
-                  <span th:if="${isAccount} == 0" th:text="${emailVisit}"></span>
+                  <span th:if="${isAccount} == 0" th:text="${email}"></span>
               </td>
             </tr>
           </table>
