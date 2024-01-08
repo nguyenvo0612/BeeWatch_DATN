@@ -43,12 +43,28 @@ public class OrderRestController {
 	}
 	@PostMapping()
 	public Orders create(@RequestBody JsonNode orders) {
-		logger.info(ordersService.create(orders).toString());
+		logger.info("Log CreateOrder order: ", orders.toString());
 		return ordersService.create(orders);
 	}
 
+
+	@GetMapping("/infororder/{id}")
+	public Orders findInforOrderById(@PathVariable("id") Integer id) {
+		Orders o = ordersDao.findInforOrderById(id);
+		return o;
+	}
+
+	@PutMapping("/updateorder/{id}")
+	public Orders updateInforOrder(@PathVariable("id") Integer id, @RequestBody Orders orders) {
+		Orders o =ordersDao.findInforOrderById(id);
+		o.setTenNn(orders.getTenNn());
+		o.setAddress(orders.getAddress());
+		o.setSdtNn(orders.getSdtNn());
+		return ordersDao.save(o);
+	}
 	@PostMapping("/visting")
-	public Orders createVisting(@RequestBody JsonNode orders) {
+	public Orders createVisting(@RequestBody JsonNode orders) throws Exception {
+		logger.info("Log CreateOrderVisiting order: ", orders.toString());
 		return ordersService.createOrderVisting(orders);
 	}
 
@@ -152,8 +168,9 @@ public class OrderRestController {
 			}
 		}
 		System.out.println("Đã hủy đơn: "+id);
-		if(principal.getName().equals("admin")) {
-
+		if(order.getTienCoc() != 0) {
+			order.setTienCoc(0);
+			order.setTthaiThanhToan(3);
 		}
 		sendSimpleEmail(email);
 		return dao.save(order);

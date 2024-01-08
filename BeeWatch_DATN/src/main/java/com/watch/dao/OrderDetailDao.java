@@ -5,8 +5,10 @@ import com.watch.entity.OrderDetail;
 import com.watch.entity.ReportProduct;
 import com.watch.entity.ReportQuantityProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +24,16 @@ public interface OrderDetailDao extends JpaRepository<OrderDetail, Integer> {
 //			+ "GROUP BY name, product.price\r\n"
 //			+ "ORDER BY count(order_details.quantity) ASC")
 //	List<OrderDetail> report();
+
+	@Transactional
+	@Modifying
+	@Query(value = "update order_detail set order_id = null, product_id = null where order_id = ?1", nativeQuery = true)
+	void updateOrderDetailErr(Integer id);
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete order_detail where product_id is null and order_id is null and order_id = ?1", nativeQuery = true)
+	void deleteOrderDetailErr(Integer id);
 
 	@Query("SELECT new ReportProduct(o.product.productId,o.product.name,o.product.image,o.product.price,COUNT(o.product.productId) ) FROM OrderDetail o "
 			+"						where o.order.sdtNn is not null and o.order.address is not null and o.order.tenNn is not null and o.order.tthaiThanhToan = 1 and o.order.status =4  "

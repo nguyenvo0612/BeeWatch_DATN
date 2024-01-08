@@ -1,47 +1,8 @@
 app.controller("thongke-ctrl", function ($scope, $http) {
-  $scope.showDepositDialog = function(item) {
-    var soTienCoc = prompt("Nhập số tiền cọc cho đơn hàng " + item.orderId + ":");
-
-    // Kiểm tra nếu người dùng đã nhập số tiền cọc
-    if (soTienCoc !== null) {
-      // Xử lý logic của bạn với số tiền cọc ở đây
-      console.log("Số tiền cọc cho đơn hàng " + item.orderId + ": " + soTienCoc + " VND");
-
-      // Gọi hàm xác nhận cọc hoặc thực hiện các bước khác tùy thuộc vào yêu cầu của bạn
-      // confirmDeposit(item, depositAmount);
-    }
-    if (soTienCoc.trim() === "") {
-      alert("Vui lòng nhập số tiền cọc");
-      return;
-    }
-    soTienCoc = parseFloat(soTienCoc);
-    if (soTienCoc > item.tienSauGiam) {
-      alert("Số tiền cọc lớn hơn số tiền phải thanh toán");
-      return;
-    }
-
-    if (soTienCoc < item.tienSauGiam * 0.1) {
-      alert("Số tiền cọc tối thiểu là 10% giá trị đơn hàng " + item.tienSauGiam);
-      return;
-    }
-    var data = {
-      soTienCoc: soTienCoc
-    };
-    $http.put('/rest/orders/coctien/' + item.orderId, data)
-        .then(function(response) {
-          // Xử lý kết quả từ server nếu cần
-          alert("Đơn hàng đã được chuyển trạng thái");
-          // $window.location.reload();
-          location.reload(true);
-        })
-        .catch(function(error) {
-          // Xử lý lỗi nếu có
-          console.error("Lỗi khi cập nhật số tiền cọc:", error);
-        });
-  };
   // hoa don
   $scope.order2 = [];
   $scope.orderDetail = [];
+  $scope.inforOrder = [];
   $scope.total2 = [];
   $scope.form = {};
   $scope.choDuyet = [];
@@ -61,7 +22,7 @@ app.controller("thongke-ctrl", function ($scope, $http) {
   $scope.initialize();
   $scope.updateUp = function (item) {
     var t = confirm(
-      "Bạn muốn Chuyển trạng thái đơn hàng " + item.orderId + " không?"
+        "Bạn muốn Chuyển trạng thái đơn hàng " + item.orderId + " không?"
     );
     if (t == false) {
     } else {
@@ -74,19 +35,6 @@ app.controller("thongke-ctrl", function ($scope, $http) {
     }
   };
   $scope.confirmRefund = function (item) {
-    var t = confirm("Bạn muốn xác nhận hoàn đơn " + item.orderId + " không?");
-    if (t == false) {
-    } else {
-      $http.put(`/rest/orders/up/${item.orderId}`, item).then((resp) => {
-        $scope.initialize();
-        alert("Đơn hàng đã được chuyển trạng thái");
-        // $window.location.reload();
-        location.reload(true);
-      });
-    }
-  };
-
-  $scope.confirmTienCoc = function (item) {
     var t = confirm("Bạn muốn xác nhận hoàn đơn " + item.orderId + " không?");
     if (t == false) {
     } else {
@@ -143,19 +91,19 @@ app.controller("thongke-ctrl", function ($scope, $http) {
       return;
     }
     $http
-      .put(`/rest/orders/saybyerefund/${item.orderId}`, {
-        sendToCustomer: sendToCustomer,
-        item: item,
-      })
-      .then((resp) => {
-        $scope.initialize();
-        alert("Đơn hàng đã được từ chối hoàn lại");
-        location.reload(true);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi cập nhật lý do:", error);
-        // Xử lý lỗi nếu cần
-      });
+        .put(`/rest/orders/saybyerefund/${item.orderId}`, {
+          sendToCustomer: sendToCustomer,
+          item: item,
+        })
+        .then((resp) => {
+          $scope.initialize();
+          alert("Đơn hàng đã được từ chối hoàn lại");
+          location.reload(true);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật lý do:", error);
+          // Xử lý lỗi nếu cần
+        });
   };
 
   ///end
@@ -164,6 +112,31 @@ app.controller("thongke-ctrl", function ($scope, $http) {
       $scope.orderDetail = resp.data;
       //alert(orderDetail)
     });
+    $http.get(`/rest/orders/infororder/${item.orderId}`, item).then((resp) => {
+      $scope.inforOrder = resp.data;
+      //alert(orderDetail)
+    });
+  };
+  $scope.updateInforOrder = function () {
+    // Lấy id của hóa đơn từ inforOrder.orderId
+    var orderIdUpdate = $scope.inforOrder.orderId;
+    // Lấy thông tin mới từ các trường input
+    var tenNnNew = $scope.tenNnEdit;
+    var sdtNnNew = $scope.sdtNnEdit;
+    var addressNew = $scope.addressEdit;
+
+    // Thực hiện cập nhật thông tin hóa đơn (gọi API hoặc service tương ứng)
+    // Ví dụ sử dụng $http.post:
+    $http
+        .put(`/rest/orders/updateorder/${orderIdUpdate}`, {
+          tenNn: tenNnNew,
+          sdtNn: sdtNnNew,
+          address: addressNew,
+        })
+        .then(function (resp) {
+          alert("Đơn hàng đã được sửa");
+          location.reload(true);
+        });
   };
 
   $scope.timKiemDh = function (item) {
@@ -180,10 +153,10 @@ app.controller("thongke-ctrl", function ($scope, $http) {
       tthaiTk = null;
     }
     $http
-      .get(`/rest/orders/searchDH/${tenTk}/${ngayTk}/${tthaiTk}`, item)
-      .then((resp) => {
-        $scope.order2 = resp.data;
-      });
+        .get(`/rest/orders/searchDH/${tenTk}/${ngayTk}/${tthaiTk}`, item)
+        .then((resp) => {
+          $scope.order2 = resp.data;
+        });
   };
 
   $scope.pager = {

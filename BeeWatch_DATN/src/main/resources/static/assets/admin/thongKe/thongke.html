@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 	<meta charset="UTF-8" />
 	<title>Thống kê</title>
@@ -31,7 +31,7 @@
 			margin-bottom: 10px;
 			background-color: #187da5e3;
 			font-weight: 800;
-			
+
 		}
 		.menten > h4 {
 			color: white;
@@ -73,26 +73,30 @@
 			margin-left: 10px;
 		}
 		.gachchitietloi {
-    	text-decoration: underline;
+			text-decoration: underline;
 		}
 		.img-small {
-    	width: 30%;
-    	height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
+			width: 30%;
+			height: auto; /* Đảm bảo tỷ lệ khung hình không bị biến đổi */
 		}
 		.ly_do_khong_chap_nhan{
 			color: red;
 		}
 		.title_ly_do_khong_chap_nhan{
 			font-weight: bold;
-			
+
 		}
 		.title_ly_do{
 			margin-left: 20px;
-			
+
 		}
 		/* .cotthongke{
 		width: 200px;
 		} */
+		.css-tuy-chinh {
+			background-color: rgb(235, 230, 230); /* Màu vàng */
+			width: 100%; /* Chiều rộng 100% */
+		}
 	</style>
 </head>
 <body>
@@ -104,313 +108,369 @@
 
 
 	<!-- Tab panes -->
-	
-		<div id="home" class="container tab-pane active">
-			<div class="content container-fluid">
-				<!-- Page Header -->
-				<div class="page-header">
-					<div class="row align-items-center">
 
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Tổng Đơn Hàng</h4>
-									<h3 class="mount">{{total2}} đơn hàng</h3>
-								</div>
-							</div>
+	<div id="home" class="container tab-pane active">
+		<div class="content container-fluid">
+			<!-- Page Header -->
+			<div class="page-header">
+				<div class="row align-items-center">
 
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Chờ Duyệt</h4>
-									<h3 class="mount">{{choDuyet}} đơn hàng</h3>
-								</div>
-							</div>
-
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Đang Xử Lý</h4>
-									<h3 class="mount">{{dangXuLy}} đơn hàng</h3>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Yêu Cầu Hoàn</h4>
-									<h3 class="mount">{{yeuCauHoan}} đơn hàng</h3>
-								</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Tổng Đơn Hàng</h4>
+								<h3 class="mount">{{total2}} đơn hàng</h3>
 							</div>
 						</div>
 
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Đang Giao</h4>
-									<h3 class="mount">{{dangGiao}} đơn hàng</h3>
-								</div>
-							</div>
-
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đã Hoàn Thành</h4>
-									<h3 class="mount">{{hoanThanh}} đơn hàng</h3>
-								</div>
-							</div>
-
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Hủy</h4>
-									<h3 class="mount">{{daHuy}} đơn hàng</h3>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="menten text-center">
-									<h4 class="title">Đơn Hoàn</h4>
-									<h3 class="mount">{{donHoan}} đơn hàng</h3>
-								</div>
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Chờ Duyệt</h4>
+								<h3 class="mount">{{choDuyet}} đơn hàng</h3>
 							</div>
 						</div>
-						<!-- <div class="col-sm-9 d-flex " style="justify-content: flex-end;">
-                            <a class="fas fa-file-download" type="Button"> <span class="glyphicon glyphicon-plus"></span>Xuất dữ liệu</a>
-                        </div> -->
+
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Đang Xử Lý</h4>
+								<h3 class="mount">{{dangXuLy}} đơn hàng</h3>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Yêu Cầu Hoàn</h4>
+								<h3 class="mount">{{yeuCauHoan}} đơn hàng</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Đang Giao</h4>
+								<h3 class="mount">{{dangGiao}} đơn hàng</h3>
+							</div>
+						</div>
+
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đã Hoàn Thành</h4>
+								<h3 class="mount">{{hoanThanh}} đơn hàng</h3>
+							</div>
+						</div>
+
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Hủy</h4>
+								<h3 class="mount">{{daHuy}} đơn hàng</h3>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="menten text-center">
+								<h4 class="title">Đơn Hoàn</h4>
+								<h3 class="mount">{{donHoan}} đơn hàng</h3>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="col-sm-9 d-flex " style="justify-content: flex-end;">
+                        <a class="fas fa-file-download" type="Button"> <span class="glyphicon glyphicon-plus"></span>Xuất dữ liệu</a>
+                    </div> -->
+				</div>
+			</div>
+			<hr>
+			<!-- Search Filter -->
+			<div class="row filter-row breadcrumb">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Tìm đơn hàng theo tên tài khoản"
+							   id="tenTk" name= "tenTk" th:value="${tenTk}">
 					</div>
 				</div>
-				<hr>
-				<!-- Search Filter -->
-				<div class="row filter-row breadcrumb">
-					<div class="col-sm-4">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Tìm đơn hàng theo tên tài khoản"
-								   id="tenTk" name= "tenTk" th:value="${tenTk}">
-						</div>
+				<div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
+					<div class="input-group">
+						<input type="date" class="form-control" placeholder="Search this blog"
+							   id="ngayTk" name= "ngayTk" th:value="${ngayTk}" onblur="checkDateHtai('ngayTk')">
 					</div>
-					<div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
-						<div class="input-group">
-							<input type="date" class="form-control" placeholder="Search this blog"
-								   id="ngayTk" name= "ngayTk" th:value="${ngayTk}" onblur="checkDateHtai('ngayTk')">
-						</div>
-					</div>
-					<div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-						<div class="select-focus">
-							<select class="form-control" id="tthaiTk" name= "tthaiTk" th:value="${tthaiTk}">
-								<option value=""> -- Trạng thái -- </option>
-								<option value="1"> Chờ duyệt </option>
-								<option value="2"> Đang xử lý </option>
-								<option value="3"> Đang giao </option>
-								<option value="4"> Hoàn thành </option>
-								<option value="5"> Yêu cầu hoàn</option>
-								<option value="6"> Đơn hoàn </option>
-								<option value="0"> Đã hủy </option>
-							</select>
-						</div>
-					</div>
-					<div class="input-group-append">
-						<input class="btn btn-success" type="button" ng-click="timKiemDh(item)" value="Tìm kiếm"/>
-					</div>
-
 				</div>
-				<hr>
-				<!-- /Search Filter -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="table-responsive">
-							<table class="table table-striped custom-table datatable text-center">
-								<thead>
-								<tr>
-									<th style="min-width:50px;">Mã</th>
-									<th style="min-width:100px;">Người nhận</th>
-									<th style="min-width:100px;">Voucher</th>
-									<th style="min-width:100px;">Ngày mua</th>
-									<th style="min-width:100px;">Tổng tiền</th>
-									<th style="min-width:150px;">Địa chỉ</th>
-									<th style="max-width:120px;">Trạng thái</th>
-									<th style="max-width:150px;">Hành động</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr ng-repeat="item in pager.items">
-									<td>{{item.orderId}}</td>
-									<td>{{item.tenNn}}</td>
-									<td>{{item.voucher.voucherName}}</td>
-									<td>{{item.createDate | date : 'dd-MM-yyyy'}}</td>
-									<td>{{item.tienSauGiam | number:0 }} VND</td>
-									<td>{{item.address}}</td>
-									<td>
-										<!-- <span class="mode mode_on">{{item.status}}</span>-->
-										<span ng-if="item.status ==1">Chờ duyệt</span>
-										<span ng-if="item.status ==2">Đang xử lý</span>
-										<span ng-if="item.status ==3">Đang giao</span>
-										<span ng-if="item.status == 4 && item.reason == null">Hoàn thành</span>
-										<span ng-if="item.status == 4 && item.reason != null">Từ chối hoàn</span>
-										<span ng-if="item.status ==5">Yêu cầu hoàn đơn</span>
-										<span ng-if="item.status ==6">Đơn hoàn</span>
-										<span ng-if="item.status ==0">Đã hủy</span>
-										<span ng-show="item.status ==1 || item.status ==2 || item.status ==3 || item.status ==4 || item.status ==6"> | </span>
-										<span ng-if="item.tthaiThanhToan == 0"  ng-show="item.status !=6">Chờ thanh toán</span>
-										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6 && item.status !=5" >Đã thanh toán</span>
-										<span ng-if="item.tthaiThanhToan == 2">Đã hoàn tiền</span>
-										<span ng-show="item.status ==5 || item.status ==6"> | </span>
-										<span ng-show="item.status ==4 && item.reason != null"> | </span>
-										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
-										<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status == 6 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
-										<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Lý do</a></span>
+				<div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+					<div class="select-focus">
+						<select class="form-control" id="tthaiTk" name= "tthaiTk" th:value="${tthaiTk}">
+							<option value=""> -- Trạng thái -- </option>
+							<option value="1"> Chờ duyệt </option>
+							<option value="2"> Đang xử lý </option>
+							<option value="3"> Đang giao </option>
+							<option value="4"> Hoàn thành </option>
+							<option value="5"> Yêu cầu hoàn</option>
+							<option value="6"> Đơn hoàn </option>
+							<option value="0"> Đã hủy </option>
+						</select>
+					</div>
+				</div>
+				<div class="input-group-append">
+					<input class="btn btn-success" type="button" ng-click="timKiemDh(item)" value="Tìm kiếm"/>
+				</div>
 
-									</td>
+			</div>
+			<hr>
+			<!-- /Search Filter -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<table class="table table-striped custom-table datatable text-center">
+							<thead>
+							<tr>
+								<th style="min-width:50px;">Mã</th>
+								<th style="min-width:100px;">Người nhận</th>
+								<th style="min-width:100px;">Voucher</th>
+								<th style="min-width:100px;">Ngày mua</th>
+								<th style="min-width:100px;">Tổng tiền</th>
+								<th style="min-width:150px;">Địa chỉ</th>
+								<th style="max-width:120px;">Trạng thái</th>
+								<th style="max-width:150px;">Hành động</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="item in pager.items">
+								<td>{{item.orderId}}</td>
+								<td>{{item.tenNn}}</td>
+								<td>{{item.voucher.voucherName}}</td>
+								<td>{{item.createDate | date : 'dd-MM-yyyy'}}</td>
+								<td>{{item.total | number:0 }} VND</td>
+								<td>{{item.address}}</td>
+								<td><a>Nhận cọc</a></td>
+								<td>
+									<!-- <span class="mode mode_on">{{item.status}}</span>-->
+									<span ng-if="item.status ==1">Chờ duyệt</span>
+									<span ng-if="item.status ==2">Đang xử lý</span>
+									<span ng-if="item.status ==3">Đang giao</span>
+									<span ng-if="item.status == 4 && item.reason == null">Hoàn thành</span>
+									<span ng-if="item.status == 4 && item.reason != null">Từ chối hoàn</span>
+									<span ng-if="item.status ==5">Yêu cầu hoàn đơn</span>
+									<span ng-if="item.status ==6">Đơn hoàn</span>
+									<span ng-if="item.status ==0">Đã hủy</span>
+									<span ng-show="item.status ==1 || item.status ==2 || item.status ==3 || item.status ==4 || item.status ==6"> | </span>
+									<span ng-if="item.tthaiThanhToan == 0"  ng-show="item.status !=6">Chờ thanh toán</span>
+									<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status !=6 && item.status !=5" >Đã thanh toán</span>
+									<span ng-if="item.tthaiThanhToan == 2">Đã hoàn tiền</span>
+									<span ng-show="item.status ==5 || item.status ==6"> | </span>
+									<span ng-show="item.status ==4 && item.reason != null"> | </span>
+									<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
+									<span ng-if="item.tthaiThanhToan == 2" ng-show="item.status == 6 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a></span>
+									<span ng-if="item.tthaiThanhToan == 1" ng-show="item.status == 4 && item.reason != null"><a href=""  ng-click="showErrorDetails(item)"  data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Lý do</a></span>
 
-									<td class="text-nowrap">
-										<!--  	<div class="btn-group mt-3" >
-                                                <a class="dropdown_icon" data-toggle="dropdown" ng-click="updateDown(item)">
-                                                    <button class="fas fa-reply"  ng-disabled="item.status != 1"></button> </a>
-                                            </div>
-                                            <div class="btn-group mt-3">
-                                                <a class="dropdown_icon" data-toggle="dropdown">
-                                                    <button class="fas fa-share" ng-click="updateUp(item)"  ng-disabled="item.status ==0 || item.status ==3 "></button>
-                                                </a>
-                                            </div>
-                                            <br>
-                                            <div class="btn-group">
-                                                <a class="dropdown_icon" data-toggle="modal" data-target="#exampleModal">
-                                                    <button type="button" class="fas fa-eye" ng-click="findId(item)"></button>
-                                                </a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="dropdown_icon" data-toggle="dropdown">
-                                                    <button class="far fa-times-circle" ng-click="updateClose(item)"  ng-disabled="item.status !=1"></button>
-                                                </a>
-                                            </div>-->
-										<div class="btn-group">
-											<a class="dropdown_icon" data-toggle="dropdown">
-												<button type="button" class="btn btn-primary" ng-show="item.status ==1" ng-click="updateUp(item)">Duyệt đơn</button>
-												<button type="button" class="btn btn-primary" ng-show="item.status ==5" ng-click="confirmRefund(item)">Xác nhận hoàn đơn</button>
-												<button type="button" class="btn btn-primary" ng-show="item.status ==2" ng-click="updateUp(item)">Giao hàng</button>
-												<button type="button" class="btn btn-primary" ng-show="item.status ==3" ng-click="updateUp(item)">Hoàn thành</button>
-												<button type="button" class="btn btn-primary" ng-show="item.status ==1" ng-click="ConfirmTienCoc(item)"   ng-click="showCoc(item)"   data-toggle="modal" data-target="#errorCoc">Nhận cọc</button>
-											</a>
-										</div>
-										<div class="btn-group">
-											<a class="dropdown_icon" data-toggle="dropdown">
-												<button class="btn btn-danger" ng-show="item.status !=5"  ng-click="updateClose(item)" ng-disabled="item.status == 3 || item.status == 4 || item.status ==0 ||item.status ==5 ||item.status ==6">Huỷ đơn</button>
-												<button class="btn btn-danger" ng-show="item.status == 5" ng-click="sayByeRefund(item)">Từ chối</button>
 
-											</a>
-										</div>
-										<div class="btn-group">
-											<a class="dropdown_icon" data-toggle="modal" data-target="#exampleModal">
-												<button class="btn btn-success" ng-click="findId(item)">Chi tiết</button>
-											</a>
-										</div>
-									</td>
-								</tr>
-								</tbody>
-							</table>
 
-							<div class=" text-center mb-3">
-								<button class="btn btn-danger" ng-click="pager.first()">
-									<b class="fa-solid fa-backward"></b>
-								</button>
-								<button class="btn btn-primary" ng-click="pager.prev()">
-									<b class="fa-sharp fa-solid fa-arrow-left"></b>
-								</button>
+								</td>
+								<td class="text-nowrap">
+									<!--  	<div class="btn-group mt-3" >
+                                            <a class="dropdown_icon" data-toggle="dropdown" ng-click="updateDown(item)">
+                                                <button class="fas fa-reply"  ng-disabled="item.status != 1"></button> </a>
+                                        </div>
+                                        <div class="btn-group mt-3">
+                                            <a class="dropdown_icon" data-toggle="dropdown">
+                                                <button class="fas fa-share" ng-click="updateUp(item)"  ng-disabled="item.status ==0 || item.status ==3 "></button>
+                                            </a>
+                                        </div>
+                                        <br>
+                                        <div class="btn-group">
+                                            <a class="dropdown_icon" data-toggle="modal" data-target="#exampleModal">
+                                                <button type="button" class="fas fa-eye" ng-click="findId(item)"></button>
+                                            </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="dropdown_icon" data-toggle="dropdown">
+                                                <button class="far fa-times-circle" ng-click="updateClose(item)"  ng-disabled="item.status !=1"></button>
+                                            </a>
+                                        </div>-->
+									<div class="btn-group">
+										<a class="dropdown_icon" data-toggle="dropdown">
+											<button type="button" class="btn btn-primary" ng-show="item.status ==1" ng-click="updateUp(item)">Duyệt đơn</button>
+											<button type="button" class="btn btn-primary" ng-show="item.status ==5" ng-click="confirmRefund(item)">Xác nhận hoàn đơn</button>
+											<button type="button" class="btn btn-primary" ng-show="item.status ==2" ng-click="updateUp(item)">Giao hàng</button>
+											<button type="button" class="btn btn-primary" ng-show="item.status ==3" ng-click="updateUp(item)">Hoàn thành</button>
+										</a>
+									</div>
+									<div class="btn-group">
+										<a class="dropdown_icon" data-toggle="dropdown">
+											<button class="btn btn-danger" ng-show="item.status !=5"  ng-click="updateClose(item)" ng-disabled="item.status == 3 || item.status == 4 || item.status ==0 ||item.status ==5 ||item.status ==6">Huỷ đơn</button>
+											<button class="btn btn-danger" ng-show="item.status == 5" ng-click="sayByeRefund(item)">Từ chối</button>
 
-								<button class="btn btn-success">{{pager.page + 1}} of
-									{{pager.count}}</button>
+										</a>
+									</div>
+									<div class="btn-group">
+										<a class="dropdown_icon" data-toggle="modal" data-target="#exampleModal">
+											<button class="btn btn-success" ng-click="findId(item)">Chi tiết</button>
+										</a>
+									</div>
+								</td>
+							</tr>
+							</tbody>
+						</table>
 
-								<button class="btn btn-primary" ng-click="pager.next()">
-									<b class="fa-sharp fa-solid fa-arrow-right"></b>
-								</button>
-								<button class="btn btn-danger" ng-click="pager.last()">
-									<i class="fa-solid fa-forward"></i>
-								</button>
-							</div>
-							<!-- Button trigger modal -->
-							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
+						<div class=" text-center mb-3">
+							<button class="btn btn-danger" ng-click="pager.first()">
+								<b class="fa-solid fa-backward"></b>
+							</button>
+							<button class="btn btn-primary" ng-click="pager.prev()">
+								<b class="fa-sharp fa-solid fa-arrow-left"></b>
+							</button>
+
+							<button class="btn btn-success">{{pager.page + 1}} of
+								{{pager.count}}</button>
+
+							<button class="btn btn-primary" ng-click="pager.next()">
+								<b class="fa-sharp fa-solid fa-arrow-right"></b>
+							</button>
+							<button class="btn btn-danger" ng-click="pager.last()">
+								<i class="fa-solid fa-forward"></i>
+							</button>
+						</div>
+						<!-- Button trigger modal -->
+						<!-- Modal -->
+						<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+							<div class="modal-dialog modal-lg " role="document">
+								<div class="modal-content  css-tuy-chinh ">
+									<div class="modal-body">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLongTitle">CHI TIẾT HÓA ĐƠN</h5>
+											<h5 class="modal-title" id="exampleModalLongTitle" >CHI TIẾT HÓA ĐƠN</h5>
 										</div>
-										<div class="modal-body">
-											<table class="table text-center">
-												<thead class="thead-info">
-												<tr>
-													<th scope="col">ID</th>
-													<th scope="col">MÃ SẢN PHẨM</th>
-													<th scope="col">ĐƠN GIÁ</th>
-													<th scope="col">SỐ LƯỢNG</th>
-													<th scope="col">THÀNH TIỀN</th>
-												</tr>
-												</thead>
-												<tbody>
-												<tr ng-repeat="item in orderDetail">
-													<td>{{item.product.productId}}</td>
-													<td>{{item.product.name}}</td>
-													<td>
-														{{item.price |number:0}} VNĐ
-													</td>
-													<td> {{item.quantity}}</td>
-													<td>
-														{{item.quantity * item.price |number:0}} VNĐ
-													</td>
-												</tr>
-												</tbody>
-											</table>
+										<div class="row">
+											<!-- Phần bên trái -->
+											<div class="col-4">
+												<!-- Thêm thông tin hóa đơn vào đây -->
+												<br>
+												<br>
+												<p>Mã hóa đơn: {{inforOrder.orderId}}</p>
+												<p>Ngày tạo: {{inforOrder.createDate  | date : 'dd-MM-yyyy'}}</p>
+												<p>Tên người nhận: {{inforOrder.tenNn}}</p>
+												<p>Số điện thoại: {{inforOrder.sdtNn}}</p>
+												<p>Địa chỉ: {{inforOrder.address}}</p>
+												<p>Tổng tiền: {{inforOrder.total | number:0}} VNĐ</p>
+
+												<!-- Thêm thông tin khác nếu cần -->
+											</div>
+											<!-- Phần bên phải -->
+											<div class="col-8">
+
+												<table class="table text-center">
+													<thead class="thead-info">
+													<tr>
+														<th scope="col">ID</th>
+														<th scope="col">MÃ SẢN PHẨM</th>
+														<th scope="col">ĐƠN GIÁ</th>
+														<th scope="col">SỐ LƯỢNG</th>
+														<th scope="col">THÀNH TIỀN</th>
+													</tr>
+													</thead>
+													<tbody>
+													<tr ng-repeat="item in orderDetail">
+														<td>{{item.product.productId}}</td>
+														<td>{{item.product.name}}</td>
+														<td>{{item.price | number:0}} VNĐ</td>
+														<td>{{item.quantity}}</td>
+														<td>{{item.quantity * item.price | number:0}} VNĐ</td>
+													</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#suaModal">Sửa</button>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
 									</div>
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
-
 			</div>
 
 		</div>
 
+	</div>
 
+	<!--  -->
+	<!-- Modal sửa -->
+	<div class="modal fade" id="suaModal" tabindex="-1" role="dialog" aria-labelledby="suaModalLongTitle" aria-hidden="true">
+		<!-- Nội dung modal sửa ở đây -->
+		<div class="modal-dialog modal-lg " role="document">
+			<div class="modal-content  css-tuy-chinh ">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle" >SỬA THÔNG TIN HÓA ĐƠN</h5>
+					</div>
+					<div class="row">
+						<!-- Phần bên trái -->
+						<div class="col-4">
+							<!-- Thêm thông tin hóa đơn vào đây -->
+							<br>
+							<br>
+							<p>Mã hóa đơn: {{inforOrder.orderId}}</p>
+							<p>Ngày tạo: {{inforOrder.createDate  | date : 'dd-MM-yyyy'}}</p>
+							<p>Tên người nhận: <input type="text" placeholder="{{inforOrder.tenNn}}" ng-model="tenNnEdit"></p>
+							<p>Số điện thoại: <input type="text" placeholder="{{inforOrder.sdtNn}}" ng-model="sdtNnEdit"></p>
+							<p>Địa chỉ: <input type="text" placeholder="{{inforOrder.address}}" ng-model="addressEdit"></p>
+							<p>Tổng tiền: {{inforOrder.total | number:0}}</p>
 
-	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Lý do hoàn đơn hàng</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-                <img ng-src="../../images/{{currentSelectedItem.anhLoiSanPham}}" alt="Ảnh" class="img-small" />
-				
-				{{currentSelectedItem.reason}}
-            </div>
-			<div ng-show="currentSelectedItem.sendToCustomer!=null"  class="title_ly_do">
-				<span  class="title_ly_do_khong_chap_nhan">Lý do không chấp nhận:</span> <span class="ly_do_khong_chap_nhan">{{currentSelectedItem.sendToCustomer}}</span>
+							<!-- Thêm thông tin khác nếu cần -->
+						</div>
+						<!-- Phần bên phải -->
+						<div class="col-8">
+
+							<table class="table text-center">
+								<thead class="thead-info">
+								<tr>
+									<th scope="col">ID</th>
+									<th scope="col">MÃ SẢN PHẨM</th>
+									<th scope="col">ĐƠN GIÁ</th>
+									<th scope="col">SỐ LƯỢNG</th>
+									<th scope="col">THÀNH TIỀN</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr ng-repeat="item in orderDetail">
+									<td>{{item.product.productId}}</td>
+									<td>{{item.product.name}}</td>
+									<td>{{item.price | number:0}} VNĐ</td>
+									<td><input type="number" placeholder="{{item.quantity}}" min="1" max="10" style="width: 40px"></td>
+									<td>{{item.quantity * item.price | number:0}} VNĐ</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#suaModal" ng-click="updateInforOrder()">Xác nhận</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+				</div>
 			</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
+		</div>
+	</div>
 
 
-	<div class="modal fade" id="errorCoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCoc" aria-hidden="true">
+
+	<!--  -->
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCoc">Coc don hang</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Lý do hoàn đơn hàng</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<span>Nhận đủ số cọc :</span>
-					<input type="number">
 
+					<img ng-src="../../images/{{currentSelectedItem.anhLoiSanPham}}" alt="Ảnh" class="img-small" />
+
+					{{currentSelectedItem.reason}}
 				</div>
-
+				<div ng-show="currentSelectedItem.sendToCustomer!=null"  class="title_ly_do">
+					<span  class="title_ly_do_khong_chap_nhan">Lý do không chấp nhận:</span> <span class="ly_do_khong_chap_nhan">{{currentSelectedItem.sendToCustomer}}</span>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 				</div>
@@ -419,12 +479,11 @@
 	</div>
 
 
-<td ng-repeat="item in orderList">
+	<td ng-repeat="item in orderList">
     <span ng-if="item.tthaiThanhToan == 1" ng-show="item.status ==5 || item.status ==6 ">
         <a href="#" ng-click="showErrorDetails(item)" data-toggle="modal" data-target="#errorModal" ng-class="{ 'gachchitietloi': item.showErrorDetails }">Chi tiết lỗi</a>
     </span>
-</td>
-
+	</td>
 </body>
 </html>
 

@@ -36,6 +36,8 @@ public class OrderServiceImpl implements OrdersService{
 	OrderDetailDao ddao;
 	@Autowired
 	CartDao cartDao;
+	@Autowired
+	OrderDetailDao orderDetailDao;
 	 @Autowired 
 	public  HttpSession session;
 
@@ -84,15 +86,22 @@ public class OrderServiceImpl implements OrdersService{
 		session.setAttribute("OrderganNhat", order1);
 		return order1;
 	}
+
+	public boolean validateOrder() {
+
+
+		return true;
+	}
+
 	@Override
-	public Orders createOrderVisting(JsonNode orders) {
+	public Orders createOrderVisting(JsonNode orders) throws Exception {
 		ObjectMapper mapper=new ObjectMapper();
 		VistingGuest vistingGuest = new VistingGuest();
 		vistingOrderDao.save(vistingGuest);
 		Orders order=mapper.convertValue(orders,Orders.class);
 		VistingGuest vistingGuest1 = vistingOrderDao.getVistingGuest();
 		if(vistingGuest1 == null) {
-			System.out.println("Loi sql");
+			throw new Exception("Loi SQL");
 		}
 		System.out.println(vistingGuest1.toString());
 		order.setVoucher(null);
@@ -139,6 +148,14 @@ public class OrderServiceImpl implements OrdersService{
 	@Override
 	public void deleteById(Integer id) {
 		odao.deleteById(id);
+	}
+
+	@Override
+	public boolean checkOrders(int id) {
+		if(odao.checkProductBeforePay(id) > 0) {
+		return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.watch.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.watch.entity.OrderDetail;
 import com.watch.entity.Orders;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public interface OrdersService {
 	List<Orders> findAll();
-	Orders createOrderVisting(JsonNode orders);
+	Orders createOrderVisting(JsonNode orders) throws Exception;
 	Orders create(JsonNode orders);
 
 	Orders getById(Integer id);
@@ -18,6 +19,8 @@ public interface OrdersService {
 	void delete(Orders entity);
 
 	void deleteById(Integer id);
+
+	boolean checkOrders(int id);
 
 	Optional<Orders> findById(Integer id);
 

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.watch.dao.*;
 import com.watch.dto.CartDTO;
 import com.watch.entity.*;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,6 @@ public class OrderController {
     VoucherDao voucherDao;
     @Autowired
     OrdersDao orderDao;
-    
     @Autowired
 	OrdersDao odao;
 	@Autowired
@@ -86,6 +86,9 @@ public class OrderController {
     Accounts account;
     @Autowired
 	VistingOrderDao vistingOrderDao;
+
+    @Autowired
+    OrderDetailDao orderDetailDao;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -255,6 +258,7 @@ public class OrderController {
 			}
 			com.google.gson.JsonObject job = new JsonObject();
 			if(pttt.equals("1")) {
+				logger.info("Log thanh toán phương thức thanh toán 1");
 				Orders order = (Orders) session.getAttribute("OrderganNhat");
 				System.out.println(order.toString());
 				Accounts ttkh = (Accounts) session.getAttribute("accountKh");
@@ -356,7 +360,7 @@ public class OrderController {
 	@PostMapping("/beewatch/order/checkoutVisting")
 	@ResponseBody
 	public String checkoutPostVisting(Model model, @ModelAttribute("visiting") VistingGuest visiting) throws IOException{
-		System.out.println(visiting.getEmail());
+		logger.info("Log check out order visiting: ", visiting);
 		VistingGuest vistingOrder = vistingOrderDao.getVistingGuestOrders();
 		vistingOrder.setEmail(visiting.getEmail());
 		vistingOrder.setFullname(visiting.getFullname());
@@ -370,7 +374,16 @@ public class OrderController {
 
 		List<Brand> listBrand = brandService.findAll();
 		model.addAttribute("brands", listBrand);
+		logger.info("Log account thanh toán");
 		System.out.println("acount: "+ visiting);
+		logger.info("Log lấy order visiting:");
+		Orders orders = (Orders) session.getAttribute("OrderganNhat");
+			logger.info("Order visiting is null");
+			logger.info("Order visiting : ", orders.toString());
+			logger.info(orders.toString());
+			logger.info("Set info order");
+			orders.setTenNn(visiting.getFullname());
+			orders.setSdtNn(visiting.getPhone());
 		/*
 		 * accounts.setAccountId(account.getAccountId());
 		 * accounts.setAddress(accountKh.getAddress());
@@ -388,13 +401,14 @@ public class OrderController {
 		String pttt = req.getParameter("httt_ma");
 		session.setAttribute("pttt", pttt);
 
+		logger.info("Log thông tin thanh toán");
 		System.out.println("pttt: "+ pttt);
 		String maVoucher = req.getParameter("rdoResult");
 		session.setAttribute("maVoucher", maVoucher);
 		System.out.println("maVoucher: "+ maVoucher);
 
 
-
+		logger.info("Log VNPay");
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String orderType = req.getParameter("ordertype");
@@ -462,13 +476,18 @@ public class OrderController {
 		}
 		com.google.gson.JsonObject job = new JsonObject();
 		if(pttt.equals("1")) {
+			logger.info("Log phương thức thanh toán 1");
 			Orders order = (Orders) session.getAttribute("OrderganNhat");
+			logger.info(order.toString());
 			VistingGuest ttkh = (VistingGuest) session.getAttribute("accountKh");
 			String address = ttkh.getAddress();
 			String maVoucher2 = (String) session.getAttribute("maVoucher");
 			//int amount = (int) session.getAttribute("amount");
 			order.setAddress(visiting.getAddress());
+			order.setTenNn(visiting.getFullname());
+			order.setSdtNn(visiting.getPhone());
 
+			logger.info("Log set voucher");
 			if(maVoucher2== null || maVoucher2.equals("")) {
 				order.setVoucher(null);
 			}else {
@@ -518,6 +537,7 @@ public class OrderController {
 				}
 				//order.setTotal(amount);
 			}
+			logger.info("Log set order");
 			order.setStatus(1);
 			order.setCreateDate(new Date());
 
@@ -528,6 +548,8 @@ public class OrderController {
 			//order.setTotal(amount1);
 			order.setTthaiThanhToan(0);
 			orderService.save(order);
+			orderDao.updateTongTienKoKhuyenMai();
+			orderDao.updateTienSauGiam();
 			if(order.getTenNn().equals(null) || order.getSdtNn().equals(null) || order.getAddress().equals(null)) {
 				//chỗ này chỉnh sửa đơn ảo
 			}
@@ -535,7 +557,11 @@ public class OrderController {
 			job.addProperty("code", "00");
 			job.addProperty("message", "success");
 			job.addProperty("data", paymentUrl);
-		}else {
+		}
+		else {
+			logger.info("Log phương thức thanh toán 2");
+			orderDao.updateTongTienKoKhuyenMai();
+			orderDao.updateTienSauGiam();
 			String queryUrl = query.toString();
 			String vnp_SecureHash = VnpayConfig.hmacSHA512(VnpayConfig.vnp_HashSecret, hashData.toString());
 			queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
@@ -561,6 +587,12 @@ public class OrderController {
 
 	@GetMapping("/thanh-toan-thanh-cong")
 	public String thanhcong(Model model, Principal principal) {
+		String address = "";
+		String tenNN = "";
+		logger.info("Log Đặt hàng thành công");
+		logger.info("Log lấy order");
+		Orders orderCheck = (Orders) session.getAttribute("OrderganNhat");
+
 
 		String vnp_ResponseCode = req.getParameter("vnp_ResponseCode");
 
@@ -586,29 +618,26 @@ public class OrderController {
 
 		System.out.println("mã: "+vnp_ResponseCode);
 		if(vnp_ResponseCode.equals("00")) {
+			logger.info("Log lấy order");
 			Orders order = (Orders) session.getAttribute("OrderganNhat");
 			Accounts accountKh = new Accounts();
 			VistingGuest vistingGuest = new VistingGuest();
 			if(principal != null) {
 				accountKh = (Accounts) session.getAttribute("accountKh");
+				logger.info(accountKh.toString());
 			}else {
 				vistingGuest = (VistingGuest) session.getAttribute("accountKh");
+				logger.info(vistingGuest.toString());
 			}
-			String address = "";
-			if(principal != null) {
-				address = accountKh.getAddress();
-			}else {
-				address = vistingGuest.getAddress();
 
-			}
+
 			String maVoucher = (String) session.getAttribute("maVoucher");
 
 			System.out.println(address);
 
 
 			//int amount = (int) session.getAttribute("amount");
-			order.setAddress(accountKh.getAddress());
-
+			logger.info("Log set voucher");
 			if(maVoucher== null || maVoucher.equals("")) {
 				order.setVoucher(null);
 			}else {
@@ -655,20 +684,22 @@ public class OrderController {
 
 				//order.setTotal(amount);
 			}
-			order.setTenNn(accountKh.getFullname());
-			order.setSdtNn(accountKh.getPhone());
 //			order.setEmailNn(accountKh.getEmail());
 //			order.setDiaChiNn(accountKh.getAddress());
 			if(principal != null) {
  				address = accountKh.getAddress();
+ 				tenNN = accountKh.getFullname();
 			}else {
 				address = vistingGuest.getAddress();
-
+				tenNN = vistingGuest.getFullname();
+				order.setSdtNn(vistingGuest.getPhone());
 			}
 			order.setAddress(address);
 			order.setStatus(1);
 			order.setTthaiThanhToan(1);
 			order.setCreateDate(new Date());
+			logger.info("Order thanh toán", order.toString());
+			logger.info(order.toString());
 			orderService.save(order);
 
 			List<OrderDetail> orderDetail = (List<OrderDetail>) session.getAttribute("listOrderDetail");
@@ -717,11 +748,23 @@ public class OrderController {
 				model.addAttribute("isAccount", 0);
 				email = orderDao.getEmailVisiting();
 			}
+
+			logger.info("Log update tong tien khong khuyen mai");
+			orderDao.updateTongTienKoKhuyenMai();
+			logger.info("Log update tien sau giam");
+			orderDao.updateTienSauGiam();
+			logger.info("Log lấy tiền giảm");
+			Double tienGiam = orderDao.getTienSauGiamKhachVangLai((order.getOrderId()));
+			model.addAttribute("tienSauGiam", tienGiam);
+			logger.info("Log update Orders NUll");
+			orderDao.updateOrdersNull();
+			logger.info("Log delete Orders");
+			orderDao.deleteOrders();
+			logger.info("Log gửi mail");
 			System.out.println(email);
 			sendSimpleEmail(email, order);
 			return "success1";
 		}else {
-
 			return "redirect:/thanh-toan-khong-thanh-cong";
 		}
 
@@ -741,7 +784,29 @@ public class OrderController {
 
 	@GetMapping("/dat-hang-thanh-cong")
 	public String okCOD(Model model, Principal principal) {
+		logger.info("Check thanh toan");
+		Orders orderCheck = new Orders();
 		if(principal != null) {
+			logger.info("Lấy order");
+			orderCheck = odao.getGanNhat(account.getAccountId());
+			logger.info(orderCheck.toString());
+		}else {
+			logger.info("Log lấy orders");
+			orderCheck = (Orders) session.getAttribute("OrderganNhat");
+			logger.info(orderCheck.toString());
+		}
+		if(!orderService.checkOrders(orderCheck.getOrderId())) {
+			logger.info("Delete Order Err");
+			logger.info(orderCheck.toString());
+			orderDao.updateOrderErr(orderCheck.getOrderId());
+			orderDetailDao.updateOrderDetailErr(orderCheck.getOrderId());
+			orderDao.deleteOrderErr(orderCheck.getOrderId());
+			orderDetailDao.deleteOrderDetailErr(orderCheck.getOrderId());
+			return "redirect:/thanh-toan-khong-thanh-cong";
+		}
+		logger.info("Đặt hàng thành công");
+		if(principal != null) {
+			logger.info("Khách đăng nhập");
 			model.addAttribute("isAccount", 1);
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
@@ -752,8 +817,11 @@ public class OrderController {
 			model.addAttribute("brands", listBrand);
 //		Orders order = (Orders) session.getAttribute("OrderganNhat");
 			account = useAcc.User();
-			Orders order1 = odao.getGanNhat(account.getAccountId());orderDao.updateTongTienKoKhuyenMai();
-
+			logger.info("Lấy order");
+			Orders order1 = odao.getGanNhat(account.getAccountId());
+			logger.info("Update tổng tiền ko khuyến mãi");
+			orderDao.updateTongTienKoKhuyenMai();
+			logger.info("Update tiền sau giảm");
 			orderDao.updateTienSauGiam();
 
 
@@ -763,8 +831,9 @@ public class OrderController {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 			String strDate = formatter.format(date);
 			System.out.println("Date Format with dd MMMM yyyy: " + strDate);
-
+			logger.info("Lấy tiền sau giảm");
 			Double tienGiam = orderDao.getTienSauGiam(account.getAccountId());
+			logger.info(String.valueOf(tienGiam));
 			/* Format tiền */
 			double vn = order1.getTotal();
 			float vn2 = (float) vn;
@@ -781,6 +850,7 @@ public class OrderController {
 				return "success";
 			}
 			//chỉnh sửa lại số lượng thanh toán
+			logger.info("Chỉnh lại số lượng sản phẩm");
 			for (int i = 0; i < orderDetail.size(); i++) {
 				int productId = orderDetail.get(i).getProduct().getProductId();
 				int slgmua = orderDetail.get(i).getQuantity();
@@ -793,21 +863,26 @@ public class OrderController {
 				product.setQuantity(slgMoi);
 				productService.save(product);
 			}
-
+			logger.info("Lấy mail");
 			String mail = orderDao.getEmail(order1.getOrderId());
+			logger.info("Add attribute");
 			model.addAttribute("vnd", str1);
 			model.addAttribute("date", strDate);
 			model.addAttribute("order", order1);
 			model.addAttribute("tienSauGiam", tienGiam);
-			logger.info(mail);
+			logger.info("Gủi mail đến", mail);
 			sendSimpleEmail(mail, order1);
-
+			logger.info("xóa cart detail");
 			cartDetailDao.deleteCartDetails(account.getAccountId());
+			logger.info("update order null");
 			orderDao.updateOrdersNull();
+			logger.info("delete orders");
 			orderDao.deleteOrders();
 			return "success1";
 		} else {
+			logger.info("Khách không đăng nhập");
 			model.addAttribute("isAccount", 0);
+			logger.info("Log add attribute");
 			List<Strap_material> straps = strapSv.findAll();
 			model.addAttribute("straps", straps);
 			List<Size> sizes = sizeSV.findAll();
@@ -815,8 +890,10 @@ public class OrderController {
 
 			List<Brand> listBrand = brandService.findAll();
 			model.addAttribute("brands", listBrand);
+			logger.info("Log lấy orders");
 			Orders order = (Orders) session.getAttribute("OrderganNhat");
-			Orders order1 = odao.getVistingOrder();
+			logger.info(order.toString());
+			logger.info("Log lấy order1 ");
 			/* Format ngày tháng */
 			Date date = new Date();
 			date = order.getCreateDate();
@@ -852,10 +929,18 @@ public class OrderController {
 				product.setQuantity(slgMoi);
 				productService.save(product);
 			}
+			logger.info("Log update tong tien khong khuyen mai");
 			orderDao.updateTongTienKoKhuyenMai();
+			logger.info("Log update tien sau giam");
 			orderDao.updateTienSauGiam();
-
+			logger.info("Log lấy tiền giảm");
 			Double tienGiam = orderDao.getTienSauGiamKhachVangLai((order.getOrderId()));
+			logger.info("Log update Orders NUll");
+			orderDao.updateOrdersNull();
+			logger.info("Log delete Orders");
+			orderDao.deleteOrders();
+			logger.info("Log gửi mail");
+			logger.info("Log lấy mail");
 			String mail = orderDao.getEmailVisiting();
 			model.addAttribute("vnd", str1);
 			model.addAttribute("date", strDate);
@@ -867,8 +952,11 @@ public class OrderController {
 			} else {
 				System.out.println(mail);
 			}
+			logger.info("Log update Orders NUll");
 			orderDao.updateOrdersNull();
+			logger.info("Log delete Orders");
 			orderDao.deleteOrders();
+			logger.info("Log gửi mail");
 			sendSimpleEmail(mail, order);
 			return "success1";
 		}

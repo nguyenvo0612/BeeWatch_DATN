@@ -205,17 +205,14 @@
         <a class="btn btn-warning" th:href="@{/beewatch/product}"
         >Tiếp tục mua hàng</a
         >
-        <div th:if="${isAccount == 0}">
-          <button
+          <button th:if="${isAccount == 0}"
                   ng-click="orderVisting.purchase()"
                   ng-disabled="cart.amount ==0"
                   class="btn btn-success"
                   id="btn2"
           >
-            Thanh Toán Khách ko đăng nhập
+            Thanh Toán
           </button>
-
-        </div>
 
         <div th:if="${isAccount == 1}">
           <button
@@ -224,7 +221,7 @@
                   class="btn btn-success"
                   id="btn1"
           >
-            Thanh Toán Khách đăng nhập
+            Thanh Toán
           </button>
         </div>
 

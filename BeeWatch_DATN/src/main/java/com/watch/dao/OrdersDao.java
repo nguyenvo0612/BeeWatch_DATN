@@ -20,9 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface OrdersDao extends JpaRepository<Orders, Integer>{
 
+	@Query("SELECT d FROM Orders d WHERE d.orderId=?1")
+	public Orders findInforOrderById(Integer id);
+
 	Page<Orders> findOrdersByOrderId(int id ,Pageable pageable);
 
-
+	@Query(value = "select count(*) from orders o join order_detail od on o.order_id = od.order_id " +
+			"join product p on od.product_id = p.product_id where p.status = 0 and o.order_id = ?1",
+	nativeQuery = true)
+	Integer checkProductBeforePay(Integer id);
 
 	@Query("select count(Orders.orderId) from Orders Orders where Orders.sdtNn is not null and Orders.tenNn is not null and Orders.address is not null")
 	Long tongDonHang();
@@ -71,7 +77,7 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Query(value = "select top(1) tien_sau_giam from orders where order_id = ?1 order by create_date desc  ", nativeQuery = true)
 	Double getTienSauGiamKhachVangLai(int id);
 
-	@Query(value = "select top 1 * from orders where visting_guest_id is null and account_id is null order by create_date desc", nativeQuery = true)
+	@Query(value = "select top 1 * from orders where visting_guest_id is not null and account_id is null order by create_date desc", nativeQuery = true)
 	Orders getVistingOrder();
 	//	@Query("SELECT SUM(o.total) FROM Orders o")
 	@Query(value="select sum(total) from orders where status != 0 and sdt_nn is not null and ten_nn is not null and address is not null and tthai_thanh_toan = 1", nativeQuery = true)
@@ -103,6 +109,16 @@ public interface OrdersDao extends JpaRepository<Orders, Integer>{
 	@Modifying
 	@Query(value = "update orders set tien_sau_giam = total - v.valued from orders od join vouchers v on od.voucher_name = v.voucher_name", nativeQuery = true)
 	void updateTienSauGiam();
+
+	@Transactional
+	@Modifying
+	@Query(value = "update orders set account_id = null, visting_guest_id = null where order_id = ?1", nativeQuery = true)
+	void updateOrderErr(Integer id);
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete orders where account_id is null and visting_guest_id is null and order_id = ?1", nativeQuery = true)
+	void deleteOrderErr(Integer id);
 
 	@Transactional
 	@Modifying
