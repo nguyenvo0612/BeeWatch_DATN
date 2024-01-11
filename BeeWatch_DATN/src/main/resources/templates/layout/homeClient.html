@@ -254,13 +254,27 @@
   <body>
     <div class="noidung" layout:fragment="content">
       <!-- banner -->
-      <div class="bannerBee">
-        <a href="#"
-          ><img
-            src="../../static/assets/images/banner-dong-ho-bee.jpg"
-            alt=""
-            srcset=""
-        /></a>
+      <div
+        id="carouselExampleSlidesOnly"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="../../static/assets/images/banner-dong-ho-bee.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="../../static/assets/images/banner-new-year.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+        </div>
       </div>
       <!--content-->
       <div class="content">
@@ -268,14 +282,10 @@
           <div class="content-top" style="padding-top: 50px">
             <h2>Hàng mới nhất</h2>
             <div class="dhn">
-              <a
-                class="btn btn-secondary"
-                th:href="@{|/beewatch/category/1|}"
+              <a class="btn btn-secondary" th:href="@{|/beewatch/category/1|}"
                 >Đồng hồ cơ</a
               >
-              <a
-                class="btn btn-secondary"
-                th:href="@{|/beewatch/category/2|}"
+              <a class="btn btn-secondary" th:href="@{|/beewatch/category/2|}"
                 >Đồng hồ pin</a
               >
             </div>
@@ -300,6 +310,9 @@
                       style="width: 348px; height: 348px"
                     />
                   </a>
+                  <div th:if="${listpro.quantity} <= 0" class="sold-out">
+                    <span class="sold-out-text">Hết hàng</span>
+                  </div>
                 </div>
 
                 <div class="proName text-center">
@@ -358,10 +371,10 @@
               <div class="image-text">
                 <a th:href="@{|/beewatch/brand/citizen|}">
                   <img
-                    class="img-responsive"
-                    src="/assets/images/rolexview.jpg"
+                    class=""
+                    src="../../static/assets/images/man-fastens-cufflink-his-business-suit.jpg"
+                    style="height: 482px; width: 600px; border-radius: 10pt"
                     alt=""
-                    style="width: 700px; height: 428px"
                   />
                   <!-- <div class="b-wrapper"> -->
                   <div class="text-xem-them-left">
@@ -380,6 +393,7 @@
                       class="img-responsive"
                       src="/assets/images/st2.jpg"
                       alt=""
+                      style="border-radius: 10pt"
                     />
                     <div class="text-xem-them-right-top">
                       <h2 style="color: white">Đồng hồ Rolex</h2>
@@ -394,8 +408,9 @@
                     <a th:href="@{|/beewatch/brand/orient|}"
                       ><img
                         class="img-responsive"
-                        src="/assets/images/st3.jpg"
+                        src="../../static/assets/images/close-up-seller-s-hands-gloves-shows-exclusive-men-s-watch-from-new-collection-luxury-jewelry-store.jpg"
                         alt=""
+                        style="height: 160px; width: 275px; border-radius: 10pt"
                       />
 
                       <!-- <div class="b-wrapper"> -->
@@ -413,8 +428,9 @@
                     <a th:href="@{|/beewatch/brand/orient|}"
                       ><img
                         class="img-responsive"
-                        src="/assets/images/st3.jpg"
+                        src="../../static/assets/images/man-dressed-stylish-blue-suit-who-is-putting-elegant-watch.jpg"
                         alt=""
+                        style="height: 160px; width: 275px; border-radius: 10pt"
                       />
 
                       <div class="text-xem-them-right-bot">
@@ -439,7 +455,7 @@
                 <a th:href="@{|/beewatch/brand/orient|}"
                   ><img
                     class="img-responsive"
-                    src="/assets/images/st3.jpg"
+                    src="../../static/assets/images/ROTHWELL 10 Slot Leather Watch Box - Luxury Watch Case Display Jewelry Organizer - Locking Watch Display Case Holder with Large Glass Top - Watch Box Organizer for Men and Women (Black_Red).jpg"
                     alt=""
                   />
                 </a>
@@ -451,7 +467,7 @@
                 <a th:href="@{|/beewatch/brand/orient|}"
                   ><img
                     class="img-responsive"
-                    src="/assets/images/st3.jpg"
+                    src="../../static/assets/images/Men's Watch _ Black Leather Strap _ Black Watch Face.jpg"
                     alt=""
                   />
                 </a>
@@ -470,10 +486,11 @@
                 <div th:each="p:${news}" class="col-md-4 grid_3">
                   <a th:href="@{|/beewatch/blog/${p.newsId}|}"
                     ><img
-                      style="height: 350px; width: 350px"
+                      style="height: 350px; width: 350px; border-radius: 10pt"
                       th:src="@{|/assets/images/${p.image}/|}"
                       class="img-responsive-new"
                       th:href="@{|/beewatch/blog/${p.newsId}|}"
+                      alt=""
                   /></a>
                   <h3 style="margin-top: 10px">
                     <a th:href="@{|/beewatch/blog/${p.newsId}|}"

@@ -225,6 +225,16 @@ a.item_add {
   top: 4px;
 }
 
+.btn-sm {
+  border: 1px solid #000;
+  background-color: #000;
+  color: white;
+}
+.btn-sm :hover {
+  color: white !important;
+  text-decoration: none;
+}
+
 .form-group {
   display: flex;
   justify-items: last baseline;
@@ -1558,7 +1568,7 @@ h3.real {
 }
 
 .cd-tabs-navigation a.selected {
-  background: #e5db7c;
+  background: #000;
   color: #fff;
 }
 
@@ -1643,7 +1653,7 @@ h3.real {
 a.add-re {
   text-decoration: none;
   color: #fff;
-  background: #e5db7c;
+  background: #000;
   padding: 0.4em 0.8em;
   font-size: 0.9em;
   text-transform: uppercase;
@@ -2865,4 +2875,46 @@ ul.qty li p {
 .bonus-hover-menu:hover a {
   background-color: #e5db7c !important;
   cursor: pointer;
+}
+
+/* Minh lam */
+
+.flex {
+  display: flex;
+}
+
+.item-1 {
+  width: 47%;
+}
+
+.flex-dr-cl {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sold-out {
+  color: white;
+  font-size: 10px;
+  position: absolute;
+  right: 72px;
+  top: 11px;
+  height: 30px;
+  width: 62px;
+  background-color: red;
+  text-align: center;
+}
+.sold-out-text {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.sold-out::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  border-width: 0 31.5px 6px;
+  border-style: solid;
+  border-color: transparent red transparent red;
 }

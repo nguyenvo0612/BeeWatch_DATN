@@ -365,11 +365,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   th:if="${item.status} == true"
                 >
                   <a
-                          class="add-re btn"
-                          th:if="${isAccount} == 1"
-                          th:href="@{'/cart-add/' + ${item.productId}}"
-
-                  >Thêm vào Giỏ Hàng</a
+                    class="add-re btn"
+                    th:if="${isAccount} == 1"
+                    th:href="@{'/cart-add/' + ${item.productId}}"
+                    >Thêm vào Giỏ Hàng</a
                   >
                   <a
                     class="add-re btn"

@@ -14,6 +14,11 @@
     href="/assets/vendor-tt/font-awesome/css/font-awesome.min.css"
   />
   <link
+    rel="icon"
+    href="../../static/assets/images/beelogo.png"
+    type="image/x-icon"
+  />
+  <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"
   />
@@ -39,7 +44,7 @@
       padding: 50px 0;
     }
     .banner-sec {
-      background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg)
+      background: url(../../../static/assets/images/seller-shows-client-exclusive-men-s-watch-standing-open-showcase-luxury-jewelry-store.jpg)
         no-repeat left bottom;
       background-size: cover;
       min-height: 500px;
@@ -143,9 +148,7 @@
           </div>
           <form class="login-form" th:action="@{/login}" method="POST">
             <div class="form-group" data-validate="Username is reauired">
-              <label  class="text-uppercase"
-                >Username</label
-              >
+              <label class="text-uppercase">Username</label>
               <input
                 type="text"
                 class="form-control"
@@ -155,9 +158,7 @@
               />
             </div>
             <div class="form-group" data-validate="Password is required">
-              <label class="text-uppercase"
-                >Password</label
-              >
+              <label class="text-uppercase">Password</label>
               <input
                 type="password"
                 name="password"
@@ -222,7 +223,7 @@
           </div>
 
           <div class="copy-text">
-            Made with 100% <i class="fa fa-heart"></i> by
+            Made with 100% passion <i class="fa fa-heart"></i> by
             <a href="/beewatch">BEEWATCH</a>
           </div>
         </div>
@@ -267,7 +268,7 @@
               <div class="carousel-item">
                 <img
                   class="d-block img-fluid"
-                  src="https://blog.donghoviet.vn/wp-content/uploads/2020/05/1_12-dong-ho-doi-800-450.jpg"
+                  src="../../../static/assets/images/seller-shows-client-exclusive-men-s-watch-standing-open-showcase-luxury-jewelry-store.jpg"
                   alt="First slide"
                 />
                 <div class="carousel-caption d-none d-md-block"></div>
