@@ -72,7 +72,6 @@ app.controller("feedback-ctrl", function ($scope, $http) {
 			$scope.items[index] = item;
 			alert("Cập nhật thành công");
 		}).catch(error => {
-			alert("Xảy ra lỗi trong quá trình cập nhật " + error)
 			console.log("error", error);
 		})
 	}
@@ -91,7 +90,6 @@ app.controller("feedback-ctrl", function ($scope, $http) {
 				alert("Xóa Thành Công");
 			})
 				.catch(error => {
-					alert("Lỗi xóa!")
 					console.log("Error", error);
 				})
 

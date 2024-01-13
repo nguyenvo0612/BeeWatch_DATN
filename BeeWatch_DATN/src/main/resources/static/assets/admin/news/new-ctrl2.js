@@ -45,7 +45,6 @@ app.controller("news-ctrl2",function($scope,$http){
 				alert("Thêm mới tin tức thành công!");
 				$(".nav-tabs a:eq(0)").tab('show')
 			}).catch(error => {
-				alert("Thêm mới thất bại");
 				console.log("Lỗi nè===:", error);
 			});
 		}
@@ -64,7 +63,6 @@ app.controller("news-ctrl2",function($scope,$http){
 			alert("Cập nhật thành công!");
 			$(".nav-tabs a:eq(0)").tab('show')
 		}).catch(error => {
-			alert("Xảy ra lỗi trong quá trình cập nhật");
 			console.log("Lỗi nè===:", error);
 		});
 	}
@@ -78,7 +76,6 @@ app.controller("news-ctrl2",function($scope,$http){
 			$scope.reset();
 			alert("Xóa thành công!");
 		}).catch(error => {
-			alert("Xóa thất bại");
 			console.log("Lỗi nè===:", error);
 		});
 	}
@@ -94,7 +91,6 @@ app.controller("news-ctrl2",function($scope,$http){
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình" + error);
 			console.log("Error", error);
 		})
 	}

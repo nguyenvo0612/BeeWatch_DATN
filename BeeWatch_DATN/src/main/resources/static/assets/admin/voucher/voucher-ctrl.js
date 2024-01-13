@@ -92,7 +92,6 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			this.initialize();
 			alert("Thêm mới thành công");
 		}).catch(error => {
-			alert("Lỗi thêm mới")
 			console.log("error", error);
 		});
 	}
@@ -107,7 +106,6 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			$(".nav-tabs a:eq(0)").tab('show')
 			this.initialize();
 		}).catch(error => {
-			alert("Lỗi cập nhật" + error)
 			console.log("error", error);
 		})
 	}
@@ -130,7 +128,6 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			alert("Xóa vocher thành công");
 			this.initialize();
 		}).catch(error => {
-			alert("Lỗi Xóa" + error)
 			console.log("error", error);
 		})
 	}

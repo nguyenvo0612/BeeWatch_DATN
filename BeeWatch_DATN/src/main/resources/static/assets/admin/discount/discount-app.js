@@ -56,7 +56,6 @@ app.controller("discount-ctrl", function($scope, $http) {
                 alert("Thêm mới thành công!");
                 $(".nav-tabs a:eq(0)").tab('show')
             }).catch(error => {
-                alert("Thêm mới thất bại");
                 console.log(error);
             });
         }else{
@@ -81,7 +80,6 @@ app.controller("discount-ctrl", function($scope, $http) {
                 alert("Cập nhật thành công");
                 $(".nav-tabs a:eq(0)").tab('show')
             }).catch(error => {
-                alert("Xảy ra lỗi trong quá trình cập nhật " + error)
                 console.log("error", error);
             })
         } else {
@@ -115,7 +113,6 @@ app.controller("discount-ctrl", function($scope, $http) {
                 $scope.initialize();
                 $(".nav-tabs a:eq(0)").tab('show')
             }).catch(error => {
-                alert("Lỗi xóa " + error)
                 console.log("error", error);
             })   
 

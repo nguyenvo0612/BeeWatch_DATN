@@ -161,7 +161,6 @@ $scope.reset1 = function () {
 	            $scope.initialize();
 	            $(".nav-tabs a:eq(0)").tab('show')
 		        }).catch(error => {
-		            alert("Thêm mới thất bại");
 		            console.log(error);
 		        });
 			}

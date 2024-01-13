@@ -62,7 +62,6 @@ $scope.reset1 = function () {
 					alert("Thêm mới thành công");
 					$(".nav-tabs a:eq(0)").tab('show')
 				}).catch(error => {
-					alert("Lỗi Thêm mới account");
 					console.log("error", error);
 				});
 			} else {
@@ -87,7 +86,6 @@ $scope.reset1 = function () {
 			$(".nav-tabs a:eq(0)").tab('show')
 			$scope.initialize();
 		}).catch(error => {
-			alert("Xảy ra lỗi trong quá trình cập nhật " + error);
 			console.log("error", error);
 		})
 	}
@@ -109,7 +107,6 @@ $scope.reset1 = function () {
 			alert("xóa category thành công");
 			$scope.initialize();
 		}).catch(error => {
-			alert("Lỗi xóa category" + error);
 			console.log("error", error);
 		})
 		

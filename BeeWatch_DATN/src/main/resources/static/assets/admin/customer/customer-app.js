@@ -90,7 +90,6 @@ app.controller("customer-ctrl", function ($scope, $http) {
 					alert("Thêm mới thành công!");
 					$(".nav-tabs a:eq(0)").tab('show')
 				}).catch(error => {
-					alert("Thêm mới thất bại");
 					console.log(error);
 				});
 			} else {
@@ -174,7 +173,6 @@ app.controller("customer-ctrl", function ($scope, $http) {
 			alert("Cập nhật thành công");
 			$(".nav-tabs a:eq(0)").tab('show')
 		}).catch(error => {
-			alert("Xảy ra lỗi trong quá trình cập nhật " + error)
 			console.log("error", error);
 		})
 	}
@@ -225,7 +223,6 @@ app.controller("customer-ctrl", function ($scope, $http) {
 		}).then(resp => {
 			$scope.form.image = resp.data.name;
 		}).catch(error => {
-			alert("Lỗi upload hình" + error);
 			console.log("Error", error);
 		})
 	}

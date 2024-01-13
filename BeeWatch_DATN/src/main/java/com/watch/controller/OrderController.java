@@ -771,7 +771,26 @@ public class OrderController {
 	}
 
 	@GetMapping("/thanh-toan-khong-thanh-cong")
-	public String khongthanhcong(Model model) {
+	public String khongthanhcong(Model model, Principal principal) {
+		Orders orderCheck = new Orders();
+		if(principal != null) {
+			logger.info("Lấy order");
+			orderCheck = odao.getGanNhat(account.getAccountId());
+			logger.info(orderCheck.toString());
+		}else {
+			logger.info("Log lấy orders");
+			orderCheck = (Orders) session.getAttribute("OrderganNhat");
+			logger.info(orderCheck.toString());
+		}
+		if(!orderService.checkOrders(orderCheck.getOrderId())) {
+			logger.info("Delete Order Err");
+			logger.info(orderCheck.toString());
+			orderDao.updateOrderErr(orderCheck.getOrderId());
+			orderDetailDao.updateOrderDetailErr(orderCheck.getOrderId());
+			orderDao.deleteOrderErr(orderCheck.getOrderId());
+			orderDetailDao.deleteOrderDetailErr(orderCheck.getOrderId());
+		}
+
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
 		List<Size> sizes = sizeSV.findAll();
@@ -957,8 +976,13 @@ public class OrderController {
 			logger.info("Log delete Orders");
 			orderDao.deleteOrders();
 			logger.info("Log gửi mail");
-			sendSimpleEmail(mail, order);
-			return "success1";
+			try {
+				sendSimpleEmail(mail, order);
+				return "success1";
+			}catch (Exception e) {
+				logger.info(e.toString());
+				return "redirect:/thanh-toan-khong-thanh-cong";
+			}
 		}
 	}
 
