@@ -52,11 +52,11 @@
                     </div>
                      <div class="row">
                         <ul class="pagination" style="margin-left: 350px;">
-						  <li class="page-item"><a class="page-link" href="/beestore/product?p=0">|< </a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${number-1}|}"><<</a></li>
+						  <li class="page-item"><a class="page-link" href="/beestore/product?p=0"><i class="fa-solid fa-backward-fast"></i></a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${number-1}|}"><i class="fa-solid fa-arrow-left"></i></a></li>
 						  <li class="page-item"><a class="page-link" href="/beestore/product?p=0"> [[${number+1}]]/[[${listproduct.totalPages}]]</a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${number+1}|}">>></a></li>
-						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${listproduct.totalPages-1}|}">>|</a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${number+1}|}"><i class="fa-solid fa-arrow-right"></i></a></li>
+						  <li class="page-item"><a class="page-link" th:href="@{|/beestore/product?p=${listproduct.totalPages-1}|}"><i class="fa-solid fa-forward-fast"></i></a></li>
 						</ul>
                         </div>
                 </div>
