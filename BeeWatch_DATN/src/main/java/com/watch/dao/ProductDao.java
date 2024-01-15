@@ -90,7 +90,7 @@ public interface ProductDao extends JpaRepository<Product, Integer>{
 	@Query(value = "select p from Product p where p.name like %?1% or p.category.name like %?1% or p.brand.name like %?1%")
 	Page<Product> findSearch(String name,Pageable pageable);
 	
-	@Query(value = "SELECT TOP(5) * FROM Product\r\n"
+	@Query(value = "SELECT TOP(4) * FROM Product\r\n"
 			+ "order by create_date desc", 
 			nativeQuery = true)
 	//@Query("select p from Product p where p.category.id=?1")

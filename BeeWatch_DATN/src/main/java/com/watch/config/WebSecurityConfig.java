@@ -27,7 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //fb gg
     @Autowired
     private CustomOAuth2UserService oauthUserService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -41,33 +40,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
-        
-        http.authorizeRequests().antMatchers("/admin", "/admin/beewatch","/assets/admin/main/homeAdmin.html").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+
+        http.authorizeRequests().antMatchers("/", "/login", "/logout", "/login/oauth2/**").permitAll();
+
+        http.authorizeRequests().antMatchers("/admin", "/admin/beestore","/assets/admin/main/homeAdmin.html").access("hasAnyRole('ROLE_ADMIN')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests()
-                .antMatchers("/beewatch/cartItem").permitAll()
-        		.antMatchers("/oauth/**").permitAll()
+                .antMatchers("/beestore/cartItem").permitAll()
+                .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
                 .loginPage("/auth/login/form")
+                .defaultSuccessUrl("/beestore")
                 .userInfoEndpoint()
-                    .userService(oauthUserService);
-        
-        
+                .userService(oauthUserService);
+
+
         http.formLogin()
                 .loginPage("/auth/login/form")
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/login2")
                 .defaultSuccessUrl("/auth/login/success", false);
 
         http.authorizeRequests().and() //
-        .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-        .tokenValiditySeconds(1 * 24 * 60 * 60);
-        
+                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+                .tokenValiditySeconds(1 * 24 * 60 * 60);
+
 
         http.exceptionHandling()
                 .accessDeniedPage("/auth/unauthoried");
@@ -75,19 +75,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout();
 
         //login fb gg
-		/*
-		 * http.oauth2Login() .loginPage("/auth/login/form")
-		 * .defaultSuccessUrl("/oauth2/login/success",true)
-		 * .failureUrl("/auth/login/error")
-		 * .authorizationEndpoint().baseUri("/oauth2/authorization");
-		 */
-        
-        
-        
-		 
-		 
+        /*
+         * http.oauth2Login() .loginPage("/auth/login/form")
+         * .defaultSuccessUrl("/oauth2/login/success",true)
+         * .failureUrl("/auth/login/error")
+         * .authorizationEndpoint().baseUri("/oauth2/authorization");
+         */
+
+
+
+
+
     }
-    
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database

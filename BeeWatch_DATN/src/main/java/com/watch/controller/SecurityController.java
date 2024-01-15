@@ -95,13 +95,13 @@ public class SecurityController {
 		Accounts acount = useAcc.User();
 		if(acount!=null) {
 			if(acount.isStatus() == true) {
-				return"redirect:/beewatch";
+				return"redirect:/beestore";
 			}else {
 				return"redirect:/login";
 			}
 		}
 		model.addAttribute("message", "Đăng nhập thành công");
-		return "redirect:/beewatch";
+		return "redirect:/beestore";
 		 //return "/user/login/test";
 	}
 
@@ -172,7 +172,6 @@ public class SecurityController {
 		try {
 			sendEmailRegister(email);
 		} catch (UnsupportedEncodingException | MessagingException e) {
-			// TODO: handle exception
 			model.addAttribute("error", "Lỗi khi gửi email");
 		}
 
@@ -187,7 +186,6 @@ public class SecurityController {
 
 		helper.setFrom("cskhbeewatch@gmail.com", "Đăng Ký Tài Khoản Thành Công");
 		helper.setTo(recipientEmail);
-
 		String subject = "Đây là mail xác nhận đăng ký tài khoản của bạn đã thành công";
 
 		String content = "<p>Chào bạn,</p>" + "<p>Bạn đã đăng ký thành công tài khoản của mình.</p>"

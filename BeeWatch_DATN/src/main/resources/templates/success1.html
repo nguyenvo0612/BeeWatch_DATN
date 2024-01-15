@@ -192,8 +192,8 @@
               </td>
                 <td></td>
               <td class="contentL">
-                Invoice: #<span th:text="${order.orderId}">{{order.orderId}}</span><br />
-                Created: <span th:text="${order.createDate}"></span><br />
+                Mã hóa đơn: #<span th:text="${order.orderId}">{{order.orderId}}</span><br />
+                Ngày tạo: <span th:text="${order.createDate}"></span><br />
 <!--                 Due: February 1, 2023 -->
               </td>
             </tr>
@@ -206,14 +206,14 @@
           <table>
             <tr>
               <td>
-                Sparksuite, Inc.<br />
-                12345 Sunny Road<br />
-                  <span th:text="${order.getAddress()}"></span>
+                Tên người nhận: <br />
+                Địa chỉ nhận: <br />
+                Email người nhận: <br />
               </td>
                 <td></td>
               <td class="contentL">
-                Acme Corp.<br />
                 <span th:text="${order.getTenNn()}"></span><br />
+                  <span th:text="${order.getAddress()}"></span><br />
                 <span th:if="${isAccount} == 1" th:text="${order.getAccount().getEmail()}"></span>
                   <span th:if="${isAccount} == 0" th:text="${email}"></span>
               </td>
@@ -223,22 +223,23 @@
       </tr>
 
       <tr class="heading">
-        <td>Payment Method</td>
+        <td>Phương thức thanh toán</td>
           <td></td>
-        <td class="contentL"  th:if="${order.getTthaiThanhToan} == 0"><span>Thanh toán khi nhận hàng</span></td>
-         <td class="contentL" th:if="${order.getTthaiThanhToan} == 1"><span >Đã thanh toán</span></td>
+          <td></td>
+          <td></td>
       </tr>
 
       <tr class="details">
-        <td>Check</td>
+          <td class="contentR"  th:if="${order.getTthaiThanhToan} == 0"><span>Thanh toán khi nhận hàng</span></td>
+          <td class="contentR" th:if="${order.getTthaiThanhToan} == 1"><span >Đã thanh toán</span></td>
           <td></td>
-        <td class="contentL">1000</td>
+          <td></td>
       </tr>
 
       <tr class="heading">
-        <td>Item</td>
-        <td>Quantity</td>
-        <td class="contentL">Price</td>
+        <td>Tên sản phẩm</td>
+        <td>Số lượng</td>
+        <td class="contentL">Giá</td>
       </tr>
 
       <tr class="item" th:if="${isAccount} == 1" th:each="item : ${cartItems}">
@@ -272,7 +273,7 @@
       <tr class="total">
         <td></td>
 
-        <td>Total: <span th:text="${#numbers.formatDecimal(tienSauGiam, 0, 'COMMA', 0, 'POINT')}">VND</span></td>
+        <td>Tổng tiền: <span th:text="${#numbers.formatDecimal(tienSauGiam, 0, 'COMMA', 0, 'POINT')}">VND</span></td>
       </tr>
     </table>
   </div>

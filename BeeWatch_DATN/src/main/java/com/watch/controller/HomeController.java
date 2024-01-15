@@ -48,6 +48,9 @@ public class HomeController {
 	@Autowired
 	CartService cartService;
 
+	@Autowired
+	NewsDao newsDao;
+
 
 	//home người admin
 	@GetMapping({"/admin","/admin/beestore"})
@@ -85,7 +88,7 @@ public class HomeController {
 			List<News> list3 = newsService.findAll();
 			model.addAttribute("items3", list3);
 
-			List<News> list1 = newsService.findAll();
+			List<News> list1 = newsDao.findTop3News();
 			model.addAttribute("news", list1);
 
 			return "/layout/homeClient";
@@ -112,7 +115,7 @@ public class HomeController {
 			List<News> list3 = newsService.findAll();
 			model.addAttribute("items3", list3);
 
-			List<News> list1 = newsService.findAll();
+			List<News> list1 = newsDao.findTop3News();
 			model.addAttribute("news", list1);
 
 			return "/layout/homeClient";
