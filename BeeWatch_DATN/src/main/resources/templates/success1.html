@@ -225,8 +225,8 @@
       <tr class="heading">
         <td>Payment Method</td>
           <td></td>
-        <td class="contentL"><span th:if="${order.getTthaiThanhToan} == 0">Thanh toán khi nhận hàng</span></td>
-         <td class="contentL"><span th:if="${order.getTthaiThanhToan} == 1">Đã thanh toán</span></td>
+        <td class="contentL"  th:if="${order.getTthaiThanhToan} == 0"><span>Thanh toán khi nhận hàng</span></td>
+         <td class="contentL" th:if="${order.getTthaiThanhToan} == 1"><span >Đã thanh toán</span></td>
       </tr>
 
       <tr class="details">
