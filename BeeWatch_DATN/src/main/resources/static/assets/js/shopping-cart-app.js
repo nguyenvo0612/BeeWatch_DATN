@@ -31,7 +31,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
             if (item) {
                 if (item.qty >= item.quantity) {
                     alert("Số lượng sản phẩm đã đạt giới hạn!");
-                    location.href = "/beewatch/cartItem";
+                    location.href = "/beestore/cartItem";
                     return;
                 } else {
                     item.qty++;
@@ -87,7 +87,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
             console.log(this.items[index].quantity);
             if (this.items[index].quantity <= this.items[index].qty) {
                 alert("Số lượng sản phẩm đã đạt giới hạn!");
-                //location.href = "/beewatch/cartItem";
+                //location.href = "/beestore/cartItem";
                 this.items[index].qty = this.items[index].quantity;
                 this.saveToLocalStorage();
                 return;
@@ -142,7 +142,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
             console.log(this.items[index].quantity);
             if (this.items[index].qty >= this.items[index].quantity) {
                 alert("Số lượng sản phẩm đã đạt giới hạn!");
-                //location.href = "/beewatch/cartItem";
+                //location.href = "/beestore/cartItem";
                 this.items[index].qty = this.items[index].quantity;
                 this.saveToLocalStorage();
                 return;
@@ -316,7 +316,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
                 .post(`/rest/orders`, order)
                 .then((resp) => {
                     /* $scope.cart.clear();*/
-                    location.href = "/beewatch/order/checkout";
+                    location.href = "/beestore/order/checkout";
                 })
                 .cath((error) => {
                     alert("Dat hang loi");
@@ -351,7 +351,7 @@ app.controller("shopping-cart-ctrl", function ($scope, $http, $window) {
                 .post(`/rest/orders/visting`, order)
                 .then((resp) => {
                     /* $scope.cart.clear();*/
-                    location.href = "/beewatch/order/checkout";
+                    location.href = "/beestore/order/checkout";
                 })
                 .cath((error) => {
                     alert("Dat hang loi");

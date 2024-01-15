@@ -153,7 +153,7 @@ public class OrderController {
 
 	}
 
-	@PostMapping("/beewatch/order/checkout")
+	@PostMapping("/beestore/order/checkout")
 	@ResponseBody
 	public String checkoutPost(Model model, @ModelAttribute("account") Accounts accountKh,Principal principal) throws IOException{
 		List<Strap_material> straps = strapSv.findAll();
@@ -357,7 +357,7 @@ public class OrderController {
 
 	}
 
-	@PostMapping("/beewatch/order/checkoutVisting")
+	@PostMapping("/beestore/order/checkoutVisting")
 	@ResponseBody
 	public String checkoutPostVisting(Model model, @ModelAttribute("visiting") VistingGuest visiting) throws IOException{
 		logger.info("Log check out order visiting: ", visiting);
