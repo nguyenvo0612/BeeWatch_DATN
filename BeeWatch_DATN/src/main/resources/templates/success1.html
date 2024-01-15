@@ -243,7 +243,7 @@
 
       <tr class="item" th:if="${isAccount} == 1" th:each="item : ${cartItems}">
         <td><a
-            th:href="${'/beewatch/product/detail/' + item.getProduct_id()}"
+            th:href="${'/beestore/product/detail/' + item.getProduct_id()}"
           >
             <p th:text="${item.getNameProduct()}"></p>
           </a></td>
@@ -257,7 +257,7 @@
       </tr>
 
       <tr class="item" th:if="${isAccount} == 0" ng-repeat="item in cart.items">
-        <td><a href="/beewatch/product/detail/{{item.productId}}"
+        <td><a href="/beestore/product/detail/{{item.productId}}"
             >{{item.name}}</a
             ></td>
           <td th:if="${isAccount} == 0">

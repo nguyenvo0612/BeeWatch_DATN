@@ -83,7 +83,7 @@ public class AccountController {
 		return "/user/account/lichSuMuaHang";
 	}
 
-	@GetMapping("/beewatch/account/view")
+	@GetMapping("/beestore/account/view")
 	public String capNhatTaiKhoan(Model model, HttpServletRequest request) {
 
 		if(useAcc.User()==null) {
@@ -116,7 +116,7 @@ public class AccountController {
 	}
 
 	// Get lichSuMuahang
-	@GetMapping("/beewatch/account/history")
+	@GetMapping("/beestore/account/history")
 	public String lichSuMuahang(Model model, HttpServletRequest request, @RequestParam("p") Optional<Integer> p, Principal principal) {
 		if(principal != null) {
 			List<Strap_material> straps = strapSv.findAll();
@@ -149,7 +149,7 @@ public class AccountController {
 	}
 
 	//huy don hang
-	@GetMapping("/beewatch/account/history/cancel/{orderId}")
+	@GetMapping("/beestore/account/history/cancel/{orderId}")
 	public String huyDon(Model model, HttpServletRequest request
 			,@PathVariable("orderId") Integer orderId
 			, @RequestParam("p") Optional<Integer> p
@@ -200,7 +200,10 @@ public class AccountController {
 						voucherDao.save(voucher);
 					}
 				}
-
+				if(order.getTienCoc() != 0) {
+					order.setTienSauGiam(order.getTienCoc());
+					order.setTthaiThanhToan(3);
+				}
 				orderService.save(order);
 				System.out.println("Đã hủy đơn login: "+orderId);
 				model.addAttribute("message", "Hủy đơn thành công");
@@ -240,6 +243,10 @@ public class AccountController {
 						voucherDao.save(voucher);
 					}
 				}
+				if(order.getTienCoc() != 0) {
+					order.setTienSauGiam(order.getTienCoc());
+					order.setTthaiThanhToan(3);
+				}
 
 				orderService.save(order);
 				System.out.println("Đã hủy đơn: " + orderId);
@@ -255,7 +262,7 @@ public class AccountController {
 	}
 
 	//hoan don hang
-	@GetMapping("/beewatch/account/history/refund/{orderId}/{reason}")
+	@GetMapping("/beestore/account/history/refund/{orderId}/{reason}")
 	public String hoanDon(Model model,
 						  HttpServletRequest request,
 						  @PathVariable("orderId") Integer orderId,
@@ -328,7 +335,7 @@ public class AccountController {
 	}
 
 	//	-----------------------------------------------------------------
-	@PostMapping("/beewatch/account/history/refundOrder/{orderId}")
+	@PostMapping("/beestore/account/history/refundOrder/{orderId}")
 	public String hoanDon(
 			Model model,
 			HttpServletRequest request,
@@ -408,7 +415,7 @@ public class AccountController {
 	}
 //	-----------------------------------------------------------------
 
-	@RequestMapping("/beewatch/account/history/search")
+	@RequestMapping("/beestore/account/history/search")
 	public String Search(Model model, @RequestParam("keyword") String kw, @RequestParam("page") Optional<Integer> p) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -429,7 +436,7 @@ public class AccountController {
 		return "/user/account/lichSuMuaHang0Login";
 	}
 
-	@GetMapping("/beewatch/account/favorite")
+	@GetMapping("/beestore/account/favorite")
 	public String sanPhamYeuThich(Model model, HttpServletRequest request) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -448,7 +455,7 @@ public class AccountController {
 	}
 
 	// Get doiMatKhau
-	@GetMapping("/beewatch/account/changePassword")
+	@GetMapping("/beestore/account/changePassword")
 	public String doiMatKhau(Model model) {
 		if(useAcc.User()==null) {
 			return "redirect:/login";
@@ -463,7 +470,7 @@ public class AccountController {
 		return "/user/account/doiMatKhau";
 	}
 
-	@GetMapping("/beewatch/account/like/{id}")
+	@GetMapping("/beestore/account/like/{id}")
 	public String likeOrUnlike(@PathVariable("id") Integer id,Model model) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);
@@ -480,10 +487,10 @@ public class AccountController {
 		Long idac = account.getAccountId();
 		WishList wl = wishListService.findBy(id, idac);
 		wishListService.delete(wl);
-		return "redirect:/beewatch/account/favorite";
+		return "redirect:/beestore/account/favorite";
 	}
 
-	@PostMapping("/beewatch/account/update")
+	@PostMapping("/beestore/account/update")
 	public String capNhatTaiKhoan2(@ModelAttribute("account") Accounts account
 			, @RequestParam("image1") String image1, @RequestParam("image2") String image2
 			, @RequestParam("bithdate") String bithdate,Model model) throws ParseException {
@@ -525,10 +532,10 @@ public class AccountController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/beewatch/account/view";
+		return "redirect:/beestore/account/view";
 	}
 
-	@GetMapping("/beewatch/account/history/detail/{orderId}")
+	@GetMapping("/beestore/account/history/detail/{orderId}")
 	public String chiTietDonHang(Model model, @PathVariable("orderId") Integer orderId,HttpServletRequest request) {
 		List<Strap_material> straps = strapSv.findAll();
 		model.addAttribute("straps", straps);

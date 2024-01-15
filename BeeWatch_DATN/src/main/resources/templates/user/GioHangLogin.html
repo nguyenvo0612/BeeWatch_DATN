@@ -147,7 +147,7 @@
                     <tr th:each="item : ${cartItems}">
                       <td>
                         <a
-                          th:href="${'/beewatch/product/detail/' + item.getProduct_id()}"
+                          th:href="${'/beestore/product/detail/' + item.getProduct_id()}"
                         >
                           <input type="hidden" name="cartItemId" th:value="${item.getCartDetailId()}">
                           <!-- <img
@@ -165,7 +165,7 @@
                       <td>
                         <div style="margin-top: 50px">
                           <a
-                            th:href="${'/beewatch/product/detail/' + item.getProduct_id()}"
+                            th:href="${'/beestore/product/detail/' + item.getProduct_id()}"
                           >
                             <p th:text="${item.getNameProduct()}"></p>
                           </a>
@@ -222,7 +222,7 @@
               </p>
             </div>
             <br />
-            <a class="btn btn-warning" th:href="@{/beewatch/product}"
+            <a class="btn btn-warning" th:href="@{/beestore/product}"
               >Tiếp tục mua hàng</a
             >
             <button

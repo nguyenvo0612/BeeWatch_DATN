@@ -92,7 +92,7 @@ public class OrderController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@GetMapping("/beewatch/order/checkout")
+	@GetMapping("/beestore/order/checkout")
 	public String checkout(Model model, Principal principal) {
 
 		if(principal !=null) {
@@ -578,7 +578,7 @@ public class OrderController {
 		return gson.toJson(job);
 	}
 
-	@PostMapping("/beewatch/order/checkoutVistingOrder")
+	@PostMapping("/beestore/order/checkoutVistingOrder")
 	public String checkOutVisitingOrder(@RequestBody VistingGuest vistingGuest) {
 		System.out.println(vistingGuest.getEmail());
 		String mail = vistingGuest.getEmail();
@@ -1015,10 +1015,10 @@ public class OrderController {
 		SimpleMailMessage message = new SimpleMailMessage();
 
 		message.setTo(email);
-		message.setSubject("Đặt hàng thành công tại beewatch.COM");
-		message.setText("Cảm ơn bạn đã mua hàng tại beewatch.COM.\r\n"
+		message.setSubject("Đặt hàng thành công tại beestore.COM");
+		message.setText("Cảm ơn bạn đã mua hàng tại beestore.COM.\r\n"
 				+ "Mã hóa đơn của bạn là: "+order.getOrderId()+"\r\n"
-				+ "Vui lòng click vào đường link: http://localhost:8080/beewatch/account/history/detail/"+order.getOrderId()+ " để xem chi tiết hóa đơn.\r\n"
+				+ "Vui lòng click vào đường link: http://localhost:8080/beestore/account/history/detail/"+order.getOrderId()+ " để xem chi tiết hóa đơn.\r\n"
 				+ "Xin chân thành cảm ơn đã sử dụng dịch vụ.");
 		System.out.println("gui mail");
 		emailSender.send(message);

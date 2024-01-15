@@ -132,7 +132,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 login-sec">
-          <h2 class="text-center">Login Now</h2>
+          <h2 class="text-center">Login Now 2</h2>
           <div
             class="alert alert-danger text-center"
             th:if="${message == 'LOCK' && message != '' }"
@@ -146,7 +146,7 @@
           <div class="alert alert-success text-center" th:if="${param.logout}">
             Bạn đã đăng xuất
           </div>
-          <form class="login-form" th:action="@{/login}" method="POST">
+          <form class="login-form" th:action="@{/login2}" method="POST">
             <div class="form-group" data-validate="Username is reauired">
               <label class="text-uppercase">Username</label>
               <input
@@ -213,7 +213,7 @@
               >
               <small
                 ><a
-                  th:href="@{/beewatch}"
+                  th:href="@{/beestore}"
                   class="txt2"
                   style="margin-left: 10px; color: black"
                   >Trang chủ</a
@@ -224,7 +224,7 @@
 
           <div class="copy-text">
             Made with 100% passion <i class="fa fa-heart"></i> by
-            <a href="/beewatch">BEEWATCH</a>
+            <a href="/beestore">BEESTORE</a>
           </div>
         </div>
         <div class="col-md-8 banner-sec">

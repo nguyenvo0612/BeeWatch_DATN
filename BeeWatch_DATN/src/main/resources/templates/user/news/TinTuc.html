@@ -56,10 +56,10 @@
 					<div class="grid-in">
 						<ul>
 							<div th:each="p:${news}" class="col-md-4 grid_3" >
-								<a th:href="@{|/beewatch/blog/${p.newsId}|}"><img style="height: 350px;width: 350px;" th:src="@{|/assets/images/${p.image}/|}"
-									class="img-responsive-new" th:href="@{|/beewatch/blog/${p.newsId}|}" /></a>
+								<a th:href="@{|/beestore/blog/${p.newsId}|}"><img style="height: 350px;width: 350px;" th:src="@{|/assets/images/${p.image}/|}"
+									class="img-responsive-new" th:href="@{|/beestore/blog/${p.newsId}|}" /></a>
 								<h3>
-									<a th:href="@{|/beewatch/blog/${p.newsId}|}">[[${p.title}]]</a>
+									<a th:href="@{|/beestore/blog/${p.newsId}|}">[[${p.title}]]</a>
 								</h3>
 								<h4 th:utext="${p.shortcontent}"></h4>
 							</div>

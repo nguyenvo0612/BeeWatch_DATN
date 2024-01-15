@@ -74,7 +74,7 @@ public class WishListController {
 			}
 			//return "user/product/ChiTietSP";
 			//return "redirect:/beewatch/product/" + Product.getProductId();
-		    return "redirect:/beewatch/account/favorite";
+		    return "redirect:/beestore/account/favorite";
 	    }
 	    
 	    

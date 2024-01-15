@@ -15,7 +15,7 @@ import java.util.List;
 public class NewController {
 	@Autowired
 	private NewsService vser;
-	@RequestMapping("/beewatch/blog/{newsId}")
+	@RequestMapping("/beestore/blog/{newsId}")
 	//lấy thông tin từ trình duyệt gắn vào Integer id (PathValueable)
 	public String detail(Model model,@PathVariable("newsId") Integer id) {
 		News item=vser.getById(id);

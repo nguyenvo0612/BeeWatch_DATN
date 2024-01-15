@@ -282,10 +282,10 @@
           <div class="content-top" style="padding-top: 50px">
             <h2>Hàng mới nhất</h2>
             <div class="dhn">
-              <a class="btn btn-secondary" th:href="@{|/beewatch/category/1|}"
+              <a class="btn btn-secondary" th:href="@{|/beestore/category/1|}"
                 >Đồng hồ cơ</a
               >
-              <a class="btn btn-secondary" th:href="@{|/beewatch/category/2|}"
+              <a class="btn btn-secondary" th:href="@{|/beestore/category/2|}"
                 >Đồng hồ pin</a
               >
             </div>
@@ -300,7 +300,7 @@
                   style="margin-bottom: 0px; padding-bottom: 0px"
                 >
                   <a
-                    th:href="@{|beewatch/product/detail/${listpro.productId}|}"
+                    th:href="@{|beestore/product/detail/${listpro.productId}|}"
                     class="b-link-stripe b-animate-go thickbox"
                   >
                     <img
@@ -318,7 +318,7 @@
                 <div class="proName text-center">
                   <a
                     class="link-danger"
-                    th:href="@{|beewatch/product/detail/${listpro.productId}|}"
+                    th:href="@{|beestore/product/detail/${listpro.productId}|}"
                     style="
                       text-decoration: none;
                       font-size: 20px;
@@ -359,7 +359,7 @@
 
             <div class="clearfix"></div>
             <div class="bonus">
-              <a th:href="@{/beewatch/product}"
+              <a th:href="@{/beestore/product}"
                 >Xem thêm <i class="fa-solid fa-angle-right"></i
               ></a>
             </div>
@@ -369,7 +369,7 @@
             <h2>Bộ sư tập nổi bật</h2>
             <div class="col-md-6 men">
               <div class="image-text">
-                <a th:href="@{|/beewatch/brand/citizen|}">
+                <a th:href="@{|/beestore/brand/citizen|}">
                   <img
                     class=""
                     src="../../static/assets/images/man-fastens-cufflink-his-business-suit.jpg"
@@ -388,7 +388,7 @@
               <div class="col-md1">
                 <div class="image-text">
                   <!-- <div class="b-wrapper"> -->
-                  <a th:href="@{|/beewatch/brand/ogival|}"
+                  <a th:href="@{|/beestore/brand/ogival|}"
                     ><img
                       class="img-responsive"
                       src="/assets/images/st2.jpg"
@@ -405,7 +405,7 @@
               <div class="col-md2 productNew" style="margin-top: 4px">
                 <div class="col-md-6 men1">
                   <div class="image-text">
-                    <a th:href="@{|/beewatch/brand/orient|}"
+                    <a th:href="@{|/beestore/brand/orient|}"
                       ><img
                         class="img-responsive"
                         src="../../static/assets/images/close-up-seller-s-hands-gloves-shows-exclusive-men-s-watch-from-new-collection-luxury-jewelry-store.jpg"
@@ -425,7 +425,7 @@
                 <div class="col-md-6 men1">
                   <div class="image-text">
                     <!-- <div class="b-wrapper"> -->
-                    <a th:href="@{|/beewatch/brand/orient|}"
+                    <a th:href="@{|/beestore/brand/orient|}"
                       ><img
                         class="img-responsive"
                         src="../../static/assets/images/man-dressed-stylish-blue-suit-who-is-putting-elegant-watch.jpg"
@@ -452,7 +452,7 @@
           <div class="content-top-bottom">
             <div class="col-md-6 bo-suu-tap-left">
               <div class="bo-suu-tap">
-                <a th:href="@{|/beewatch/brand/orient|}"
+                <a th:href="@{|/beestore/brand/orient|}"
                   ><img
                     class="img-responsive"
                     src="../../static/assets/images/collections.jpg"
@@ -464,7 +464,7 @@
             </div>
             <div class="col-md-6 bo-suu-tap-right">
               <div class="bo-suu-tap">
-                <a th:href="@{|/beewatch/brand/orient|}"
+                <a th:href="@{|/beestore/brand/orient|}"
                   ><img
                     class="img-responsive"
                     src="../../static/assets/images/Men's Watch _ Black Leather Strap _ Black Watch Face.jpg"
@@ -484,16 +484,16 @@
             <div class="grid-in">
               <ul>
                 <div th:each="p:${news}" class="col-md-4 grid_3">
-                  <a th:href="@{|/beewatch/blog/${p.newsId}|}"
+                  <a th:href="@{|/beestore/blog/${p.newsId}|}"
                     ><img
                       style="height: 350px; width: 350px; border-radius: 10pt"
                       th:src="@{|/assets/images/${p.image}/|}"
                       class="img-responsive-new"
-                      th:href="@{|/beewatch/blog/${p.newsId}|}"
+                      th:href="@{|/beestore/blog/${p.newsId}|}"
                       alt=""
                   /></a>
                   <h3 style="margin-top: 10px">
-                    <a th:href="@{|/beewatch/blog/${p.newsId}|}"
+                    <a th:href="@{|/beestore/blog/${p.newsId}|}"
                       >[[${p.title}]]</a
                     >
                   </h3>
@@ -514,12 +514,12 @@
             style="margin-top: 20px; margin-bottom: 10px"
           >
             <a
-              th:href="@{|/beewatch/brand/${brand.name}|}"
+              th:href="@{|/beestore/brand/${brand.name}|}"
               style="text-decoration: none; font-size: 13px"
               ><img
                 style="height: 90px; width: 90px; margin-top: 30px"
                 th:src="@{|/assets/images/brand/${brand.image}/|}"
-                th:href="@{|/beewatch/brand/${brand.brandId}|}"
+                th:href="@{|/beestore/brand/${brand.brandId}|}"
             /></a>
           </div>
         </div>

@@ -9,7 +9,7 @@ public class CategoryController {
 	
 	
 	//Category
-		@GetMapping("/beewatch/category")
+		@GetMapping("/beestore/category")
 		public String danhmuc(Model model) {	
 			return"/user/product/sanPham";
 		}

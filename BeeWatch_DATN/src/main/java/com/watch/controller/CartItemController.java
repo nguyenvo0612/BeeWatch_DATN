@@ -63,7 +63,7 @@ public class CartItemController {
 
 
 	//giỏ hàng
-	@GetMapping("/beewatch/cartItem")
+	@GetMapping("/beestore/cartItem")
 	public String gioHang(Model model, Principal principal) {
 
 
@@ -144,7 +144,7 @@ public class CartItemController {
 					Logger logger = LoggerFactory.getLogger(this.getClass());
 					logger.info(cartDetail.toString());
 					cartDetailDao.save(cartDetail);
-					return "redirect:/beewatch/cartItem";
+					return "redirect:/beestore/cartItem";
 				} else {
 					CartDetail cartDetail = new CartDetail();
 					cartDetail.setProductCartDetail(product.get());
@@ -153,7 +153,7 @@ public class CartItemController {
 					cartDetail.setCart(cartForAdd);
 					System.out.println(cartDetail);
 					cartDetailDao.save(cartDetail);
-					return "redirect:/beewatch/cartItem";
+					return "redirect:/beestore/cartItem";
 				}
 			} else {
 				CartDetail cartDetail = new CartDetail();
@@ -163,10 +163,10 @@ public class CartItemController {
 				cartDetail.setCart(cartForAdd);
 				System.out.println(cartDetail);
 				cartDetailDao.save(cartDetail);
-				return "redirect:/beewatch/cartItem";
+				return "redirect:/beestore/cartItem";
 			}
 		}
-		return "redirect:/beewatch/cartItem";
+		return "redirect:/beestore/cartItem";
 	}
 	@GetMapping("/remove-item/{id}")
 	public String removeCart(@PathVariable("id") Integer id,
@@ -193,7 +193,7 @@ public class CartItemController {
 					Logger logger = LoggerFactory.getLogger(this.getClass());
 					logger.info(cartDetail.toString());
 					cartDetailDao.delete(cartDetail);
-					return "redirect:/beewatch/cartItem";
+					return "redirect:/beestore/cartItem";
 				} else {
 					CartDetail cartDetail = new CartDetail();
 					cartDetail.setProductCartDetail(product.get());
@@ -202,7 +202,7 @@ public class CartItemController {
 					cartDetail.setCart(cartForAdd);
 					System.out.println(cartDetail);
 					cartDetailDao.delete(cartDetail);
-					return "redirect:/beewatch/cartItem";
+					return "redirect:/beestore/cartItem";
 				}
 			} else {
 				CartDetail cartDetail = new CartDetail();
@@ -212,14 +212,14 @@ public class CartItemController {
 				cartDetail.setCart(cartForAdd);
 				System.out.println(cartDetail);
 				cartDetailDao.delete(cartDetail);
-				return "redirect:/beewatch/cartItem";
+				return "redirect:/beestore/cartItem";
 			}
 		}
-		return "redirect:/beewatch/cartItem";
+		return "redirect:/beestore/cartItem";
 	}
 	@PostMapping("updateCartItem")
 	public String updateCartItem(@RequestParam int cartItemId, @RequestParam(name = "quantity", required = false) int quantity) {
 		cartItemService.update(cartItemId,quantity);
-		return "redirect:/beewatch/cartItem";
+		return "redirect:/beestore/cartItem";
 	}
 }

@@ -11,7 +11,7 @@
           <h4>Bộ Lọc:</h4>
         </label>
         <div class="row" id="filter">
-          <form th:action="@{|/beewatch/product/search|}" method="post">
+          <form th:action="@{|/beestore/product/search|}" method="post">
             <div class="form-group col-sm-3 col-xs-6">
               <select
                 class="form-control form-control-lg"
@@ -90,13 +90,13 @@
         <div style="margin-bottom: 20px">
           <div class="khungSapxep">
             <b style="margin-left: 10px">Sắp xếp theo</b>
-            <a th:href="@{|/beewatch/product/khuyenmai|}"
+            <a th:href="@{|/beestore/product/khuyenmai|}"
               ><button class="btn-sm">Khuyến mãi</button></a
             >
-            <a th:href="@{|/beewatch/product/moinhat|}"
+            <a th:href="@{|/beestore/product/moinhat|}"
               ><button class="btn-sm">Mới Nhất</button></a
             >
-            <a th:href="@{|/beewatch/product/banchay|}"
+            <a th:href="@{|/beestore/product/banchay|}"
               ><button class="btn-sm">Bán Chạy</button></a
             >
           </div>

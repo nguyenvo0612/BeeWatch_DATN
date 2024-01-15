@@ -63,7 +63,7 @@ public class ProductController {
 	}
 	
 	//search strap
-	@GetMapping("beewatch/product/strap/{value}")
+	@GetMapping("beestore/product/strap/{value}")
 	public String searchStrap(Model model,@PathVariable("value") Long strap, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -121,7 +121,7 @@ public class ProductController {
 	
 	
 	//seacher price
-	@GetMapping("beewatch/product/price/{value}")
+	@GetMapping("beestore/product/price/{value}")
 	public String searchPrice(Model model,@PathVariable("value") String pric, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -180,7 +180,7 @@ public class ProductController {
 	}
 	
 	//search size
-	@GetMapping("beewatch/product/size/{value}")
+	@GetMapping("beestore/product/size/{value}")
 	public String searchSize(Model model,@PathVariable("value") Long pric, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -237,7 +237,7 @@ public class ProductController {
 	}
 	
 	//search header
-	@GetMapping("/beewatch/search")
+	@GetMapping("/beestore/search")
 	public String Search(Model model, @RequestParam("nameSearch") String name, Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -290,7 +290,7 @@ public class ProductController {
 	CartDao cartDao;
 
 	// Product
-	@GetMapping("/beewatch/product")
+	@GetMapping("/beestore/product")
 	public String sanpham(Model model, @RequestParam("p") Optional<Integer> p, Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -335,7 +335,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping({"/beewatch/product/{id}"})
+	@GetMapping({"/beestore/product/{id}"})
 	public String loaiSp(Model model, @PathVariable("id") Integer id, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -380,7 +380,7 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping({"/beewatch/brand/{name}"})
+	@GetMapping({"/beestore/brand/{name}"})
 	public String thuonghieu(Model model, @PathVariable("name") String name, @RequestParam("p") Optional<Integer> p,Principal principal) {
 //		System.out.println("id: " + id);
 		if (principal != null) {
@@ -449,7 +449,7 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping({"/beewatch/category/{id}"})
+	@GetMapping({"/beestore/category/{id}"})
 	public String loaisp2(Model model, @PathVariable("id") int id, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -496,7 +496,7 @@ public class ProductController {
 	}
 
 	
-	@PostMapping("/beewatch/product/search")
+	@PostMapping("/beestore/product/search")
 	public String search(Model model, @RequestParam("bran") String bran, @RequestParam("cate") String cate,
 			@RequestParam("pric") String pric, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
@@ -622,7 +622,7 @@ public class ProductController {
 			return "/user/product/childSanPham";
 		}
 	}
-	@GetMapping("beewatch/product/gender/{gender}")
+	@GetMapping("beestore/product/gender/{gender}")
 	public String productGender(@RequestParam("p") Optional<Integer> p,Model model,@PathVariable("gender") String param,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -689,7 +689,7 @@ public class ProductController {
 			return "/user/product/childSanPham";
 		}
 	}
-	@GetMapping("beewatch/product/khuyenmai")
+	@GetMapping("beestore/product/khuyenmai")
 	public String phobien(Model model, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -745,7 +745,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping("beewatch/product/banchay")
+	@GetMapping("beestore/product/banchay")
 	public String banchay(Model model, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -801,7 +801,7 @@ public class ProductController {
 		}
 	}
 
-	@GetMapping("beewatch/product/moinhat")
+	@GetMapping("beestore/product/moinhat")
 	public String moinhat(Model model, @RequestParam("p") Optional<Integer> p,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -859,7 +859,7 @@ public class ProductController {
 		}
 	}
 	
-	@GetMapping("/beewatch/product/tags/{id}")
+	@GetMapping("/beestore/product/tags/{id}")
 	public String tags(Model model, @RequestParam("p") Optional<Integer> p,@PathVariable("id") String id,Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -945,10 +945,10 @@ public class ProductController {
 		}
 	}
 	//ChitietSp
-			@GetMapping({"/beewatch/product/detail/{id}","/beewatch/product/tags/detail/{id}"
-				,"/beewatch/product/tags/detail/detail/{id}","/beewatch/detail/{id}",
-				"/beewatch/brand/detail/{id}","/beewatch/category/detail/{id}","/beewatch/product/price/detail/{id}",
-				"/beewatch/product/strap/detail/{id}","/beewatch/account/detail/{id}","/chitietDH/beewatch/product/detail/{id}"})
+			@GetMapping({"/beestore/product/detail/{id}","/beestore/product/tags/detail/{id}"
+				,"/beestore/product/tags/detail/detail/{id}","/beestore/detail/{id}",
+				"/beestore/brand/detail/{id}","/beestore/category/detail/{id}","/beestore/product/price/detail/{id}",
+				"/beestore/product/strap/detail/{id}","/beestore/account/detail/{id}","/chitietDH/beestore/product/detail/{id}"})
 			public String chitietSp(Model model ,@PathVariable("id") Integer id,Principal principal) {
 				if (principal != null) {
 					// User is logged in

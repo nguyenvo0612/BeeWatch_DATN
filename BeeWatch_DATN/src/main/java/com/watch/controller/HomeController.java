@@ -50,13 +50,13 @@ public class HomeController {
 
 
 	//home người admin
-	@GetMapping({"/admin","/admin/beewatch"})
+	@GetMapping({"/admin","/admin/beestore"})
 	public String homeAmin(Model model) {
 		return "redirect:/assets/admin/main/homeAdmin.html";
 	}
 	
 	//Home người dùng
-	@GetMapping({"/beewatch","/beewatch/home"})
+	@GetMapping({"/beestore","/beestore/home"})
 	public String homeClient(Model model, Principal principal) {
 		if (principal != null) {
 			// User is logged in

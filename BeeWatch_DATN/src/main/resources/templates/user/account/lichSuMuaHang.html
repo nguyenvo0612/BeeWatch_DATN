@@ -215,12 +215,12 @@
                         <td>
                           <div class="btn-group">
                             <a
-                              th:href="@{|/beewatch/account/history/detail/${order.orderId}|}"
+                              th:href="@{|/beestore/account/history/detail/${order.orderId}|}"
                             >
                               <button
                                 type="button"
                                 class="btn btn-primary"
-                                th:href="@{|/beewatch/account/history/cancel/${order.orderId}|}"
+                                th:href="@{|/beestore/account/history/cancel/${order.orderId}|}"
                               >
                                 Chi tiết
                               </button>
@@ -266,21 +266,21 @@
           <div class="row">
             <ul class="pagination text-center" style="margin-left: 35%">
               <li class="page-item">
-                <a class="page-link" href="/beewatch/account/history?p=0"
+                <a class="page-link" href="/beestore/account/history?p=0"
                   >|<
                 </a>
               </li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number-1}|}"
+                  th:href="@{|/beestore/account/history?p=${number-1}|}"
                   ><<</a
                 >
               </li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number}|}"
+                  th:href="@{|/beestore/account/history?p=${number}|}"
                 >
                   [[${number+1}]]/[[${orders.totalPages}]]
                 </a>
@@ -289,14 +289,14 @@
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${number+1}|}"
+                  th:href="@{|/beestore/account/history?p=${number+1}|}"
                   >>></a
                 >
               </li>
               <li class="page-item">
                 <a
                   class="page-link"
-                  th:href="@{|/beewatch/account/history?p=${orders.totalPages-1}|}"
+                  th:href="@{|/beestore/account/history?p=${orders.totalPages-1}|}"
                   >>|</a
                 >
               </li>
@@ -410,7 +410,7 @@
         formData.append("anh_san_pham_loi", anh_san_pham_loi);
 
         $.ajax({
-          url: "/beewatch/account/history/refundOrder/" + orderId,
+          url: "/beestore/account/history/refundOrder/" + orderId,
           type: "POST",
           data: formData,
           processData: false,
@@ -434,7 +434,7 @@
         if (t == false) {
           return false;
         } else {
-          url = "/beewatch/account/history/cancel/" + obj;
+          url = "/beestore/account/history/cancel/" + obj;
           document.getElementById("formId").action = url;
           document.getElementById("formId").method = "GET";
           document.getElementById("formId").submit();
@@ -447,7 +447,7 @@
           return false;
         } else {
           url =
-            "/beewatch/account/history/refund/" +
+            "/beestore/account/history/refund/" +
             obj +
             "/" +
             encodeURIComponent(reason);
@@ -457,7 +457,7 @@
           setTimeout(function () {
             // Chuyển hướng đến URL mong muốn
             window.location.replace(
-              "http://localhost:8080/beewatch/account/history"
+              "http://localhost:8080/beestore/account/history"
             );
           }, 50);
         }

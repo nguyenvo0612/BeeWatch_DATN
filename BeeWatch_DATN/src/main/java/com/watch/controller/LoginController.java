@@ -82,7 +82,7 @@ public class LoginController {
 		return"redirect:/login";
 	}
 
-	@GetMapping("/beewatch/chinhSachBaoHanh")
+	@GetMapping("/beestore/chinhSachBaoHanh")
 	public String chinhSachBaoHanh(Model model, Principal principal) {
 		if (principal != null) {
 			// User is logged in
@@ -112,7 +112,7 @@ public class LoginController {
 		}
 	}
 
-	@GetMapping("/beewatch/chinhSachDoiTra")
+	@GetMapping("/beestore/chinhSachDoiTra")
 	public String chinhSachDoiTra(Model model,Principal principal) {
 		if (principal != null) {
 			// User is logged in
